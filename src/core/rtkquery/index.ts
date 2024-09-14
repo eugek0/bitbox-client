@@ -12,14 +12,24 @@ const baseQuery = fetchBaseQuery({
 
 const fetchMainBaseQuery =
   (
-    args: string | FetchArgs,
+    basePath: string,
   ): BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> =>
-  async (_, api, extraOptions) => {
-    let result = await baseQuery(args, api, extraOptions);
+  async (args, api, extraOptions) => {
+    const updatedArgs: string | FetchArgs =
+      typeof args === "string"
+        ? {
+            url: `${SERVER_BASE_URL}${basePath}${args.startsWith("/") ? args : `/${args}`}`,
+          }
+        : {
+            ...args,
+            url: `${SERVER_BASE_URL}${basePath}${args.url.startsWith("/") ? args.url : `/${args.url}`}`,
+          };
+
+    let result = await baseQuery(updatedArgs, api, extraOptions);
 
     if (result.error && result.error.status === 401) {
       await baseQuery(`${SERVER_BASE_URL}/auth/refresh`, api, extraOptions);
-      result = await baseQuery(args, api, extraOptions);
+      result = await baseQuery(updatedArgs, api, extraOptions);
     }
 
     return result;
