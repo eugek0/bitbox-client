@@ -7,11 +7,11 @@ export const authApi = createApi({
   baseQuery: fetchMainBaseQuery("/auth"),
   endpoints: (builder) => ({
     register: builder.mutation<void, IRegisterPayload>({
-      query: (body) => ({ url: "/register", body }),
+      query: (body) => ({ url: "/register", body, method: "POST" }),
     }),
 
     login: builder.mutation<void, ILoginPayload>({
-      query: (body) => ({ url: "/login", body }),
+      query: (body) => ({ url: "/login", body, method: "POST" }),
     }),
 
     getProfile: builder.query<IProfile, void>({
@@ -20,5 +20,9 @@ export const authApi = createApi({
   }),
 });
 
-export const { useRegisterMutation, useLoginMutation, useGetProfileQuery } =
-  authApi;
+export const {
+  useRegisterMutation,
+  useLoginMutation,
+  useGetProfileQuery,
+  useLazyGetProfileQuery,
+} = authApi;
