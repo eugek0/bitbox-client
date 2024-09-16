@@ -1,7 +1,7 @@
 import { Base64 } from "@/core/types";
 
 export interface IRegisterPayload {
-  username: string;
+  login: string;
   email: string;
   password: string;
 }
@@ -12,7 +12,7 @@ export interface ILoginPayload {
 }
 
 export interface IProfile {
-  username: string;
+  login: string;
   email: string;
   createdAt: string;
   avatar: Base64;

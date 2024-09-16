@@ -1,5 +1,5 @@
 export interface IRegisterFormValues {
-  username: string;
+  login: string;
   email: string;
   password: string;
   repeatPassword: string;

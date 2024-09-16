@@ -11,9 +11,9 @@ const RegisterForm: FC<AuthFormInstanceProps> = ({ ...props }) => {
     <AuthForm {...props}>
       <Form.Item<IRegisterFormValues>
         rules={DEFAULT_AUTH_FORM_RULES}
-        name="username"
+        name="login"
       >
-        <Input placeholder="Никнейм" suffix={<UserOutlined />} />
+        <Input placeholder="Логин" suffix={<UserOutlined />} />
       </Form.Item>
       <Form.Item<IRegisterFormValues>
         rules={DEFAULT_AUTH_FORM_RULES}
