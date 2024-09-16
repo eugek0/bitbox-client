@@ -1,5 +1,5 @@
 import LoginForm from "@/components/Auth/AuthForm/LoginForm";
-import { isFormException } from "@/core/guards";
+import { isFormException } from "@/core/typeguards";
 import { setErrorsToField } from "@/core/utils/form";
 import { useNavigate } from "@tanstack/react-router";
 import { FormProps, useForm } from "antd/es/form/Form";

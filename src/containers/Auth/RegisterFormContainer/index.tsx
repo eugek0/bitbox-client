@@ -1,11 +1,11 @@
 import RegisterForm from "@/components/Auth/AuthForm/RegisterForm";
+import { isFormException } from "@/core/typeguards";
+import { setErrorsToField } from "@/core/utils/form";
 import { useNavigate } from "@tanstack/react-router";
 import { FormProps, useForm } from "antd/es/form/Form";
 import { FC } from "react";
 import { useLazyGetProfileQuery, useRegisterMutation } from "../api";
 import { IRegisterFormValues } from "./types";
-import { isFormException } from "@/core/guards";
-import { setErrorsToField } from "@/core/utils/form";
 
 const RegisterFormContainer: FC = () => {
   const [form] = useForm();
@@ -23,9 +23,9 @@ const RegisterFormContainer: FC = () => {
       navigate({ to: "/" });
     } catch (error) {
       if (isFormException(error)) {
-        return setErrorsToField(form, error)
+        return setErrorsToField(form, error);
       }
-      throw error
+      throw error;
     }
   };
 
