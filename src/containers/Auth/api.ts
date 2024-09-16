@@ -14,6 +14,10 @@ export const authApi = createApi({
       query: (body) => ({ url: "/login", body, method: "POST" }),
     }),
 
+    logout: builder.mutation<void, void>({
+      query: () => "/logout",
+    }),
+
     getProfile: builder.query<IProfile, void>({
       query: () => "/profile",
     }),
@@ -23,6 +27,7 @@ export const authApi = createApi({
 export const {
   useRegisterMutation,
   useLoginMutation,
+  useLogoutMutation,
   useGetProfileQuery,
   useLazyGetProfileQuery,
 } = authApi;
