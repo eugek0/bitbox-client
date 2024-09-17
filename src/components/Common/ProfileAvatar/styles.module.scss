@@ -1,0 +1,16 @@
+@import "@/core/styles";
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  transition: $base_transition;
+  cursor: pointer;
+
+  &_active {
+    filter: brightness(0.7);
+  }
+
+  img {
+    flex: 1;
+  }
+}

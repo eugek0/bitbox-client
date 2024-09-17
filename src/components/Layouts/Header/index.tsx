@@ -1,9 +1,9 @@
 import Logotype from "@/components/Common/Logotype";
 import ProfileAvatarContainer from "@/containers/Common/ProfileAvatarContainer";
 import { APP_NAME } from "@/core/constants";
-import { AppstoreOutlined, LoginOutlined } from "@ant-design/icons";
+import { LoginOutlined } from "@ant-design/icons";
 import { Link } from "@tanstack/react-router";
-import { Button, Flex, Tooltip, Typography } from "antd";
+import { Button, Flex, Typography } from "antd";
 import { FC } from "react";
 import styles from "./styles.module.scss";
 import { HeaderProps } from "./types";
@@ -20,11 +20,6 @@ const Header: FC<HeaderProps> = ({ profile }) => {
         </Flex>
         {profile ? (
           <Flex gap={20} align="center">
-            <Tooltip title="Хранилище" placement="bottomLeft">
-              <Link>
-                <Button icon={<AppstoreOutlined />} />
-              </Link>
-            </Tooltip>
             <ProfileAvatarContainer />
           </Flex>
         ) : (
