@@ -1,12 +1,13 @@
 import ProfileAvatar from "@/components/Common/ProfileAvatar";
-import { useGetProfileQuery } from "@/containers/Auth/api";
+import { profileSelector } from "@/containers/Auth/selectors";
+import { useAppSelector } from "@/store";
 import { PopoverProps } from "antd";
 import { FC, useState } from "react";
 
 const ProfileAvatarContainer: FC = () => {
-  const [isPopoverOpened, setPopoverOpened] = useState<boolean>(false);
+  const profile = useAppSelector(profileSelector);
 
-  const { data } = useGetProfileQuery();
+  const [isPopoverOpened, setPopoverOpened] = useState<boolean>(false);
 
   const handleTogglePopover: PopoverProps["onOpenChange"] = (open) => {
     setPopoverOpened(open);
@@ -16,7 +17,7 @@ const ProfileAvatarContainer: FC = () => {
     <ProfileAvatar
       isPopoverOpened={isPopoverOpened}
       handleTogglePopover={handleTogglePopover}
-      profile={data!}
+      profile={profile!}
     />
   );
 };

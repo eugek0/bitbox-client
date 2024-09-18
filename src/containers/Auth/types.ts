@@ -1,4 +1,17 @@
-import { Base64 } from "@/core/types";
+import { Base64, Nullable } from "@/core/types";
+
+export interface IProfile {
+  login: string;
+  email: string;
+  createdAt: string;
+  avatar: Base64;
+}
+
+export interface IAuthState {
+  profile: Nullable<IProfile>;
+}
+
+// INFO: Интерфейсы и типы для API
 
 export interface IRegisterPayload {
   login: string;
@@ -9,11 +22,4 @@ export interface IRegisterPayload {
 export interface ILoginPayload {
   email: string;
   password: string;
-}
-
-export interface IProfile {
-  login: string;
-  email: string;
-  createdAt: string;
-  avatar: Base64;
 }

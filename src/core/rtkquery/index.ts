@@ -4,7 +4,7 @@ import {
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query/react";
-import { SERVER_BASE_URL } from "../constants.env";
+import { SERVER_BASE_URL } from "../constants";
 
 const baseQuery = fetchBaseQuery({
   credentials: "include",

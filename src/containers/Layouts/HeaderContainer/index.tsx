@@ -1,11 +1,12 @@
 import Header from "@/components/Layouts/Header";
-import { useGetProfileQuery } from "@/containers/Auth/api";
+import { profileSelector } from "@/containers/Auth/selectors";
+import { useAppSelector } from "@/store";
 import { FC } from "react";
 
 const HeaderContainer: FC = () => {
-  const { data } = useGetProfileQuery();
+  const profile = useAppSelector(profileSelector);
 
-  return <Header profile={data} />;
+  return <Header profile={profile} />;
 };
 
 export default HeaderContainer;

@@ -1,1 +1,1 @@
-export { isFormException } from "./form.typeguards";
+export * from "./form.typeguards";
