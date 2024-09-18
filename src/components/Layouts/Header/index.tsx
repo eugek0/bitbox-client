@@ -19,9 +19,7 @@ const Header: FC<HeaderProps> = ({ profile }) => {
           </Typography.Text>
         </Flex>
         {profile ? (
-          <Flex gap={20} align="center">
-            <ProfileAvatarContainer />
-          </Flex>
+          <ProfileAvatarContainer />
         ) : (
           <Flex gap={20} align="center">
             <Link to="/auth/login">
