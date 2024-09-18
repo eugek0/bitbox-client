@@ -5,31 +5,34 @@ import {
 } from "@reduxjs/toolkit/query/react";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query/react";
 import { SERVER_BASE_URL } from "../constants";
-import { notification } from "antd";
-import { INotificationData } from "./types";
 
 const baseQuery = fetchBaseQuery({
   credentials: "include",
 });
 
-const mainBaseQuery: BaseQueryFn<
-  string | FetchArgs,
-  unknown,
-  FetchBaseQueryError
-> = async (args, api, extraOptions) => {
-  let result = await baseQuery(args, api, extraOptions);
+const fetchMainBaseQuery =
+  (
+    basePath: string,
+  ): BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> =>
+  async (args, api, extraOptions) => {
+    const updatedArgs: string | FetchArgs =
+      typeof args === "string"
+        ? {
+            url: `${SERVER_BASE_URL}${basePath}${args.startsWith("/") ? args : `/${args}`}`,
+          }
+        : {
+            ...args,
+            url: `${SERVER_BASE_URL}${basePath}${args.url.startsWith("/") ? args.url : `/${args.url}`}`,
+          };
 
-  if (result.error && result.error.status === 401) {
-    await baseQuery(`${SERVER_BASE_URL}/auth/refresh`, api, extraOptions);
-    result = await baseQuery(args, api, extraOptions);
-  }
+    let result = await baseQuery(updatedArgs, api, extraOptions);
 
-  const { status, ...config } = (result.data as INotificationData).notification;
-  if (status) {
-    notification[status](config);
-  }
+    if (result.error && result.error.status === 401) {
+      await baseQuery(`${SERVER_BASE_URL}/auth/refresh`, api, extraOptions);
+      result = await baseQuery(updatedArgs, api, extraOptions);
+    }
 
-  return result;
-};
+    return result;
+  };
 
-export default mainBaseQuery;
+export default fetchMainBaseQuery;
