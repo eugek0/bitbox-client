@@ -31,18 +31,7 @@ const RegisterForm: FC<AuthFormInstanceProps> = ({ ...props }) => {
         <Input.Password placeholder="Пароль" suffix={<KeyOutlined />} />
       </Form.Item>
       <Form.Item<IRegisterFormValues>
-        rules={[
-          ...AUTH_FORM_RULES.repeatPassword,
-          {
-            validator: (_, value) => {
-              const { password } = props.form?.getFieldsValue();
-              if (password !== value) {
-                return Promise.reject("Пароли не совпадают");
-              }
-              return Promise.resolve();
-            },
-          },
-        ]}
+        rules={AUTH_FORM_RULES.repeatPassword(props.form)}
         name="repeatPassword"
       >
         <Input.Password
