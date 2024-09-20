@@ -13,7 +13,7 @@ const LoginForm: FC<AuthFormInstanceProps> = ({ ...props }) => {
         <Input placeholder="Почта" suffix={<MailOutlined />} />
       </Form.Item>
       <Form.Item<ILoginFormValues>
-        rules={AUTH_FORM_RULES.password}
+        rules={AUTH_FORM_RULES.default}
         name="password"
       >
         <Input.Password placeholder="Пароль" suffix={<KeyOutlined />} />
