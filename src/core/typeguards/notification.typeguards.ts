@@ -4,16 +4,15 @@ import {
   NotificationStatusType,
 } from "../types/notification.types";
 
-export function isNotificationStatusType(
+export const isNotificationStatusType = (
   unknown: any,
-): unknown is NotificationStatusType {
-  return ["info", "error", "success", "warning"].includes(unknown);
-}
+): unknown is NotificationStatusType =>
+  ["info", "error", "success", "warning"].includes(unknown);
 
-export function isNotificationPlacement(
+export const isNotificationPlacement = (
   unknown: any,
-): unknown is NotificationPlacement {
-  return [
+): unknown is NotificationPlacement =>
+  [
     "top",
     "bottom",
     "topLeft",
@@ -21,22 +20,18 @@ export function isNotificationPlacement(
     "bottomLeft",
     "bottomRight",
   ].includes(unknown);
-}
 
-// Typeguard для INotification
-export function isNotification(unknown: any): unknown is INotification {
-  return (
-    typeof unknown === "object" &&
-    isNotificationStatusType(unknown.status) &&
-    typeof unknown.config === "object" &&
-    typeof unknown.config.message === "string" &&
-    (typeof unknown.config.description === "undefined" ||
-      typeof unknown.config.description === "string") &&
-    (typeof unknown.config.closable === "undefined" ||
-      typeof unknown.config.closable === "boolean") &&
-    (typeof unknown.config.duration === "undefined" ||
-      typeof unknown.config.duration === "number") &&
-    (typeof unknown.config.placement === "undefined" ||
-      isNotificationPlacement(unknown.config.placement))
-  );
-}
+export const isNotification = (unknown: any): unknown is INotification =>
+  unknown &&
+  typeof unknown === "object" &&
+  isNotificationStatusType(unknown.status) &&
+  typeof unknown.config === "object" &&
+  typeof unknown.config.message === "string" &&
+  (typeof unknown.config.description === "undefined" ||
+    typeof unknown.config.description === "string") &&
+  (typeof unknown.config.closable === "undefined" ||
+    typeof unknown.config.closable === "boolean") &&
+  (typeof unknown.config.duration === "undefined" ||
+    typeof unknown.config.duration === "number") &&
+  (typeof unknown.config.placement === "undefined" ||
+    isNotificationPlacement(unknown.config.placement));
