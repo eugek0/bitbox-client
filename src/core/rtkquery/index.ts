@@ -2,9 +2,11 @@ import {
   BaseQueryFn,
   FetchArgs,
   fetchBaseQuery,
+  FetchBaseQueryError,
 } from "@reduxjs/toolkit/query/react";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query/react";
+import { notification } from "antd";
 import { SERVER_BASE_URL } from "../constants";
+import { isNotification } from "../typeguards";
 
 const baseQuery = fetchBaseQuery({
   credentials: "include",
@@ -30,6 +32,11 @@ const fetchMainBaseQuery =
     if (result.error && result.error.status === 401) {
       await baseQuery(`${SERVER_BASE_URL}/auth/refresh`, api, extraOptions);
       result = await baseQuery(updatedArgs, api, extraOptions);
+    }
+
+    const data = result.error?.data ?? result.data;
+    if (isNotification(data)) {
+      notification[data.status](data.config);
     }
 
     return result;
