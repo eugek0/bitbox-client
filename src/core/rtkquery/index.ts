@@ -40,7 +40,7 @@ const fetchMainBaseQuery =
 
     const data = result.error?.data ?? result.data;
     if (isNotification(data)) {
-      notification[data.status](data.config);
+      notification[data.notification.status](data.notification.config);
     }
 
     return result;

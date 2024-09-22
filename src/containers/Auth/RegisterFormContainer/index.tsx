@@ -1,6 +1,6 @@
 import RegisterForm from "@/components/Auth/AuthForm/RegisterForm";
 import { isFormException } from "@/core/typeguards";
-import { setErrorsToField } from "@/core/utils/form";
+import { setErrorsToField } from "@/core/utils";
 import { useNavigate } from "@tanstack/react-router";
 import { FormProps, useForm } from "antd/es/form/Form";
 import { FC } from "react";
