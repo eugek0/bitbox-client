@@ -6,8 +6,8 @@ import styles from "./styles.module.scss";
 const AuthForm: FC<AuthFormProps> = ({ children, form, onFinish }) => {
   return (
     <Flex className={styles["body"]} align="center" justify="center">
-      <Flex className={styles["form"]}>
-        <Form form={form} onFinish={onFinish}>
+      <Flex className={styles["form-container"]}>
+        <Form className={styles["form"]} form={form} onFinish={onFinish}>
           {children}
         </Form>
       </Flex>

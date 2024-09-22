@@ -1,6 +1,6 @@
-import AppModule from "@/modules/App";
-import { createRootRoute } from "@tanstack/react-router";
+import { IRouterContext } from "@/core/types";
+import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 
-export const Route = createRootRoute({
-  component: AppModule,
+export const Route = createRootRouteWithContext<IRouterContext>()({
+  component: Outlet,
 });

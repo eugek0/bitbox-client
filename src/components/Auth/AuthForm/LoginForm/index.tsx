@@ -6,6 +6,7 @@ import AuthForm from "..";
 import { AuthFormInstanceProps } from "../types";
 import { AUTH_FORM_RULES } from "../constants";
 import styles from "../styles.module.scss";
+import { Link } from "@tanstack/react-router";
 
 const LoginForm: FC<AuthFormInstanceProps> = ({ ...props }) => {
   return (
@@ -27,7 +28,7 @@ const LoginForm: FC<AuthFormInstanceProps> = ({ ...props }) => {
           >
             <Input.Password placeholder="Пароль" suffix={<KeyOutlined />} />
           </Form.Item>
-          <Form.Item>
+          <Form.Item className={styles["submit-button-container"]}>
             <Button
               className={styles["submit-button"]}
               type="primary"
@@ -36,6 +37,11 @@ const LoginForm: FC<AuthFormInstanceProps> = ({ ...props }) => {
               Войти
             </Button>
           </Form.Item>
+          <Link from="/auth/login" to="/auth/register">
+            <Button className={styles["redirect-button"]} type="link">
+              Еще нет аккаунта?
+            </Button>
+          </Link>
         </div>
       </Flex>
     </AuthForm>

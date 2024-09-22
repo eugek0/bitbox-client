@@ -20,6 +20,7 @@ export const authSlice = createSlice({
 
     builder.addMatcher(authApi.endpoints.logout.matchFulfilled, (state) => {
       state.profile = null;
+      authApi.util.resetApiState();
     });
   },
 });

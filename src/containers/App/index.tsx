@@ -1,21 +1,26 @@
-import { Outlet } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/router-devtools";
+import { routeTree } from "@/routeTree.gen";
+import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { FC } from "react";
 import { useGetProfileQuery } from "../Auth/api";
 import FullscreenLoader from "../Common/FullscreenLoader";
 
+const router = createRouter({ routeTree, context: { profile: null } });
+
+declare module "@tanstack/react-router" {
+  interface Register {
+    router: typeof router;
+  }
+}
+
 const App: FC = () => {
-  const { isLoading } = useGetProfileQuery();
+  const { data: profile, isLoading } = useGetProfileQuery();
 
   if (isLoading) {
     return <FullscreenLoader />;
   }
 
   return (
-    <>
-      <Outlet />
-      <TanStackRouterDevtools />
-    </>
+    <RouterProvider router={router} context={{ profile: profile ?? null }} />
   );
 };
 

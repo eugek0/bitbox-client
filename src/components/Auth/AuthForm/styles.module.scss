@@ -1,12 +1,25 @@
 .body {
   height: 100vh;
 
-  .form {
+  .form-container {
+    width: 300px;
     padding: 10px;
+
+    .form {
+      width: 100%;
+    }
   }
 }
 
-.submit-button {
+.submit-button-container {
+  margin-bottom: 5px;
+
+  .submit-button {
+    width: 100%;
+  }
+}
+
+.redirect-button {
   width: 100%;
 }
 
