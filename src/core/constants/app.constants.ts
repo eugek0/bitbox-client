@@ -1,1 +1,1 @@
-export const APP_NAME = "Cloudy";
+export const APP_NAME = "Stash";
