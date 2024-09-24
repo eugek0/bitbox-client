@@ -16,5 +16,12 @@
 
   .auth-button:hover {
     color: $primary_color !important;
+    text-shadow: 0 0 10px $primary_color;
+  }
+
+  .auth-button_bordered:hover {
+    box-shadow: 0 0 10px $primary_color;
+    color: $primary_color !important;
+    text-shadow: 0 0 10px $primary_color;
   }
 }

@@ -32,7 +32,12 @@ const Header: FC<HeaderProps> = ({ profile }) => {
               </Button>
             </Link>
             <Link to="/auth/register">
-              <Button icon={<FormOutlined />}>Зарегистрироваться</Button>
+              <Button
+                className={styles["auth-button_bordered"]}
+                icon={<FormOutlined />}
+              >
+                Зарегистрироваться
+              </Button>
             </Link>
           </Flex>
         )}

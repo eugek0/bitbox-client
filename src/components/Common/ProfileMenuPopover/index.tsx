@@ -16,17 +16,33 @@ const ProfileMenuPopover: FC<ProfileMenuPopoverProps> = ({
   return (
     <Flex className={styles["body"]} gap={20} vertical>
       <Flex gap={20} align="center" justify="space-between">
-        <Tooltip title="Хранилище" placement="bottomRight">
-          <Button type="text" shape="circle" icon={<AppstoreOutlined />} />
-        </Tooltip>
-        <Tooltip title="Профиль" placement="bottomRight">
-          <Button type="text" shape="circle" icon={<UserOutlined />} />
-        </Tooltip>
-        <Tooltip title="Настройки" placement="bottomRight">
-          <Button type="text" shape="circle" icon={<SettingOutlined />} />
-        </Tooltip>
-        <Tooltip placement="bottomRight" title="Выйти">
+        <Tooltip title="Хранилище" placement="bottom">
           <Button
+            className={styles["nav-button"]}
+            type="text"
+            shape="circle"
+            icon={<AppstoreOutlined />}
+          />
+        </Tooltip>
+        <Tooltip title="Профиль" placement="bottom">
+          <Button
+            className={styles["nav-button"]}
+            type="text"
+            shape="circle"
+            icon={<UserOutlined />}
+          />
+        </Tooltip>
+        <Tooltip title="Настройки" placement="bottom">
+          <Button
+            className={styles["nav-button"]}
+            type="text"
+            shape="circle"
+            icon={<SettingOutlined />}
+          />
+        </Tooltip>
+        <Tooltip placement="bottom" title="Выйти">
+          <Button
+            className={styles["nav-button"]}
             onClick={handleLogout}
             icon={<LogoutOutlined />}
             type="text"
