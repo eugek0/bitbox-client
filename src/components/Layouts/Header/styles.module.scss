@@ -1,8 +1,27 @@
+@import "@/core/styles";
+
 .body {
-  padding: 5px 20px;
+  padding: 10px 20px;
+
+  .logotype-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
 
   .app-name {
     font-size: 16px;
     font-weight: 500;
+  }
+
+  .auth-button:hover {
+    color: $primary_color !important;
+    text-shadow: 0 0 10px $primary_color;
+  }
+
+  .auth-button_bordered:hover {
+    box-shadow: 0 0 10px $primary_color;
+    color: $primary_color !important;
+    text-shadow: 0 0 10px $primary_color;
   }
 }

@@ -1,7 +1,7 @@
 import Logotype from "@/components/Common/Logotype";
 import ProfileAvatarContainer from "@/containers/Common/ProfileAvatarContainer";
 import { APP_NAME } from "@/core/constants";
-import { LoginOutlined } from "@ant-design/icons";
+import { FormOutlined, LoginOutlined } from "@ant-design/icons";
 import { Link } from "@tanstack/react-router";
 import { Button, Flex, Typography } from "antd";
 import { FC } from "react";
@@ -12,18 +12,32 @@ const Header: FC<HeaderProps> = ({ profile }) => {
   return (
     <header className={styles["body"]}>
       <Flex justify="space-between" align="center">
-        <Flex gap={10} align="center">
+        <Link className={styles["logotype-container"]} to="/">
           <Logotype />
           <Typography.Text className={styles["app-name"]}>
             {APP_NAME}
           </Typography.Text>
-        </Flex>
+        </Link>
         {profile ? (
           <ProfileAvatarContainer />
         ) : (
           <Flex gap={20} align="center">
             <Link to="/auth/login">
-              <Button icon={<LoginOutlined />}>Войти</Button>
+              <Button
+                className={styles["auth-button"]}
+                type="text"
+                icon={<LoginOutlined />}
+              >
+                Войти
+              </Button>
+            </Link>
+            <Link to="/auth/register">
+              <Button
+                className={styles["auth-button_bordered"]}
+                icon={<FormOutlined />}
+              >
+                Зарегистрироваться
+              </Button>
             </Link>
           </Flex>
         )}

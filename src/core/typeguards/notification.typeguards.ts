@@ -24,14 +24,16 @@ export const isNotificationPlacement = (
 export const isNotification = (unknown: any): unknown is INotification =>
   unknown &&
   typeof unknown === "object" &&
-  isNotificationStatusType(unknown.status) &&
-  typeof unknown.config === "object" &&
-  typeof unknown.config.message === "string" &&
-  (typeof unknown.config.description === "undefined" ||
-    typeof unknown.config.description === "string") &&
-  (typeof unknown.config.closable === "undefined" ||
-    typeof unknown.config.closable === "boolean") &&
-  (typeof unknown.config.duration === "undefined" ||
-    typeof unknown.config.duration === "number") &&
-  (typeof unknown.config.placement === "undefined" ||
-    isNotificationPlacement(unknown.config.placement));
+  unknown.notification &&
+  typeof unknown.notification === "object" &&
+  isNotificationStatusType(unknown.notification.status) &&
+  typeof unknown.notification.config === "object" &&
+  typeof unknown.notification.config.message === "string" &&
+  (typeof unknown.notification.config.description === "undefined" ||
+    typeof unknown.notification.config.description === "string") &&
+  (typeof unknown.notification.config.closable === "undefined" ||
+    typeof unknown.notification.config.closable === "boolean") &&
+  (typeof unknown.notification.config.duration === "undefined" ||
+    typeof unknown.notification.config.duration === "number") &&
+  (typeof unknown.notification.config.placement === "undefined" ||
+    isNotificationPlacement(unknown.notification.config.placement));
