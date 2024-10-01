@@ -1,7 +1,7 @@
-import { CodepenOutlined } from "@ant-design/icons";
 import { FC } from "react";
 import styles from "./styles.module.scss";
 import { LogotypeProps } from "./types";
+import { RiBox1Fill } from "react-icons/ri";
 
 const Logotype: FC<LogotypeProps> = ({
   size = "middle",
@@ -9,9 +9,9 @@ const Logotype: FC<LogotypeProps> = ({
   ...props
 }) => {
   return (
-    <CodepenOutlined
+    <RiBox1Fill
       {...props}
-      className={`${styles["body"]} ${styles[size]} ${className}`}
+      className={`${styles["body"]} ${styles[size]} ${className ? className : ""}`}
     />
   );
 };

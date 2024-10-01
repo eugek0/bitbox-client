@@ -1,10 +1,32 @@
+@use "sass:color";
+@import "@/core/styles";
+
 .body {
   flex: 1;
+  .text-section {
+    width: 800px;
 
-  .slogan {
-    font-size: 45px;
-    font-weight: 600;
-    line-height: 80px;
-    letter-spacing: -0.03em;
+    .slogan {
+      font-size: 45px;
+      font-weight: 600;
+      line-height: 80px;
+      letter-spacing: -0.03em;
+      margin: 0;
+
+      &__text {
+        font-weight: 300;
+        animation: 3s fade-in;
+      }
+
+      &__paragraph {
+        margin: 0;
+        font-size: 18px;
+        animation: 2s bubble;
+      }
+
+      .hyphen {
+        font-weight: normal;
+      }
+    }
   }
 }
