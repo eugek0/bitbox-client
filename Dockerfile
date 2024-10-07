@@ -2,7 +2,7 @@ FROM node:21-alpine as build
 
 WORKDIR /app
 
-COPY yarn.lock package.json ./
+COPY ./package.json ./
 
 RUN yarn install --frozen-lockfile
 
@@ -13,7 +13,7 @@ RUN yarn build
 FROM nginx as production
 
 COPY --from=build /app/dist /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY ./nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80/tcp
 
