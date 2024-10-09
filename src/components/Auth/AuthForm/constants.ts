@@ -35,7 +35,7 @@ export const AUTH_FORM_RULES: IAuthFormRules = {
   repeatPassword: (form) => [
     {
       validator: (_, value) => {
-        const { password } = form?.getFieldsValue();
+        const password = form?.getFieldsValue()?.password;
 
         if (value && value !== password) {
           return Promise.reject(new Error("Пароли не совпадают"));
