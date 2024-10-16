@@ -10,3 +10,8 @@ export const profileSelector = createSelector(
   authBaseSelector,
   (state) => state.profile,
 );
+
+export const profileIdSelector = createSelector(
+  profileSelector,
+  (state) => state?._id,
+);

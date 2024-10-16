@@ -8,6 +8,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import styles from "./styles.module.scss";
+import { Link } from "@tanstack/react-router";
 
 const ProfileMenuPopover: FC<ProfileMenuPopoverProps> = ({
   profile,
@@ -17,12 +18,14 @@ const ProfileMenuPopover: FC<ProfileMenuPopoverProps> = ({
     <Flex className={styles["body"]} gap={20} vertical>
       <Flex gap={20} align="center" justify="space-between">
         <Tooltip title="Хранилище" placement="bottom">
-          <Button
-            className={styles["nav-button"]}
-            type="text"
-            shape="circle"
-            icon={<AppstoreOutlined />}
-          />
+          <Link to="/storage/my">
+            <Button
+              className={styles["nav-button"]}
+              type="text"
+              shape="circle"
+              icon={<AppstoreOutlined />}
+            />
+          </Link>
         </Tooltip>
         <Tooltip title="Профиль" placement="bottom">
           <Button

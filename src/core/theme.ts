@@ -12,5 +12,6 @@ export const theme: ThemeConfig = {
     colorIcon: "#fff",
     colorBgElevated: "#010814",
     colorPrimaryText: "#010814",
+    borderRadius: 3
   },
 };

@@ -1,6 +1,7 @@
 import { Base64, Nullable } from "@/core/types";
 
 export interface IProfile {
+  _id: string;
   login: string;
   email: string;
   createdAt: string;
