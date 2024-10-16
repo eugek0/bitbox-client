@@ -8,6 +8,9 @@ yarn.lock*
 pnpm-debug.log*
 lerna-debug.log*
 
+# env files
+.env*
+
 node_modules
 dist
 dist-ssr
