@@ -23,25 +23,31 @@ const Home: FC<HomeProps> = ({ profile }) => {
               </span>
             </Typography.Title>
           </Flex>
-          <Typography.Paragraph className={styles["slogan__paragraph"]}>
-            Сервис для быстрого и безопасного доступа к файлам. Мы даем
-            бесплатные 10 гигабайт хранилища, а также предоставляем всевозможные
-            плюшки для удобства пользователей и информативности.
-          </Typography.Paragraph>
-          {profile && (
-            <Flex gap={10} align="center">
-              <Link from="/" to="/storage/my">
-                <Button type="primary" size="large" icon={<AppstoreOutlined />}>
-                  Хранилище
-                </Button>
-              </Link>
-              <Link from="/" to="/">
-                <Button size="large" icon={<UserOutlined />}>
-                  Войти в профиль
-                </Button>
-              </Link>
-            </Flex>
-          )}
+          <Flex className={styles["bubble"]} gap={10} vertical>
+            <Typography.Paragraph className={styles["slogan__paragraph"]}>
+              Сервис для быстрого и безопасного доступа к файлам. Мы даем
+              бесплатные 10 гигабайт хранилища, а также предоставляем
+              всевозможные плюшки для удобства пользователей и информативности.
+            </Typography.Paragraph>
+            {profile && (
+              <Flex gap={10} align="center">
+                <Link from="/" to="/storage/my">
+                  <Button
+                    type="primary"
+                    size="large"
+                    icon={<AppstoreOutlined />}
+                  >
+                    Хранилище
+                  </Button>
+                </Link>
+                <Link from="/" to="/">
+                  <Button size="large" icon={<UserOutlined />}>
+                    Войти в профиль
+                  </Button>
+                </Link>
+              </Flex>
+            )}
+          </Flex>
         </Flex>
       </Flex>
     </Flex>

@@ -1,4 +1,4 @@
-export const APP_NAME: string = "Bitbox";
+export const APP_NAME: string = "BitBox";
 
 export const APP_SLOGANS: string[] = [
   "цифровая шкатулка.",
