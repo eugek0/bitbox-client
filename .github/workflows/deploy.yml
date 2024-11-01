@@ -40,4 +40,4 @@ jobs:
             sudo docker kill bitbox-client
             sudo docker rm bitbox-client
             sudo docker rmi bitbox-client
-            sudo docker-compose up -e {{ secrets.ENV }} -d
+            sudo docker-compose up -e ${{ secrets.ENV }} -d
