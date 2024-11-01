@@ -35,9 +35,20 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/applications
+
+            echo "cloning ${{ github.repository }}.git"}"
             git clone https://github.com/${{ github.repository }}.git bitbox-client
+
             cd bitbox-client
+
+            echo "killing previous container"
             sudo docker kill bitbox-client
+
+            echo "removing previous container"
             sudo docker rm bitbox-client
+
+            echo "restarting image"
             sudo docker rmi bitbox-client
-            sudo docker-compose up -e ${{ secrets.ENV }} -d
+
+            echo "restarting container"
+            sudo docker-compose up -d --env ${{ secrets.ENV }}
