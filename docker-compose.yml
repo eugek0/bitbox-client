@@ -1,5 +1,6 @@
 services:
   client:
+    image: bitbox-client
     build:
       context: .
       dockerfile: Dockerfile
