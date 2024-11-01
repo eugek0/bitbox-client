@@ -51,4 +51,4 @@ jobs:
             sudo docker rmi bitbox-client
 
             echo "restarting container"
-            sudo docker-compose up -d -e ${{ secrets.ENV }}
+            sudo docker-compose up -e ${{ secrets.ENV }} -d
