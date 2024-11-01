@@ -17,7 +17,7 @@ jobs:
       - name: Linting
         run: yarn lint
 
-  build:
+  deploy:
     needs: lint
     runs-on: ubuntu-latest
     steps:
@@ -51,4 +51,4 @@ jobs:
             sudo docker rmi bitbox-client
 
             echo "restarting container"
-            sudo docker-compose up -d --env ${{ secrets.ENV }}
+            sudo docker-compose up -d -e ${{ secrets.ENV }}
