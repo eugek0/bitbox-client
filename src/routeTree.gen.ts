@@ -12,6 +12,8 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
+import { Route as StorageMyImport } from './routes/storage/my'
+import { Route as StorageUserIdImport } from './routes/storage/$userId'
 import { Route as AuthRegisterImport } from './routes/auth/register'
 import { Route as AuthLoginImport } from './routes/auth/login'
 
@@ -19,6 +21,16 @@ import { Route as AuthLoginImport } from './routes/auth/login'
 
 const IndexRoute = IndexImport.update({
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const StorageMyRoute = StorageMyImport.update({
+  path: '/storage/my',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const StorageUserIdRoute = StorageUserIdImport.update({
+  path: '/storage/$userId',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -57,6 +69,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRegisterImport
       parentRoute: typeof rootRoute
     }
+    '/storage/$userId': {
+      id: '/storage/$userId'
+      path: '/storage/$userId'
+      fullPath: '/storage/$userId'
+      preLoaderRoute: typeof StorageUserIdImport
+      parentRoute: typeof rootRoute
+    }
+    '/storage/my': {
+      id: '/storage/my'
+      path: '/storage/my'
+      fullPath: '/storage/my'
+      preLoaderRoute: typeof StorageMyImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -66,6 +92,8 @@ export const routeTree = rootRoute.addChildren({
   IndexRoute,
   AuthLoginRoute,
   AuthRegisterRoute,
+  StorageUserIdRoute,
+  StorageMyRoute,
 })
 
 /* prettier-ignore-end */
@@ -78,7 +106,9 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/",
         "/auth/login",
-        "/auth/register"
+        "/auth/register",
+        "/storage/$userId",
+        "/storage/my"
       ]
     },
     "/": {
@@ -89,6 +119,12 @@ export const routeTree = rootRoute.addChildren({
     },
     "/auth/register": {
       "filePath": "auth/register.tsx"
+    },
+    "/storage/$userId": {
+      "filePath": "storage/$userId.tsx"
+    },
+    "/storage/my": {
+      "filePath": "storage/my.tsx"
     }
   }
 }
