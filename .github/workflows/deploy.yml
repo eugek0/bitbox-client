@@ -35,7 +35,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/applications
-            rm -rf bitbox-client
             git clone https://github.com/${{ github.repository }}.git bitbox-client
             cd bitbox-client
             sudo docker kill bitbox_client_1
@@ -43,3 +42,5 @@ jobs:
             sudo docker rmi bitbox_client_1
             echo ${{ secrets.ENV }} > .env.production
             sudo docker-compose up -d
+            cd ..
+            rm -rf bitbox-client
