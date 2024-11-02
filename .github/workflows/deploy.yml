@@ -41,6 +41,6 @@ jobs:
             sudo docker rm bitbox-client_client_1
             sudo docker rmi bitbox-client_client
             echo "${{ secrets.ENV }}" > .env.production
-            sudo docker-compose up -d
+            sudo docker-compose up --build -d
             cd ..
             rm -rf bitbox-client
