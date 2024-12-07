@@ -7,18 +7,14 @@ import { AuthFormInstanceProps } from "../types";
 import { AUTH_FORM_RULES } from "../constants";
 import styles from "../styles.module.scss";
 import { Link } from "@tanstack/react-router";
-import Logotype from "@/components/Common/Logotype";
 
 const LoginForm: FC<AuthFormInstanceProps> = ({ ...props }) => {
   return (
     <AuthForm {...props}>
       <Flex gap={25} vertical>
-        <Flex align="center" justify="center" gap={10}>
-          <Logotype />
-          <Typography.Text className={styles["form-title"]}>
-            Авторизация
-          </Typography.Text>
-        </Flex>
+        <Typography.Text className={styles["form-title"]}>
+          Авторизация
+        </Typography.Text>
         <Flex gap={10} vertical>
           <Form.Item<ILoginFormValues>
             rules={AUTH_FORM_RULES.email}

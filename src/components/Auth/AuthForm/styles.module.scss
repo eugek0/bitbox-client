@@ -3,8 +3,9 @@
 
   .form-container {
     width: 300px;
-    padding: 20px;
-    border: 1px solid grey;
+    padding: 30px;
+    background-color: #02060d;
+    box-shadow: 0 0 10px #00db00;
     border-radius: 10px;
 
     .form {
@@ -28,5 +29,5 @@
 .form-title {
   text-align: center;
   font-size: 22px;
-  font-weight: 600;
+  font-weight: 500;
 }
