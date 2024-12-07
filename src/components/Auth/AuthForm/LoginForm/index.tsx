@@ -7,42 +7,57 @@ import { AuthFormInstanceProps } from "../types";
 import { AUTH_FORM_RULES } from "../constants";
 import styles from "../styles.module.scss";
 import { Link } from "@tanstack/react-router";
+import Logotype from "@/components/Common/Logotype";
 
 const LoginForm: FC<AuthFormInstanceProps> = ({ ...props }) => {
   return (
     <AuthForm {...props}>
       <Flex gap={25} vertical>
-        <Typography.Text className={styles["form-title"]}>
-          Авторизация
-        </Typography.Text>
-        <div>
+        <Flex align="center" justify="center" gap={10}>
+          <Logotype />
+          <Typography.Text className={styles["form-title"]}>
+            Авторизация
+          </Typography.Text>
+        </Flex>
+        <Flex gap={10} vertical>
           <Form.Item<ILoginFormValues>
             rules={AUTH_FORM_RULES.email}
             name="email"
           >
-            <Input placeholder="Почта" suffix={<MailOutlined />} />
+            <Input placeholder="Почта" suffix={<MailOutlined />} size="large" />
           </Form.Item>
           <Form.Item<ILoginFormValues>
             rules={AUTH_FORM_RULES.default}
             name="password"
           >
-            <Input.Password placeholder="Пароль" suffix={<KeyOutlined />} />
+            <Input.Password
+              placeholder="Пароль"
+              suffix={<KeyOutlined />}
+              size="large"
+            />
           </Form.Item>
-          <Form.Item className={styles["submit-button-container"]}>
-            <Button
-              className={styles["submit-button"]}
-              type="primary"
-              htmlType="submit"
-            >
-              Войти
-            </Button>
-          </Form.Item>
-          <Link from="/auth/login" to="/auth/register">
-            <Button className={styles["redirect-button"]} type="link">
-              Еще нет аккаунта?
-            </Button>
-          </Link>
-        </div>
+          <div>
+            <Form.Item className={styles["submit-button-container"]}>
+              <Button
+                className={styles["submit-button"]}
+                type="primary"
+                htmlType="submit"
+                size="large"
+              >
+                Войти
+              </Button>
+            </Form.Item>
+            <Link to="/auth/register">
+              <Button
+                className={styles["redirect-button"]}
+                type="link"
+                size="large"
+              >
+                Еще нет аккаунта?
+              </Button>
+            </Link>
+          </div>
+        </Flex>
       </Flex>
     </AuthForm>
   );

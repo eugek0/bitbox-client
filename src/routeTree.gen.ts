@@ -12,8 +12,10 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
+import { Route as StarterIndexImport } from './routes/starter/index'
 import { Route as StorageMyImport } from './routes/storage/my'
 import { Route as StorageUserIdImport } from './routes/storage/$userId'
+import { Route as StarterLoginImport } from './routes/starter/login'
 import { Route as AuthRegisterImport } from './routes/auth/register'
 import { Route as AuthLoginImport } from './routes/auth/login'
 
@@ -24,6 +26,11 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const StarterIndexRoute = StarterIndexImport.update({
+  path: '/starter/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const StorageMyRoute = StorageMyImport.update({
   path: '/storage/my',
   getParentRoute: () => rootRoute,
@@ -31,6 +38,11 @@ const StorageMyRoute = StorageMyImport.update({
 
 const StorageUserIdRoute = StorageUserIdImport.update({
   path: '/storage/$userId',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const StarterLoginRoute = StarterLoginImport.update({
+  path: '/starter/login',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -69,6 +81,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRegisterImport
       parentRoute: typeof rootRoute
     }
+    '/starter/login': {
+      id: '/starter/login'
+      path: '/starter/login'
+      fullPath: '/starter/login'
+      preLoaderRoute: typeof StarterLoginImport
+      parentRoute: typeof rootRoute
+    }
     '/storage/$userId': {
       id: '/storage/$userId'
       path: '/storage/$userId'
@@ -83,6 +102,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StorageMyImport
       parentRoute: typeof rootRoute
     }
+    '/starter/': {
+      id: '/starter/'
+      path: '/starter'
+      fullPath: '/starter'
+      preLoaderRoute: typeof StarterIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -92,8 +118,10 @@ export const routeTree = rootRoute.addChildren({
   IndexRoute,
   AuthLoginRoute,
   AuthRegisterRoute,
+  StarterLoginRoute,
   StorageUserIdRoute,
   StorageMyRoute,
+  StarterIndexRoute,
 })
 
 /* prettier-ignore-end */
@@ -107,8 +135,10 @@ export const routeTree = rootRoute.addChildren({
         "/",
         "/auth/login",
         "/auth/register",
+        "/starter/login",
         "/storage/$userId",
-        "/storage/my"
+        "/storage/my",
+        "/starter/"
       ]
     },
     "/": {
@@ -120,11 +150,17 @@ export const routeTree = rootRoute.addChildren({
     "/auth/register": {
       "filePath": "auth/register.tsx"
     },
+    "/starter/login": {
+      "filePath": "starter/login.tsx"
+    },
     "/storage/$userId": {
       "filePath": "storage/$userId.tsx"
     },
     "/storage/my": {
       "filePath": "storage/my.tsx"
+    },
+    "/starter/": {
+      "filePath": "starter/index.tsx"
     }
   }
 }

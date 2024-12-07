@@ -7,7 +7,12 @@ const AuthForm: FC<AuthFormProps> = ({ children, form, onFinish }) => {
   return (
     <Flex className={styles["body"]} align="center" justify="center">
       <Flex className={styles["form-container"]}>
-        <Form className={styles["form"]} form={form} onFinish={onFinish}>
+        <Form
+          className={styles["form"]}
+          onFinish={onFinish}
+          form={form}
+          autoComplete="off"
+        >
           {children}
         </Form>
       </Flex>
