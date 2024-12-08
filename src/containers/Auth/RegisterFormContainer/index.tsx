@@ -29,7 +29,17 @@ const RegisterFormContainer: FC = () => {
     }
   };
 
-  return <RegisterForm form={form} onFinish={onFinish} />;
+  return (
+    <RegisterForm
+      redirectButton={{
+        show: true,
+        link: "/auth/login",
+        text: "Уже есть аккаунт?",
+      }}
+      form={form}
+      onFinish={onFinish}
+    />
+  );
 };
 
 export default RegisterFormContainer;

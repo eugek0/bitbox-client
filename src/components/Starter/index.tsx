@@ -1,8 +1,7 @@
-import LoginFormContainer from "@/containers/Auth/LoginFormContainer";
 import { FC } from "react";
 
 const Starter: FC = () => {
-  return <LoginFormContainer />;
+  return <span>Configuration</span>;
 };
 
 export default Starter;

@@ -3,6 +3,6 @@ import { starterRoute } from "@/containers/Starter/utils";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/starter/login")({
-  beforeLoad: starterRoute(),
+  beforeLoad: starterRoute(true),
   component: StarterLogin,
 });

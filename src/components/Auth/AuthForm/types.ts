@@ -5,8 +5,15 @@ import { ReactNode } from "react";
 
 export interface AuthFormProps {
   form: FormProps["form"];
-  onFinish?: FormProps["onFinish"];
   children?: ReactNode;
+  redirectButton?: IAuthRedirectButton;
+  onFinish?: FormProps["onFinish"];
+}
+
+export interface IAuthRedirectButton {
+  show?: boolean;
+  text?: string;
+  link?: string;
 }
 
 export interface IAuthFormRules {

@@ -8,7 +8,7 @@ import { AUTH_FORM_RULES } from "../constants";
 import styles from "../styles.module.scss";
 import { Link } from "@tanstack/react-router";
 
-const LoginForm: FC<AuthFormInstanceProps> = ({ ...props }) => {
+const LoginForm: FC<AuthFormInstanceProps> = ({ redirectButton, ...props }) => {
   return (
     <AuthForm {...props}>
       <Flex gap={25} vertical>
@@ -43,15 +43,17 @@ const LoginForm: FC<AuthFormInstanceProps> = ({ ...props }) => {
                 Войти
               </Button>
             </Form.Item>
-            <Link to="/auth/register">
-              <Button
-                className={styles["redirect-button"]}
-                type="link"
-                size="large"
-              >
-                Еще нет аккаунта?
-              </Button>
-            </Link>
+            {redirectButton?.show && (
+              <Link to={redirectButton?.link}>
+                <Button
+                  className={styles["redirect-button"]}
+                  type="link"
+                  size="large"
+                >
+                  {redirectButton?.text}
+                </Button>
+              </Link>
+            )}
           </div>
         </Flex>
       </Flex>

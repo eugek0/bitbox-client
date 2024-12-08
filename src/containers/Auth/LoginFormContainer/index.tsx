@@ -27,7 +27,17 @@ const LoginFormContainer: FC = () => {
     }
   };
 
-  return <LoginForm form={form} onFinish={onFinish} />;
+  return (
+    <LoginForm
+      redirectButton={{
+        show: true,
+        link: "/auth/register",
+        text: "Еще нет аккаунта?",
+      }}
+      form={form}
+      onFinish={onFinish}
+    />
+  );
 };
 
 export default LoginFormContainer;
