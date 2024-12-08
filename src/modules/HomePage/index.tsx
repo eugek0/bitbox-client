@@ -1,4 +1,4 @@
-import HomeContainer from "@/containers/HomeContainer";
+import HomeContainer from "@/containers/Home";
 import HeaderContainer from "@/containers/Layouts/HeaderContainer";
 import { Flex } from "antd";
 import { FC } from "react";

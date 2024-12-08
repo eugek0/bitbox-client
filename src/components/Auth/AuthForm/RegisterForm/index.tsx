@@ -8,25 +8,28 @@ import { AUTH_FORM_RULES } from "../constants";
 import styles from "../styles.module.scss";
 import { Link } from "@tanstack/react-router";
 
-const RegisterForm: FC<AuthFormInstanceProps> = ({ ...props }) => {
+const RegisterForm: FC<AuthFormInstanceProps> = ({
+  redirectButton,
+  ...props
+}) => {
   return (
     <AuthForm {...props}>
       <Flex gap={25} vertical>
         <Typography.Text className={styles["form-title"]}>
           Регистрация
         </Typography.Text>
-        <div>
+        <Flex gap={10} vertical>
           <Form.Item<IRegisterFormValues>
             rules={AUTH_FORM_RULES.default}
             name="login"
           >
-            <Input placeholder="Логин" suffix={<UserOutlined />} />
+            <Input placeholder="Логин" suffix={<UserOutlined />} size="large" />
           </Form.Item>
           <Form.Item<IRegisterFormValues>
             rules={AUTH_FORM_RULES.email}
             name="email"
           >
-            <Input placeholder="Почта" suffix={<MailOutlined />} />
+            <Input placeholder="Почта" suffix={<MailOutlined />} size="large" />
           </Form.Item>
           <Form.Item<IRegisterFormValues>
             rules={[
@@ -35,7 +38,11 @@ const RegisterForm: FC<AuthFormInstanceProps> = ({ ...props }) => {
             ]}
             name="password"
           >
-            <Input.Password placeholder="Пароль" suffix={<KeyOutlined />} />
+            <Input.Password
+              placeholder="Пароль"
+              suffix={<KeyOutlined />}
+              size="large"
+            />
           </Form.Item>
           <Form.Item<IRegisterFormValues>
             rules={AUTH_FORM_RULES.repeatPassword(props.form)}
@@ -44,22 +51,32 @@ const RegisterForm: FC<AuthFormInstanceProps> = ({ ...props }) => {
             <Input.Password
               placeholder="Повторите пароль"
               suffix={<KeyOutlined />}
+              size="large"
             />
           </Form.Item>
+        </Flex>
+        <div>
           <Form.Item className={styles["submit-button-container"]}>
             <Button
               className={styles["submit-button"]}
               type="primary"
               htmlType="submit"
+              size="large"
             >
               Зарегистрироваться
             </Button>
           </Form.Item>
-          <Link from="/auth/register" to="/auth/login">
-            <Button className={styles["redirect-button"]} type="link">
-              Уже есть аккаунт?
-            </Button>
-          </Link>
+          {redirectButton?.show && (
+            <Link to={redirectButton?.link}>
+              <Button
+                className={styles["redirect-button"]}
+                type="link"
+                size="large"
+              >
+                {redirectButton?.text}
+              </Button>
+            </Link>
+          )}
         </div>
       </Flex>
     </AuthForm>

@@ -14,6 +14,10 @@ export const authApi = createApi({
       query: (body) => ({ url: "/login", body, method: "POST" }),
     }),
 
+    adminLogin: builder.mutation<void, ILoginPayload>({
+      query: (body) => ({ url: "/admin/login", body, method: "POST" }),
+    }),
+
     logout: builder.mutation<void, void>({
       query: () => "/logout",
     }),
@@ -27,6 +31,7 @@ export const authApi = createApi({
 export const {
   useRegisterMutation,
   useLoginMutation,
+  useAdminLoginMutation,
   useLogoutMutation,
   useGetProfileQuery,
   useLazyGetProfileQuery,

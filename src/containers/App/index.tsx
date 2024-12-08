@@ -5,8 +5,13 @@ import { FC } from "react";
 import { useGetProfileQuery } from "../Auth/api";
 import { profileSelector } from "../Auth/selectors";
 import FullscreenLoader from "../Common/FullscreenLoader";
+import { useGetAppStatusQuery } from "./api";
+import { appStatusSelector } from "./selectors";
 
-const router = createRouter({ routeTree, context: { profile: null } });
+const router = createRouter({
+  routeTree,
+  context: { profile: null, appStatus: null },
+});
 
 declare module "@tanstack/react-router" {
   interface Register {
@@ -16,14 +21,19 @@ declare module "@tanstack/react-router" {
 
 const App: FC = () => {
   const profile = useAppSelector(profileSelector);
-  const { isLoading } = useGetProfileQuery();
+  const appStatus = useAppSelector(appStatusSelector);
+  const { isLoading: isProfileLoading } = useGetProfileQuery();
+  const { isLoading: isAppStateLoading } = useGetAppStatusQuery();
 
-  if (isLoading) {
+  if (isProfileLoading || isAppStateLoading) {
     return <FullscreenLoader />;
   }
 
   return (
-    <RouterProvider router={router} context={{ profile: profile ?? null }} />
+    <RouterProvider
+      router={router}
+      context={{ profile: profile ?? null, appStatus: appStatus ?? null }}
+    />
   );
 };
 
