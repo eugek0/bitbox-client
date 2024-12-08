@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import LoginForm from "@/components/Auth/AuthForm/LoginForm";
 import { useLazyGetProfileQuery, useLoginMutation } from "../api";
 import { isFormException } from "@/core/typeguards";
@@ -12,13 +12,12 @@ const LoginFormContainer: FC = () => {
   const navigate = useNavigate({ from: "/auth/login" });
 
   const [login] = useLoginMutation();
-  const [getProfile] = useLazyGetProfileQuery();
+  const [getProfile, { data: profile }] = useLazyGetProfileQuery();
 
   const onFinish: FormProps<ILoginPayload>["onFinish"] = async (values) => {
     try {
       await login(values).unwrap();
       await getProfile().unwrap();
-      navigate({ to: "/" });
     } catch (error) {
       if (isFormException(error)) {
         return setErrorsToField(form, error);
@@ -26,6 +25,12 @@ const LoginFormContainer: FC = () => {
       throw error;
     }
   };
+
+  useEffect(() => {
+    if (profile) {
+      navigate({ to: "/", replace: true });
+    }
+  }, [profile]);
 
   return (
     <LoginForm

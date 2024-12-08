@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useAdminLoginMutation, useLazyGetProfileQuery } from "../api";
 import LoginForm from "@/components/Auth/AuthForm/LoginForm";
 import { FormProps, useForm } from "antd/es/form/Form";
@@ -13,13 +13,12 @@ const AdminLoginContainer: FC<AdminLoginContainerProps> = ({ redirectTo }) => {
   const navigate = useNavigate();
 
   const [adminLogin] = useAdminLoginMutation();
-  const [getProfile] = useLazyGetProfileQuery();
+  const [getProfile, { data: profile }] = useLazyGetProfileQuery();
 
   const handleFinish: FormProps<ILoginPayload>["onFinish"] = async (values) => {
     try {
       await adminLogin(values).unwrap();
       await getProfile().unwrap();
-      navigate({ to: redirectTo ?? "/" });
     } catch (error) {
       if (isFormException(error)) {
         return setErrorsToField(form, error);
@@ -27,6 +26,12 @@ const AdminLoginContainer: FC<AdminLoginContainerProps> = ({ redirectTo }) => {
       throw error;
     }
   };
+
+  useEffect(() => {
+    if (profile) {
+      navigate({ to: redirectTo ?? "/", replace: true });
+    }
+  }, [profile]);
 
   return <LoginForm form={form} onFinish={handleFinish} />;
 };
