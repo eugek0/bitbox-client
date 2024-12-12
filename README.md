@@ -1,5 +1,3 @@
-# Проект развернут на IP адресе http://185.125.101.249
-
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
