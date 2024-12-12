@@ -28,7 +28,7 @@ export const AUTH_FORM_RULES: IAuthFormRules = {
     },
     {
       min: 5,
-      message: "Пароль должен состоять минимум из 5 символов",
+      message: "Длина должна быть не менее 5 символов",
       validateTrigger: ["onSubmit"],
     },
   ],

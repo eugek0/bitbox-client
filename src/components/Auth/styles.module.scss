@@ -1,0 +1,22 @@
+.hello {
+  width: 500px;
+
+  .hello-logotype {
+    font-size: 32px;
+  }
+
+  .hello-title {
+    font-size: 42px !important;
+    font-weight: 400 !important;
+    margin: 0 !important;
+  }
+
+  .hello-text {
+    font-size: 22px;
+    font-weight: 300;
+
+    .hello-text_bold {
+      font-weight: 400;
+    }
+  }
+}

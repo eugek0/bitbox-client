@@ -54,9 +54,9 @@ const ProfileMenuPopover: FC<ProfileMenuPopoverProps> = ({
         </Tooltip>
       </Flex>
       <Flex gap={20} align="center" vertical>
-        <Avatar className={styles["avatar"]} src={profile.avatar} />
+        <Avatar className={styles["avatar"]} src={profile?.avatar} />
         <Typography.Text className={styles["login"]}>
-          {profile.login}
+          {profile?.login}
         </Typography.Text>
       </Flex>
     </Flex>

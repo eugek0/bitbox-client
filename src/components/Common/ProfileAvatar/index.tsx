@@ -1,8 +1,8 @@
-import ProfileMenuPopoverContainer from "@/containers/Common/ProfileMenuPopoverContainer";
-import { Avatar, Popover } from "antd";
 import { FC } from "react";
-import styles from "./styles.module.scss";
+import { Avatar, Popover } from "antd";
+import ProfileMenuPopoverContainer from "@/containers/Common/ProfileMenuPopoverContainer";
 import { ProfileAvatarProps } from "./types";
+import styles from "./styles.module.scss";
 
 const ProfileAvatar: FC<ProfileAvatarProps> = ({
   isPopoverOpened,
@@ -19,7 +19,7 @@ const ProfileAvatar: FC<ProfileAvatarProps> = ({
     >
       <Avatar
         className={`${styles["avatar"]} ${isPopoverOpened ? styles["avatar_active"] : ""}`}
-        src={profile.avatar}
+        src={profile?.avatar}
         alt="avatar"
       />
     </Popover>

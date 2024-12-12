@@ -1,8 +1,8 @@
+import { FC, useState } from "react";
+import { PopoverProps } from "antd";
 import ProfileAvatar from "@/components/Common/ProfileAvatar";
 import { profileSelector } from "@/containers/Auth/selectors";
 import { useAppSelector } from "@/store";
-import { PopoverProps } from "antd";
-import { FC, useState } from "react";
 
 const ProfileAvatarContainer: FC = () => {
   const profile = useAppSelector(profileSelector);
@@ -15,9 +15,9 @@ const ProfileAvatarContainer: FC = () => {
 
   return (
     <ProfileAvatar
+      profile={profile!}
       isPopoverOpened={isPopoverOpened}
       handleTogglePopover={handleTogglePopover}
-      profile={profile!}
     />
   );
 };

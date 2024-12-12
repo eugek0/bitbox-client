@@ -32,10 +32,7 @@ const RegisterForm: FC<AuthFormInstanceProps> = ({
             <Input placeholder="Почта" suffix={<MailOutlined />} size="large" />
           </Form.Item>
           <Form.Item<IRegisterFormValues>
-            rules={[
-              ...AUTH_FORM_RULES.password,
-              { min: 5, message: "Длина должна быть не менее 5 символов" },
-            ]}
+            rules={AUTH_FORM_RULES.password}
             name="password"
           >
             <Input.Password

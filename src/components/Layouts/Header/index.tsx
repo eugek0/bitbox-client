@@ -1,14 +1,12 @@
+import { FC } from "react";
+import { Flex, Typography } from "antd";
+import { Link } from "@tanstack/react-router";
 import Logotype from "@/components/Common/Logotype";
 import ProfileAvatarContainer from "@/containers/Common/ProfileAvatarContainer";
 import { APP_NAME } from "@/core/constants";
-import { FormOutlined, LoginOutlined } from "@ant-design/icons";
-import { Link } from "@tanstack/react-router";
-import { Button, Flex, Typography } from "antd";
-import { FC } from "react";
 import styles from "./styles.module.scss";
-import { HeaderProps } from "./types";
 
-const Header: FC<HeaderProps> = ({ profile }) => {
+const Header: FC = () => {
   return (
     <header className={styles["body"]}>
       <Flex justify="space-between" align="center">
@@ -18,29 +16,7 @@ const Header: FC<HeaderProps> = ({ profile }) => {
             {APP_NAME}
           </Typography.Text>
         </Link>
-        {profile ? (
-          <ProfileAvatarContainer />
-        ) : (
-          <Flex gap={20} align="center">
-            <Link to="/auth/login">
-              <Button
-                className={styles["auth-button"]}
-                type="text"
-                icon={<LoginOutlined />}
-              >
-                Войти
-              </Button>
-            </Link>
-            <Link to="/auth/register">
-              <Button
-                className={styles["auth-button_bordered"]}
-                icon={<FormOutlined />}
-              >
-                Зарегистрироваться
-              </Button>
-            </Link>
-          </Flex>
-        )}
+        <ProfileAvatarContainer />
       </Flex>
     </header>
   );
