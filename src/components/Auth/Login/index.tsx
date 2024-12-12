@@ -18,7 +18,7 @@ const Login: FC = () => {
         <Typography.Text className={styles["hello-text"]}>
           С возвращением в{" "}
           <span className={styles["hello-text_bold"]}>{APP_NAME}</span>!
-          Пожалуйста введите свои адрес электронной почты и пароль.
+          Пожалуйста введите свой адрес электронной почты и пароль.
         </Typography.Text>
       </Flex>
       <LoginFormContainer />
