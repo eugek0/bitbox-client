@@ -38,9 +38,8 @@ jobs:
             git clone https://github.com/${{ github.repository }}.git bitbox-client
             cd bitbox-client
             sudo docker kill bitbox-client_client_1
-            sudo docker rm bitbox-client_client_1
-            sudo docker rmi bitbox-client_client
+            sudo docker system purge
             echo "${{ secrets.ENV }}" > .env.production
-            sudo docker-compose up --build -d
+            sudo docker-compose up -d
             cd ..
             rm -rf bitbox-client
