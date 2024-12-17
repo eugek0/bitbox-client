@@ -31,7 +31,7 @@ const Home: FC<HomeProps> = ({ profile }) => {
             </Typography.Paragraph>
             {profile && (
               <Flex gap={10} align="center">
-                <Link from="/" to="/storage/my">
+                <Link from="/">
                   <Button
                     type="primary"
                     size="large"

@@ -1,7 +1,7 @@
+import { FC } from "react";
+import { Flex } from "antd";
 import HomeContainer from "@/containers/Home";
 import HeaderContainer from "@/containers/Layouts/HeaderContainer";
-import { Flex } from "antd";
-import { FC } from "react";
 import styles from "./styles.module.scss";
 
 const HomePage: FC = () => {
