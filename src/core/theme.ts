@@ -7,4 +7,9 @@ export const theme: ThemeConfig = {
     colorBgBase: "#fff",
     colorLink: "#00db00",
   },
+  components: {
+    Layout: {
+      bodyBg: "#fff",
+    },
+  },
 };
