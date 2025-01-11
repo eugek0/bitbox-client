@@ -1,7 +1,7 @@
-@import "@/core/styles";
+@use "@/core/styles" as *;
 
 .body {
-  color: $primary_color;
+  color: $primary-color;
 }
 
 .small {

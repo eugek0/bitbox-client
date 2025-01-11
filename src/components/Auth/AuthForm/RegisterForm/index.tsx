@@ -15,21 +15,37 @@ const RegisterForm: FC<AuthFormInstanceProps> = ({
   return (
     <AuthForm {...props}>
       <Flex gap={25} vertical>
-        <Typography.Text className={styles["form-title"]}>
-          Регистрация
-        </Typography.Text>
-        <Flex gap={10} vertical>
+        <Flex align="center" gap={10}>
+          <Typography.Text className={styles["form-title"]}>
+            Регистрация
+          </Typography.Text>
+          {redirectButton?.show && (
+            <>
+              <span className={styles["separator"]}>{">"}</span>
+              <Link to={redirectButton?.link}>{redirectButton?.text}</Link>
+            </>
+          )}
+        </Flex>
+        <div>
           <Form.Item<IRegisterFormValues>
             rules={AUTH_FORM_RULES.default}
             name="login"
           >
-            <Input placeholder="Логин" suffix={<UserOutlined />} size="large" />
+            <Input
+              placeholder="Логин"
+              suffix={<UserOutlined />}
+              size="middle"
+            />
           </Form.Item>
           <Form.Item<IRegisterFormValues>
             rules={AUTH_FORM_RULES.email}
             name="email"
           >
-            <Input placeholder="Почта" suffix={<MailOutlined />} size="large" />
+            <Input
+              placeholder="Почта"
+              suffix={<MailOutlined />}
+              size="middle"
+            />
           </Form.Item>
           <Form.Item<IRegisterFormValues>
             rules={AUTH_FORM_RULES.password}
@@ -38,7 +54,7 @@ const RegisterForm: FC<AuthFormInstanceProps> = ({
             <Input.Password
               placeholder="Пароль"
               suffix={<KeyOutlined />}
-              size="large"
+              size="middle"
             />
           </Form.Item>
           <Form.Item<IRegisterFormValues>
@@ -48,34 +64,23 @@ const RegisterForm: FC<AuthFormInstanceProps> = ({
             <Input.Password
               placeholder="Повторите пароль"
               suffix={<KeyOutlined />}
-              size="large"
+              size="middle"
             />
           </Form.Item>
-        </Flex>
-        <div>
-          <Form.Item className={styles["submit-button-container"]}>
-            <Button
-              className={styles["submit-button"]}
-              type="primary"
-              htmlType="submit"
-              size="large"
-            >
-              Зарегистрироваться
-            </Button>
-          </Form.Item>
-          {redirectButton?.show && (
-            <Link to={redirectButton?.link}>
-              <Button
-                className={styles["redirect-button"]}
-                type="link"
-                size="large"
-              >
-                {redirectButton?.text}
-              </Button>
-            </Link>
-          )}
         </div>
       </Flex>
+      <div>
+        <Form.Item className={styles["submit-button-container"]}>
+          <Button
+            className={styles["submit-button"]}
+            type="primary"
+            htmlType="submit"
+            size="middle"
+          >
+            Зарегистрироваться
+          </Button>
+        </Form.Item>
+      </div>
     </AuthForm>
   );
 };

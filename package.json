@@ -13,6 +13,7 @@
     "@ant-design/icons": "^5.4.0",
     "@reduxjs/toolkit": "^2.2.7",
     "@tanstack/react-router": "^1.52.5",
+    "@tanstack/react-table": "^8.20.6",
     "antd": "^5.20.5",
     "lodash": "^4.17.21",
     "react": "^19.0.0",

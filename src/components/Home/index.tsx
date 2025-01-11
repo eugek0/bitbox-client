@@ -1,12 +1,12 @@
-import { APP_NAME, APP_SLOGANS } from "@/core/constants";
+import { FC } from "react";
+import { sample } from "lodash";
 import { Link } from "@tanstack/react-router";
 import { Button, Flex, Typography } from "antd";
-import { sample } from "lodash";
-import { FC } from "react";
+import { AppstoreOutlined, UserOutlined } from "@ant-design/icons";
+import { APP_NAME, APP_SLOGANS } from "@/core/constants";
 import Logotype from "../Common/Logotype";
 import styles from "./styles.module.scss";
 import { HomeProps } from "./types";
-import { AppstoreOutlined, UserOutlined } from "@ant-design/icons";
 
 const Home: FC<HomeProps> = ({ profile }) => {
   return (
@@ -25,24 +25,23 @@ const Home: FC<HomeProps> = ({ profile }) => {
           </Flex>
           <Flex className={styles["bubble"]} gap={10} vertical>
             <Typography.Paragraph className={styles["slogan__paragraph"]}>
-              Сервис для быстрого и безопасного доступа к файлам. Мы даем
-              бесплатные 10 гигабайт хранилища, а также предоставляем
-              всевозможные плюшки для удобства пользователей и информативности.
+              Сервис для быстрого и безопасного доступа к файлам прямо у вас на
+              серверах! Доступны личные, а также групповые хранилища.
             </Typography.Paragraph>
             {profile && (
               <Flex gap={10} align="center">
-                <Link from="/">
+                <Link from="/" to="/storage/my">
                   <Button
                     type="primary"
                     size="large"
                     icon={<AppstoreOutlined />}
                   >
-                    Хранилище
+                    Моё хранилище
                   </Button>
                 </Link>
                 <Link from="/" to="/">
                   <Button size="large" icon={<UserOutlined />}>
-                    Войти в профиль
+                    Мой профиль
                   </Button>
                 </Link>
               </Flex>

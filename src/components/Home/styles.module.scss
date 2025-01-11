@@ -1,5 +1,5 @@
 @use "sass:color";
-@import "@/core/styles";
+@use "@/core/styles" as *;
 
 .body {
   flex: 1;

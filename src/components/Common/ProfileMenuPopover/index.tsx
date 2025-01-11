@@ -7,8 +7,8 @@ import {
   SettingOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import styles from "./styles.module.scss";
 import { Link } from "@tanstack/react-router";
+import styles from "./styles.module.scss";
 
 const ProfileMenuPopover: FC<ProfileMenuPopoverProps> = ({
   profile,
