@@ -6,7 +6,7 @@ import { store } from "./store";
 import { ConfigProvider } from "antd";
 import { appTheme } from "./core/theme";
 import "@/core/styles/normalize.css";
-// import "@/core/styles/defaults.css";
+import "@/core/styles/defaults.scss";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
