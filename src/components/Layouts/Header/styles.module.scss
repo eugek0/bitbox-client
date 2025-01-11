@@ -1,4 +1,4 @@
-@import "@/core/styles";
+@use "@/core/styles" as *;
 
 .body {
   padding: 10px 20px;
@@ -15,6 +15,6 @@
   }
 
   .auth-button:hover {
-    color: $primary_color !important;
+    color: $primary-color !important;
   }
 }

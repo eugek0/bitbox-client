@@ -1,4 +1,4 @@
-@import "@/core/styles";
+@use "@/core/styles" as *;
 
 .body {
   padding: 10px;
@@ -14,6 +14,6 @@
   }
 
   .nav-button:hover {
-    color: $primary_color !important;
+    color: $primary-color !important;
   }
 }

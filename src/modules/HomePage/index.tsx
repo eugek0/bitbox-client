@@ -7,7 +7,7 @@ import styles from "./styles.module.scss";
 const HomePage: FC = () => {
   return (
     <Flex className={styles["body"]} vertical>
-      <HeaderContainer />
+      <HeaderContainer showLogotype={false} />
       <HomeContainer />
     </Flex>
   );

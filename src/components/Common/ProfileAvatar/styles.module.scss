@@ -1,9 +1,9 @@
-@import "@/core/styles";
+@use "@/core/styles" as *;
 
 .avatar {
   width: 32px;
   height: 32px;
-  transition: $base_transition;
+  transition: $base-transition;
   cursor: pointer;
 
   &_active {
