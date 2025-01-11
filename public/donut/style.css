@@ -19,10 +19,20 @@ body {
   color: gray;
 }
 
-.console__welcome {
+.welcome {
   display: block;
   width: 100%;
   text-align: center;
+}
+
+.welcome__company {
+  color: #33d17a;
+  font-weight: 500;
+}
+
+.welcome__separators {
+  color: gray;
+  font-weight: 500;
 }
 
 .donut {
