@@ -1,14 +1,14 @@
-import AsideLayout from "@/components/Layouts/AsideLayout";
-import { protectedRoute } from "@/core/router";
-import HomePage from "@/modules/HomePage";
 import { createFileRoute } from "@tanstack/react-router";
+import { protectedRoute } from "@/core/router";
+import AsideLayoutContainer from "@/containers/Layouts/AsideLayoutContainer";
+import HomePage from "@/modules/HomePage";
 
 export const Route = createFileRoute("/")({
   beforeLoad: protectedRoute(),
   component: () => (
-    <AsideLayout>
+    <AsideLayoutContainer>
       <title>Главная</title>
       <HomePage />
-    </AsideLayout>
+    </AsideLayoutContainer>
   ),
 });
