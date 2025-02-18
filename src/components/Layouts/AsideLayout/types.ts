@@ -9,4 +9,5 @@ export interface AsideLayoutProps {
   collapsed: boolean;
   menuSelectedKeys: string[];
   handleChangeCollapsed: SiderProps["onCollapse"];
+  handleLogout: () => void;
 }

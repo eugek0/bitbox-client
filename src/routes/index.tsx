@@ -7,7 +7,7 @@ export const Route = createFileRoute("/")({
   beforeLoad: protectedRoute(),
   component: () => (
     <AsideLayoutContainer>
-      <title>Главная</title>
+      <title>Список хранилищ</title>
       <HomePage />
     </AsideLayoutContainer>
   ),

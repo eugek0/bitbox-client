@@ -1,18 +1,18 @@
 import { FC } from "react";
-import { Avatar, Flex, Layout, Menu, Typography } from "antd";
-import { RiHome4Line } from "react-icons/ri";
+import { Flex, Layout, Menu, Typography } from "antd";
 import { AsideLayoutProps } from "./types";
 import Logotype from "@/components/Common/Logotype";
 import { APP_NAME } from "@/core/constants";
-import { Link } from "@tanstack/react-router";
 import styles from "./styles.module.scss";
+import { MdStorage } from "react-icons/md";
+import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
 
 const AsideLayout: FC<AsideLayoutProps> = ({
   children,
-  profile,
   collapsed,
   menuSelectedKeys,
   handleChangeCollapsed,
+  handleLogout,
 }) => {
   return (
     <Layout>
@@ -47,26 +47,46 @@ const AsideLayout: FC<AsideLayoutProps> = ({
                 },
                 {
                   key: "home",
-                  label: "Главная",
-                  icon: <RiHome4Line />,
+                  label: "Список хранилищ",
+                  icon: <MdStorage />,
                 },
               ]}
             />
           </div>
-          <div
-            className={`${styles["collapser"]} ${collapsed ? styles["collapser_closed"] : ""}`}
-          >
-            <Link>
-              <Flex gap={10} align="center">
-                <Avatar size="small" src={profile?.avatar} />
-                <Typography.Text
-                  className={`${styles["collapser__text"]} ${collapsed ? styles["collapser__text_closed"] : ""}`}
-                >
-                  {profile?.login}
-                </Typography.Text>
-              </Flex>
-            </Link>
-          </div>
+          <Menu
+            selectedKeys={menuSelectedKeys}
+            items={[
+              {
+                key: "profile",
+                label: "Профиль",
+                icon: <UserOutlined />,
+                children: [
+                  {
+                    key: "logout",
+                    label: "Выйти",
+                    icon: <LogoutOutlined />,
+                    onClick: handleLogout,
+                  },
+                ],
+              },
+            ]}
+          />
+          {
+            // <div
+            //   className={`${styles["collapser"]} ${collapsed ? styles["collapser_closed"] : ""}`}
+            // >
+            //   <Link>
+            //     <Flex gap={10} align="center">
+            //       <Avatar size="small" src={profile?.avatar} />
+            //       <Typography.Text
+            //         className={`${styles["collapser__text"]} ${collapsed ? styles["collapser__text_closed"] : ""}`}
+            //       >
+            //         {profile?.login}
+            //       </Typography.Text>
+            //     </Flex>
+            //   </Link>
+            // </div>
+          }
         </Flex>
       </Layout.Sider>
       {children}

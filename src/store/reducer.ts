@@ -2,7 +2,7 @@ import { appApi } from "@/containers/App/api";
 import { appSlice } from "@/containers/App/slice";
 import { authApi } from "@/containers/Auth/api";
 import { authSlice } from "@/containers/Auth/slice";
-import { usersApi } from "@/core/api/users.api";
+import { storagesApi } from "@/containers/Storages/api";
 import { combineReducers } from "@reduxjs/toolkit";
 
 const reducer = combineReducers({
@@ -10,7 +10,7 @@ const reducer = combineReducers({
   [appSlice.reducerPath]: appSlice.reducer,
   [authApi.reducerPath]: authApi.reducer,
   [appApi.reducerPath]: appApi.reducer,
-  [usersApi.reducerPath]: usersApi.reducer,
+  [storagesApi.reducerPath]: storagesApi.reducer,
 });
 
 export default reducer;

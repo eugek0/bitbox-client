@@ -1,74 +1,31 @@
 import { FC } from "react";
 import { HomeProps } from "./types";
-import { Table } from "antd";
-import { createStyles } from "antd-style";
+import StoragesTable from "@/containers/Storages/StoragesTable";
+import { AutoComplete, Button, Flex, Typography } from "antd";
+import styles from "./styles.module.scss";
+import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
 
-const useStyles = createStyles(({ css, prefixCls }) => {
-  return {
-    table: css`
-      ${prefixCls}-table-wrapper {
-        height: 100%;
-
-        ${prefixCls}-spin-nested-loading {
-          height: 100%;
-
-          ${prefixCls}-spin-container {
-            height: 100%;
-            display: flex;
-            flex-flow: column nowrap;
-
-            ${prefixCls}-table {
-              flex: auto;
-              overflow: hidden;
-
-              ${prefixCls}-table-container {
-                height: 100%;
-                display: flex;
-                flex-flow: column nowrap;
-
-                ${prefixCls}-table-header {
-                  flex: none;
-                }
-
-                ${prefixCls}-table-body {
-                  flex: auto;
-                  overflow: scroll;
-                }
-              }
-            }
-
-            ${prefixCls}-table-pagination {
-              flex: none;
-            }
-          }
-        }
-      }
-    `,
-  };
-});
-
-const Home: FC<HomeProps> = ({ profile }) => {
-  const { styles } = useStyles();
-
+const Home: FC<HomeProps> = () => {
   return (
-    <Table
-      className={styles["table"]}
-      columns={[
-        {
-          title: "Имя",
-          dataIndex: "name",
-        },
-        {
-          title: "Размер",
-          dataIndex: "size",
-        },
-        {
-          title: "Создано",
-          dataIndex: "createdAt",
-        },
-      ]}
-      bordered
-    />
+    <Flex className={styles["body"]} vertical>
+      <Flex className={styles["header"]} align="center" justify="space-between">
+        <Flex align="center" gap={25}>
+          <Typography.Title className={styles["header__title"]} level={4}>
+            Список хранилищ
+          </Typography.Title>
+          <Button color="default" variant="filled" icon={<PlusOutlined />}>
+            Создать
+          </Button>
+        </Flex>
+        <AutoComplete
+          className={styles["header__search"]}
+          variant="filled"
+          placeholder="Поиск"
+          prefix={<SearchOutlined />}
+        />
+      </Flex>
+      <StoragesTable />
+    </Flex>
   );
 };
 
