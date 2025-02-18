@@ -1,5 +1,5 @@
 import { TableColumnType } from "antd";
-import { IStoragesTableRecord } from "./types";
+import { IStoragesTableRecord } from "@/containers/Storages/StoragesTableContainer/types";
 
 export const STORAGES_TABLE_COLUMNS: TableColumnType<IStoragesTableRecord>[] = [
   {
