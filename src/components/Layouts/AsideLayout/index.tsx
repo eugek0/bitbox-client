@@ -6,6 +6,7 @@ import { APP_NAME } from "@/core/constants";
 import styles from "./styles.module.scss";
 import { MdStorage } from "react-icons/md";
 import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
+import Link from "antd/es/typography/Link";
 
 const AsideLayout: FC<AsideLayoutProps> = ({
   children,
@@ -64,9 +65,21 @@ const AsideLayout: FC<AsideLayoutProps> = ({
                 children: [
                   {
                     key: "profile",
-                    label: profile?.login,
-                    icon: <Avatar src={profile?.avatar} size="small" />,
+                    label: (
+                      <Flex vertical gap={2}>
+                        <span className={styles["profile-submenu__login"]}>
+                          {profile?.login}
+                        </span>
+                        <span className={styles["profile-submenu__email"]}>
+                          {profile?.email}
+                        </span>
+                      </Flex>
+                    ),
+                    icon: <Avatar src={profile?.avatar} />,
                     className: styles["profile-submenu"],
+                  },
+                  {
+                    type: "divider",
                   },
                   {
                     key: "logout",
@@ -78,22 +91,6 @@ const AsideLayout: FC<AsideLayoutProps> = ({
               },
             ]}
           />
-          {
-            // <div
-            //   className={`${styles["collapser"]} ${collapsed ? styles["collapser_closed"] : ""}`}
-            // >
-            //   <Link>
-            //     <Flex gap={10} align="center">
-            //       <Avatar size="small" src={profile?.avatar} />
-            //       <Typography.Text
-            //         className={`${styles["collapser__text"]} ${collapsed ? styles["collapser__text_closed"] : ""}`}
-            //       >
-            //         {profile?.login}
-            //       </Typography.Text>
-            //     </Flex>
-            //   </Link>
-            // </div>
-          }
         </Flex>
       </Layout.Sider>
       {children}

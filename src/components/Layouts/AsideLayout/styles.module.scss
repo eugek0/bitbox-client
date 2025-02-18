@@ -49,9 +49,24 @@
 }
 
 .profile-submenu {
+  height: 70px !important;
   display: flex !important;
   align-items: center;
   pointer-events: none;
+
+  &__login {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  &__email {
+    font-size: 12px;
+    color: $primary-color !important;
+  }
+
+  span {
+    line-height: 1;
+  }
 }
 
 @starting-style {
