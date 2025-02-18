@@ -63,7 +63,7 @@ const AsideLayout: FC<AsideLayoutProps> = ({
                 icon: <UserOutlined />,
                 children: [
                   {
-                    key: "profile",
+                    key: "account",
                     label: (
                       <Flex vertical gap={2}>
                         <span className={styles["profile-submenu__login"]}>

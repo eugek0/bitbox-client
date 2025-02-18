@@ -32,20 +32,4 @@
       animation: 2s bubble;
     }
   }
-
-  .header {
-    padding: 16px;
-    background-color: #403840;
-    box-shadow: 0px 1px 10px 0px rgba(34, 29, 34, 0.6);
-    z-index: 1;
-
-    &__title {
-      margin: 0;
-      font-weight: 400;
-    }
-
-    &__search {
-      width: 300px;
-    }
-  }
 }
