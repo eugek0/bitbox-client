@@ -48,6 +48,12 @@
   }
 }
 
+.profile-submenu {
+  display: flex !important;
+  align-items: center;
+  pointer-events: none;
+}
+
 @starting-style {
   .collapser__text {
     opacity: 0;

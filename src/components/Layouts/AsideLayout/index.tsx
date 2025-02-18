@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Flex, Layout, Menu, Typography } from "antd";
+import { Avatar, Flex, Layout, Menu, Typography } from "antd";
 import { AsideLayoutProps } from "./types";
 import Logotype from "@/components/Common/Logotype";
 import { APP_NAME } from "@/core/constants";
@@ -10,6 +10,7 @@ import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
 const AsideLayout: FC<AsideLayoutProps> = ({
   children,
   collapsed,
+  profile,
   menuSelectedKeys,
   handleChangeCollapsed,
   handleLogout,
@@ -61,6 +62,12 @@ const AsideLayout: FC<AsideLayoutProps> = ({
                 label: "Профиль",
                 icon: <UserOutlined />,
                 children: [
+                  {
+                    key: "profile",
+                    label: profile?.login,
+                    icon: <Avatar src={profile?.avatar} size="small" />,
+                    className: styles["profile-submenu"],
+                  },
                   {
                     key: "logout",
                     label: "Выйти",
