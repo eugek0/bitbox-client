@@ -6,7 +6,6 @@ import { APP_NAME } from "@/core/constants";
 import styles from "./styles.module.scss";
 import { MdStorage } from "react-icons/md";
 import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
-import Link from "antd/es/typography/Link";
 
 const AsideLayout: FC<AsideLayoutProps> = ({
   children,
