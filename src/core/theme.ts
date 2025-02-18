@@ -13,5 +13,8 @@ export const appTheme: ThemeConfig = {
       siderBg: "rgb(34,29,34)",
       triggerBg: "rgb(34,29,34)",
     },
+    Table: {
+      borderRadiusLG: 0,
+    },
   },
 };

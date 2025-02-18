@@ -1,27 +1,5 @@
 @use "@/core/styles" as *;
 
-@starting-style {
-  .app-name {
-    opacity: 0;
-  }
-}
-
-.app-name {
-  font-size: 16px;
-  text-overflow: clip;
-  white-space: nowrap;
-  transition:
-    display $base-transition cubic-bezier(0.645, 0.045, 0.355, 1) allow-discrete,
-    opacity $base-transition cubic-bezier(0.645, 0.045, 0.355, 1),
-    margin $base-transition,
-    color $base-transition;
-}
-
-.app-name_collapsed {
-  display: none;
-  opacity: 0;
-}
-
 .sider {
   border-right: 1px solid #ffffff26;
   background: linear-gradient(
@@ -30,21 +8,48 @@
     transparent calc(334px * 0.88)
   );
 
-  .header {
+  &__content {
+    height: 100%;
+  }
+
+  .collapser {
     padding: 10px 16px;
     margin: 4px;
     transition: padding $base-transition cubic-bezier(0.645, 0.045, 0.355, 1);
 
-    &_collapsed {
+    &_closed {
       padding-inline: calc(50% - 12px - 4px);
+    }
+
+    &__text {
+      font-size: 16px;
+      text-overflow: clip;
+      white-space: nowrap;
+      transition:
+        display $base-transition cubic-bezier(0.645, 0.045, 0.355, 1)
+          allow-discrete,
+        opacity $base-transition cubic-bezier(0.645, 0.045, 0.355, 1),
+        margin $base-transition,
+        color $base-transition;
+
+      &_closed {
+        display: none;
+        opacity: 0;
+      }
     }
   }
 
   div:global(.ant-layout-sider-trigger) {
-    border: 1px solid #ffffff26;
+    border-right: 1px solid #ffffff26;
   }
 
   ul:global(.ant-menu-root) {
     background-color: transparent;
+  }
+}
+
+@starting-style {
+  .collapser__text {
+    opacity: 0;
   }
 }

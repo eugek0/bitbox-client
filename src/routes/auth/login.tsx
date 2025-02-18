@@ -4,5 +4,10 @@ import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/auth/login")({
   beforeLoad: protectedRoute(true),
-  component: LoginPage,
+  component: () => (
+    <>
+      <title>Авторизация</title>
+      <LoginPage />
+    </>
+  ),
 });

@@ -1,54 +1,30 @@
 import { FC } from "react";
-import { sample } from "lodash";
-import { Link } from "@tanstack/react-router";
-import { Button, Flex, Typography } from "antd";
-import { AppstoreOutlined, UserOutlined } from "@ant-design/icons";
-import { APP_NAME, APP_SLOGANS } from "@/core/constants";
-import Logotype from "../Common/Logotype";
-import styles from "./styles.module.scss";
 import { HomeProps } from "./types";
+import StoragesTable from "@/containers/Storages/StoragesTable";
+import { AutoComplete, Button, Flex, Typography } from "antd";
+import styles from "./styles.module.scss";
+import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
 
-const Home: FC<HomeProps> = ({ profile }) => {
+const Home: FC<HomeProps> = () => {
   return (
-    <Flex className={styles["body"]} align="center" justify="center">
-      <Flex gap={40}>
-        <Flex className={styles["text-section"]} gap={10} vertical>
-          <Flex gap={10} align="center">
-            <Logotype size="large" />
-            <Typography.Title className={styles["slogan"]}>
-              {APP_NAME} <span className={styles["hyphen"]}>—</span>
-              <span className={styles["slogan__text"]}>
-                {" "}
-                {sample(APP_SLOGANS)}
-              </span>
-            </Typography.Title>
-          </Flex>
-          <Flex className={styles["bubble"]} gap={10} vertical>
-            <Typography.Paragraph className={styles["slogan__paragraph"]}>
-              Сервис для быстрого и безопасного доступа к файлам прямо у вас на
-              серверах! Доступны личные, а также групповые хранилища.
-            </Typography.Paragraph>
-            {profile && (
-              <Flex gap={10} align="center">
-                <Link from="/" to="/storage/my">
-                  <Button
-                    type="primary"
-                    size="large"
-                    icon={<AppstoreOutlined />}
-                  >
-                    Моё хранилище
-                  </Button>
-                </Link>
-                <Link from="/" to="/">
-                  <Button size="large" icon={<UserOutlined />}>
-                    Мой профиль
-                  </Button>
-                </Link>
-              </Flex>
-            )}
-          </Flex>
+    <Flex className={styles["body"]} vertical>
+      <Flex className={styles["header"]} align="center" justify="space-between">
+        <Flex align="center" gap={25}>
+          <Typography.Title className={styles["header__title"]} level={4}>
+            Список хранилищ
+          </Typography.Title>
+          <Button color="default" variant="filled" icon={<PlusOutlined />}>
+            Создать
+          </Button>
         </Flex>
+        <AutoComplete
+          className={styles["header__search"]}
+          variant="filled"
+          placeholder="Поиск"
+          prefix={<SearchOutlined />}
+        />
       </Flex>
+      <StoragesTable />
     </Flex>
   );
 };

@@ -1,18 +1,19 @@
-import { FC, useState } from "react";
-import { Flex, Layout, Menu, SiderProps, Typography } from "antd";
-import { RiHome4Line } from "react-icons/ri";
+import { FC } from "react";
+import { Flex, Layout, Menu, Typography } from "antd";
 import { AsideLayoutProps } from "./types";
 import Logotype from "@/components/Common/Logotype";
 import { APP_NAME } from "@/core/constants";
 import styles from "./styles.module.scss";
+import { MdStorage } from "react-icons/md";
+import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
 
-const AsideLayout: FC<AsideLayoutProps> = ({ children }) => {
-  const [collapsed, setCollapsed] = useState<boolean>(true);
-
-  const handleChangeCollapsed: SiderProps["onCollapse"] = (state) => {
-    setCollapsed(state);
-  };
-
+const AsideLayout: FC<AsideLayoutProps> = ({
+  children,
+  collapsed,
+  menuSelectedKeys,
+  handleChangeCollapsed,
+  handleLogout,
+}) => {
   return (
     <Layout>
       <Layout.Sider
@@ -21,30 +22,71 @@ const AsideLayout: FC<AsideLayoutProps> = ({ children }) => {
         collapsed={collapsed}
         collapsible
       >
-        <Flex vertical>
-          <Flex
-            className={`${styles["header"]} ${collapsed ? styles["header_collapsed"] : ""}`}
-            gap={10}
-          >
-            <Logotype />
-            <Typography.Text
-              className={`${styles["app-name"]} ${collapsed ? styles["app-name_collapsed"] : ""}`}
+        <Flex
+          className={styles["sider__content"]}
+          justify="space-between"
+          vertical
+        >
+          <div>
+            <Flex
+              className={`${styles["collapser"]} ${collapsed ? styles["collapser_closed"] : ""}`}
+              gap={10}
             >
-              {APP_NAME}
-            </Typography.Text>
-          </Flex>
+              <Logotype />
+              <Typography.Text
+                className={`${styles["collapser__text"]} ${collapsed ? styles["collapser__text_closed"] : ""}`}
+              >
+                {APP_NAME}
+              </Typography.Text>
+            </Flex>
+            <Menu
+              selectedKeys={menuSelectedKeys}
+              items={[
+                {
+                  type: "divider",
+                },
+                {
+                  key: "home",
+                  label: "Список хранилищ",
+                  icon: <MdStorage />,
+                },
+              ]}
+            />
+          </div>
           <Menu
+            selectedKeys={menuSelectedKeys}
             items={[
               {
-                type: "divider",
-              },
-              {
-                key: "home",
-                label: "Главная",
-                icon: <RiHome4Line />,
+                key: "profile",
+                label: "Профиль",
+                icon: <UserOutlined />,
+                children: [
+                  {
+                    key: "logout",
+                    label: "Выйти",
+                    icon: <LogoutOutlined />,
+                    onClick: handleLogout,
+                  },
+                ],
               },
             ]}
           />
+          {
+            // <div
+            //   className={`${styles["collapser"]} ${collapsed ? styles["collapser_closed"] : ""}`}
+            // >
+            //   <Link>
+            //     <Flex gap={10} align="center">
+            //       <Avatar size="small" src={profile?.avatar} />
+            //       <Typography.Text
+            //         className={`${styles["collapser__text"]} ${collapsed ? styles["collapser__text_closed"] : ""}`}
+            //       >
+            //         {profile?.login}
+            //       </Typography.Text>
+            //     </Flex>
+            //   </Link>
+            // </div>
+          }
         </Flex>
       </Layout.Sider>
       {children}
