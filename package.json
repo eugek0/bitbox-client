@@ -14,7 +14,6 @@
     "@reduxjs/toolkit": "^2.2.7",
     "@tanstack/react-router": "^1.52.5",
     "@tanstack/react-table": "^8.20.6",
-    "@types/moment": "^2.13.0",
     "antd": "^5.20.5",
     "antd-style": "^3.7.1",
     "lodash": "^4.17.21",

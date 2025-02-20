@@ -1,5 +1,6 @@
 import { TableColumnType } from "antd";
 import { IStoragesTableRecord } from "@/containers/Storages/StoragesTableContainer/types";
+import ProfileBadgeContainer from "@/containers/Common/ProfileBadgeContainer";
 
 export const STORAGES_TABLE_COLUMNS: TableColumnType<IStoragesTableRecord>[] = [
   {
@@ -13,9 +14,10 @@ export const STORAGES_TABLE_COLUMNS: TableColumnType<IStoragesTableRecord>[] = [
     width: "50%",
   },
   {
-    title: "Создатель",
+    title: "Владелец",
     dataIndex: "owner",
     width: "12.5%",
+    render: (record) => <ProfileBadgeContainer _id={record} />,
   },
   {
     title: "Занято",

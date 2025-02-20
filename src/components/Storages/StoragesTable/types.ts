@@ -1,10 +1,8 @@
 import { IStoragesTableRecord } from "@/containers/Storages/StoragesTableContainer/types";
+import { TableProps } from "antd";
 
-export interface StoragesTableProps {
-  isModalOpen: boolean;
+export interface StoragesTableProps extends Pick<TableProps, "onRow"> {
   storages: IStoragesTableRecord[];
   loading: boolean;
-  handleCloseModal: () => void;
-  handleOkModal: () => void;
   handleClickCreate: () => void;
 }

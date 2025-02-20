@@ -1,7 +1,3 @@
-import { ModalProps } from "antd";
+import { ICreateStoragePayload } from "../../types";
 
-export interface CreateStorageModalContainerProps
-  extends Pick<ModalProps, "open"> {
-  handleCloseModal: () => void;
-  handleOkModal: () => void;
-}
+export type TCreateStorageModalFields = ICreateStoragePayload;
