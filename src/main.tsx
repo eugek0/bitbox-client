@@ -6,6 +6,7 @@ import { store } from "./store";
 import { ConfigProvider } from "antd";
 import { appTheme } from "./core/theme";
 import ruRu from "antd/locale/ru_RU";
+import "@ant-design/v5-patch-for-react-19";
 import "@/core/styles/normalize.css";
 import "@/core/styles/defaults.scss";
 
