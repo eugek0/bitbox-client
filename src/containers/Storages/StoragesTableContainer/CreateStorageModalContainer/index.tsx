@@ -16,11 +16,9 @@ const CreateStorageModalContainer: FC = () => {
     context;
 
   const handleSubmit = async () => {
-    try {
-      const values = await form.validateFields();
-      await handleOkModal(values);
-      form.resetFields();
-    } catch {}
+    const values = await form.validateFields();
+    await handleOkModal(values);
+    form.resetFields();
   };
 
   useEffect(() => {
