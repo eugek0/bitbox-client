@@ -1,3 +1,5 @@
+import { TCreateStorageModalFields } from "./CreateStorageModalContainer/types";
+
 export interface IStoragesTableRecord {
   name: string;
   description: string;
@@ -5,4 +7,11 @@ export interface IStoragesTableRecord {
   createdAt: string;
   used: number;
   size: number;
+}
+
+export interface IStorageTableContext {
+  isModalOpen: boolean;
+  isModalLoading: boolean;
+  handleOkModal: (values: TCreateStorageModalFields) => Promise<void>;
+  handleCloseModal: () => void;
 }

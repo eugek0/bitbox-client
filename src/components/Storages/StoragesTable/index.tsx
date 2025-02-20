@@ -7,17 +7,16 @@ import { StoragesTableProps } from "./types";
 import styles from "./styles.module.scss";
 
 const StoragesTable: FC<StoragesTableProps> = ({
-  isModalOpen,
   storages,
   loading,
-  handleCloseModal,
-  handleOkModal,
+  onRow,
   handleClickCreate,
 }) => {
   return (
     <div className={styles["body"]}>
       <StoragesTableHeaderContainer handleClickCreate={handleClickCreate} />
       <Table
+        onRow={onRow}
         columns={STORAGES_TABLE_COLUMNS}
         dataSource={storages}
         loading={loading}
@@ -25,11 +24,7 @@ const StoragesTable: FC<StoragesTableProps> = ({
         rowKey="_id"
         bordered
       />
-      <CreateStorageModalContainer
-        open={isModalOpen}
-        handleOkModal={handleOkModal}
-        handleCloseModal={handleCloseModal}
-      />
+      <CreateStorageModalContainer />
     </div>
   );
 };
