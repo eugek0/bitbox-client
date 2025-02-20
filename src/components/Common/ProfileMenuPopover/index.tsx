@@ -18,7 +18,7 @@ const ProfileMenuPopover: FC<ProfileMenuPopoverProps> = ({
     <Flex className={styles["body"]} gap={20} vertical>
       <Flex gap={20} align="center" justify="space-between">
         <Tooltip title="Хранилище" placement="bottom">
-          <Link>
+          <Link to="/">
             <Button
               className={styles["nav-button"]}
               type="text"
