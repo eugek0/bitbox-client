@@ -5,7 +5,11 @@ import Logotype from "@/components/Common/Logotype";
 import { APP_NAME } from "@/core/constants";
 import styles from "./styles.module.scss";
 import { MdStorage } from "react-icons/md";
-import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  LogoutOutlined,
+  SettingOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 
 const AsideLayout: FC<AsideLayoutProps> = ({
   children,
@@ -79,6 +83,11 @@ const AsideLayout: FC<AsideLayoutProps> = ({
                   },
                   {
                     type: "divider",
+                  },
+                  {
+                    key: "profile-settings",
+                    label: "Настройки",
+                    icon: <SettingOutlined />,
                   },
                   {
                     key: "logout",

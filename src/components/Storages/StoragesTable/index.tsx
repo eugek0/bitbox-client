@@ -4,6 +4,7 @@ import CreateStorageModalContainer from "@/containers/Storages/StoragesTableCont
 import StoragesTableHeaderContainer from "@/containers/Storages/StoragesTableContainer/StoragesTableHeaderContainer";
 import { STORAGES_TABLE_COLUMNS } from "./constants";
 import { StoragesTableProps } from "./types";
+import styles from "./styles.module.scss";
 
 const StoragesTable: FC<StoragesTableProps> = ({
   isModalOpen,
@@ -14,7 +15,7 @@ const StoragesTable: FC<StoragesTableProps> = ({
   handleClickCreate,
 }) => {
   return (
-    <div>
+    <div className={styles["body"]}>
       <StoragesTableHeaderContainer handleClickCreate={handleClickCreate} />
       <Table
         columns={STORAGES_TABLE_COLUMNS}

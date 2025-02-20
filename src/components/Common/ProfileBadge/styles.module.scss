@@ -1,0 +1,7 @@
+.login-skeleton {
+  height: 10px;
+
+  > :global(.ant-skeleton-input) {
+    height: 10px !important;
+  }
+}
