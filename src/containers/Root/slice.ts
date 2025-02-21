@@ -5,8 +5,8 @@ const initialState: IRootState = {
   notification: null,
 };
 
-export const appSlice = createSlice({
-  name: "app",
+export const rootSlice = createSlice({
+  name: "root",
   initialState,
   reducers: {
     setNotification: (state, action) => {

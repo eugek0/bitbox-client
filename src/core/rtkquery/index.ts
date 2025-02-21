@@ -40,7 +40,7 @@ const fetchMainBaseQuery =
     const data = result.error?.data ?? result.data;
     if (isNotification(data)) {
       api.dispatch({
-        type: "app/setNotification",
+        type: "root/setNotification",
         payload: data.notification,
       });
     }
