@@ -2,6 +2,8 @@ import { FC, useContext, useEffect } from "react";
 import CreateStorageModal from "@/components/Storages/StoragesTable/CreateStorageModal";
 import { useForm } from "antd/es/form/Form";
 import StorageTableContext from "../context";
+import { setErrorsToField } from "@/core/utils";
+import { isFormException } from "@/core/typeguards";
 
 const CreateStorageModalContainer: FC = () => {
   const context = useContext(StorageTableContext);
@@ -16,9 +18,16 @@ const CreateStorageModalContainer: FC = () => {
     context;
 
   const handleSubmit = async () => {
-    const values = await form.validateFields();
-    await handleOkModal(values);
-    form.resetFields();
+    try {
+      const values = await form.validateFields();
+      await handleOkModal(values);
+      form.resetFields();
+      handleCloseModal();
+    } catch (error) {
+      if (isFormException(error)) {
+        setErrorsToField(form, error);
+      }
+    }
   };
 
   useEffect(() => {
