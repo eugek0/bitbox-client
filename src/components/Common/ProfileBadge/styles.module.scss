@@ -1,7 +1,14 @@
+@use "@/core/styles" as *;
+
 .login-skeleton {
   height: 10px;
 
   > :global(.ant-skeleton-input) {
     height: 10px !important;
   }
+}
+
+.role-icon {
+  font-size: 10px;
+  color: $admin-color;
 }

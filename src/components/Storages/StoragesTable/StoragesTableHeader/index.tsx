@@ -1,8 +1,9 @@
 import { FC } from "react";
-import { AutoComplete, Button, Flex, Typography } from "antd";
+import { Button, Flex, Typography } from "antd";
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
 import styles from "./styles.module.scss";
 import { StoragesTableHeaderProps } from "./types";
+import StorageSearcher from "@/containers/Common/StorageSearcher";
 
 const StoragesTableHeader: FC<StoragesTableHeaderProps> = ({
   handleClickCreate,
@@ -22,7 +23,7 @@ const StoragesTableHeader: FC<StoragesTableHeaderProps> = ({
           Создать
         </Button>
       </Flex>
-      <AutoComplete
+      <StorageSearcher
         className={styles["body__search"]}
         variant="filled"
         placeholder="Поиск"
