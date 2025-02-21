@@ -29,7 +29,10 @@ const Root: FC = () => {
 
   useEffect(() => {
     if (notification) {
-      notificate[notification.status](notification.config);
+      notificate[notification.status]({
+        ...notification.config,
+        placement: notification.config.placement ?? "bottomRight",
+      });
     }
   }, [notification]);
 
