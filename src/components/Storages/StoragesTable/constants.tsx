@@ -3,7 +3,7 @@ import { ProductFilled } from "@ant-design/icons";
 import { IStoragesTableRecord } from "@/containers/Storages/StoragesTableContainer/types";
 import ProfileBadgeContainer from "@/containers/Common/ProfileBadgeContainer";
 import styles from "./styles.module.scss";
-import { formatBytes } from "@/core/utils";
+import { convertBits } from "@/core/utils";
 
 export const STORAGES_TABLE_COLUMNS: TableColumnType<IStoragesTableRecord>[] = [
   {
@@ -36,12 +36,12 @@ export const STORAGES_TABLE_COLUMNS: TableColumnType<IStoragesTableRecord>[] = [
     title: "Занято",
     dataIndex: "used",
     width: "6.25%",
-    render: (record) => formatBytes(record),
+    render: (record) => convertBits(record),
   },
   {
     title: "Размер",
     dataIndex: "size",
     width: "6.25%",
-    render: (record) => formatBytes(record),
+    render: (record) => convertBits(record),
   },
 ];
