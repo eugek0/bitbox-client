@@ -1,7 +1,6 @@
-import { Base64 } from "@/core/types";
+import { IProfile } from "@/containers/Auth/types";
 
-export interface ProfileBadgeProps {
-  avatar?: Base64;
-  login?: string;
+export interface ProfileBadgeProps
+  extends Partial<Pick<IProfile, "avatar" | "login" | "role">> {
   loading?: boolean;
 }

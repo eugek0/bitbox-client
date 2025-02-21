@@ -2,8 +2,14 @@ import { Avatar, Flex, Skeleton, Typography } from "antd";
 import { FC } from "react";
 import { ProfileBadgeProps } from "./types";
 import styles from "./styles.module.scss";
+import { CrownFilled } from "@ant-design/icons";
 
-const ProfileBadge: FC<ProfileBadgeProps> = ({ avatar, login, loading }) => {
+const ProfileBadge: FC<ProfileBadgeProps> = ({
+  avatar,
+  login,
+  role,
+  loading,
+}) => {
   return loading ? (
     <Flex align="center" gap={10}>
       <Skeleton.Avatar active size="small" />
@@ -12,7 +18,10 @@ const ProfileBadge: FC<ProfileBadgeProps> = ({ avatar, login, loading }) => {
   ) : (
     <Flex align="center" gap={10}>
       <Avatar src={avatar} size="small" />
-      <Typography.Text>{login}</Typography.Text>
+      <Flex align="center" gap={5}>
+        <Typography.Text>{login}</Typography.Text>
+        {role === "admin" && <CrownFilled className={styles["role-icon"]} />}
+      </Flex>
     </Flex>
   );
 };

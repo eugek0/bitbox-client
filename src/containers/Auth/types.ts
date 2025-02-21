@@ -6,7 +6,10 @@ export interface IProfile {
   email: string;
   createdAt: string;
   avatar: Base64;
+  role: TRole;
 }
+
+export type TRole = "user" | "admin";
 
 export interface IAuthState {
   profile: Nullable<IProfile>;
