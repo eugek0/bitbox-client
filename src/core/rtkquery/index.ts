@@ -4,7 +4,6 @@ import {
   fetchBaseQuery,
   FetchBaseQueryError,
 } from "@reduxjs/toolkit/query/react";
-import { notification } from "antd";
 import { SERVER_BASE_URL } from "../constants";
 import { isNotification } from "../typeguards";
 
@@ -40,7 +39,10 @@ const fetchMainBaseQuery =
 
     const data = result.error?.data ?? result.data;
     if (isNotification(data)) {
-      notification[data.notification.status](data.notification.config);
+      api.dispatch({
+        type: "app/setNotification",
+        payload: data.notification,
+      });
     }
 
     return result;

@@ -1,16 +1,16 @@
 import { routeTree } from "@/routeTree.gen";
 import { useAppSelector } from "@/store";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useGetProfileQuery } from "../Auth/api";
 import { profileSelector } from "../Auth/selectors";
 import FullscreenLoader from "../Common/FullscreenLoader";
-import { useGetAppStatusQuery } from "./api";
-import { appStatusSelector } from "./selectors";
+import { notificationSelector } from "./selectors";
+import useNotification from "antd/es/notification/useNotification";
 
 const router = createRouter({
   routeTree,
-  context: { profile: null, appStatus: null },
+  context: { profile: null },
 });
 
 declare module "@tanstack/react-router" {
@@ -19,22 +19,30 @@ declare module "@tanstack/react-router" {
   }
 }
 
-const App: FC = () => {
-  const profile = useAppSelector(profileSelector);
-  const appStatus = useAppSelector(appStatusSelector);
-  const { isLoading: isProfileLoading } = useGetProfileQuery();
-  const { isLoading: isAppStateLoading } = useGetAppStatusQuery();
+const Root: FC = () => {
+  const notification = useAppSelector(notificationSelector);
 
-  if (isProfileLoading || isAppStateLoading) {
+  const [notificate, contextHolder] = useNotification();
+
+  const profile = useAppSelector(profileSelector);
+  const { isLoading: isProfileLoading } = useGetProfileQuery();
+
+  useEffect(() => {
+    if (notification) {
+      notificate[notification.status](notification.config);
+    }
+  }, [notification]);
+
+  if (isProfileLoading) {
     return <FullscreenLoader />;
   }
 
   return (
-    <RouterProvider
-      router={router}
-      context={{ profile: profile ?? null, appStatus: appStatus ?? null }}
-    />
+    <>
+      {contextHolder}
+      <RouterProvider router={router} context={{ profile: profile ?? null }} />
+    </>
   );
 };
 
-export default App;
+export default Root;
