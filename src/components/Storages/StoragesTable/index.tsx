@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { Table } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import CreateStorageModalContainer from "@/containers/Storages/StoragesTableContainer/CreateStorageModalContainer";
 import StoragesTableHeaderContainer from "@/containers/Storages/StoragesTableContainer/StoragesTableHeaderContainer";
 import { STORAGES_TABLE_COLUMNS } from "./constants";
@@ -19,7 +20,7 @@ const StoragesTable: FC<StoragesTableProps> = ({
         onRow={onRow}
         columns={STORAGES_TABLE_COLUMNS}
         dataSource={storages}
-        loading={loading}
+        loading={{ indicator: <LoadingOutlined />, spinning: loading }}
         pagination={false}
         rowKey="_id"
         bordered
