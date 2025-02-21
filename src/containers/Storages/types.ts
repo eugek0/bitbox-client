@@ -3,3 +3,7 @@ export interface ICreateStoragePayload {
   description?: string;
   size: number;
 }
+
+export interface ISearchStoragesOptionsPayload {
+  name: string;
+}
