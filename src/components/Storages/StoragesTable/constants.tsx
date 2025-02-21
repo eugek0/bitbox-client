@@ -1,12 +1,25 @@
-import { TableColumnType } from "antd";
+import { Flex, TableColumnType, Typography } from "antd";
+import { ProductFilled } from "@ant-design/icons";
 import { IStoragesTableRecord } from "@/containers/Storages/StoragesTableContainer/types";
 import ProfileBadgeContainer from "@/containers/Common/ProfileBadgeContainer";
+import styles from "./styles.module.scss";
+import { formatBytes } from "@/core/utils";
 
 export const STORAGES_TABLE_COLUMNS: TableColumnType<IStoragesTableRecord>[] = [
   {
     title: "Название",
     dataIndex: "name",
     width: "25%",
+    render: (record) => {
+      return (
+        <Flex className={styles["storage-name"]} align="center" gap={10}>
+          <ProductFilled className={styles["storage-name__icon"]} />
+          <Typography.Text className={styles["storage-name__text"]}>
+            {record}
+          </Typography.Text>
+        </Flex>
+      );
+    },
   },
   {
     title: "Описание",
@@ -23,10 +36,12 @@ export const STORAGES_TABLE_COLUMNS: TableColumnType<IStoragesTableRecord>[] = [
     title: "Занято",
     dataIndex: "used",
     width: "6.25%",
+    render: (record) => formatBytes(record),
   },
   {
     title: "Размер",
     dataIndex: "size",
     width: "6.25%",
+    render: (record) => formatBytes(record),
   },
 ];

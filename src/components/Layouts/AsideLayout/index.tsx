@@ -4,8 +4,8 @@ import { AsideLayoutProps } from "./types";
 import Logotype from "@/components/Common/Logotype";
 import { APP_NAME } from "@/core/constants";
 import styles from "./styles.module.scss";
-import { MdStorage } from "react-icons/md";
 import {
+  HddFilled,
   LogoutOutlined,
   SettingOutlined,
   UserOutlined,
@@ -53,7 +53,7 @@ const AsideLayout: FC<AsideLayoutProps> = ({
                 {
                   key: "home",
                   label: "Список хранилищ",
-                  icon: <MdStorage />,
+                  icon: <HddFilled />,
                 },
               ]}
             />
