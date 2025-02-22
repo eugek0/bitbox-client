@@ -1,15 +1,16 @@
 import { FC } from "react";
 import { Avatar, Flex, Layout, Menu, Typography } from "antd";
-import { AsideLayoutProps } from "./types";
-import Logotype from "@/components/Common/Logotype";
-import { APP_NAME } from "@/core/constants";
-import styles from "./styles.module.scss";
 import {
+  FileTextOutlined,
   HddFilled,
   LogoutOutlined,
   SettingOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+import Logotype from "@/components/Common/Logotype";
+import { APP_NAME, SERVER_BASE_URL } from "@/core/constants";
+import { AsideLayoutProps } from "./types";
+import styles from "./styles.module.scss";
 
 const AsideLayout: FC<AsideLayoutProps> = ({
   children,
@@ -61,6 +62,17 @@ const AsideLayout: FC<AsideLayoutProps> = ({
           <Menu
             selectedKeys={menuSelectedKeys}
             items={[
+              {
+                key: "api",
+                label: "API документация",
+                icon: <FileTextOutlined />,
+                onClick: () => window.open(`${SERVER_BASE_URL}/api`, "_blank"),
+              },
+              {
+                key: "settings",
+                label: "Настройки",
+                icon: <SettingOutlined />,
+              },
               {
                 key: "profile",
                 label: "Профиль",
