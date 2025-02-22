@@ -1,7 +1,15 @@
-.number {
+.size {
   width: 160px;
 }
 
-.input {
+.name {
+  flex: 1;
+}
+
+.access {
+  width: 200px;
+}
+
+.members {
   flex: 1;
 }

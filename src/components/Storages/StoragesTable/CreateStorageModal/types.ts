@@ -7,6 +7,7 @@ export interface CreateStorageModalProps
   extends Omit<ModalProps, "children" | "title" | "footer"> {
   form: FormInstance;
   loading: boolean;
+  hide?: Partial<Record<keyof TCreateStorageModalFields, boolean>>;
 }
 
 export interface ICreateStorageModalRules

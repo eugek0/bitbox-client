@@ -1,16 +1,21 @@
 import { FC } from "react";
-import { Button, Flex, Form, Input, InputNumber } from "antd";
+import { Button, Flex, Form, Input, InputNumber, Select } from "antd";
 import { TCreateStorageModalFields } from "@/containers/Storages/StoragesTableContainer/CreateStorageModalContainer/types";
-import { CREATE_STORAGE_MODAL_RULES } from "./constants";
+import AppModal from "@/components/Common/AppModal";
+import UsersSelect from "@/containers/Common/UsersSelect";
+import {
+  CREATE_STORAGE_MODAL_INITIAL_VALUES,
+  CREATE_STORAGE_MODAL_RULES,
+} from "./constants";
 import { CreateStorageModalProps } from "./types";
 import styles from "./styles.module.scss";
-import AppModal from "@/components/Common/AppModal";
 
 const CreateStorageModal: FC<CreateStorageModalProps> = ({
   form,
   loading,
   onCancel,
   onOk,
+  hide,
   ...props
 }) => {
   return (
@@ -28,10 +33,10 @@ const CreateStorageModal: FC<CreateStorageModalProps> = ({
         </>
       )}
     >
-      <Form form={form}>
-        <Flex align="center" gap={10}>
+      <Form initialValues={CREATE_STORAGE_MODAL_INITIAL_VALUES} form={form}>
+        <Flex align="center" gap={15}>
           <Form.Item<TCreateStorageModalFields>
-            className={styles["input"]}
+            className={styles["name"]}
             rules={CREATE_STORAGE_MODAL_RULES.default}
             label="Название"
             name="name"
@@ -43,7 +48,7 @@ const CreateStorageModal: FC<CreateStorageModalProps> = ({
             label="Размер"
             name="size"
           >
-            <InputNumber className={styles["number"]} addonAfter="Бит" />
+            <InputNumber className={styles["size"]} addonAfter="Бит" />
           </Form.Item>
         </Flex>
         <Form.Item<TCreateStorageModalFields>
@@ -52,6 +57,30 @@ const CreateStorageModal: FC<CreateStorageModalProps> = ({
         >
           <Input.TextArea maxLength={256} />
         </Form.Item>
+        <Flex align="center" gap={15}>
+          <Form.Item<TCreateStorageModalFields>
+            className={styles["access"]}
+            rules={CREATE_STORAGE_MODAL_RULES.default}
+            label="Доступ"
+            name="access"
+          >
+            <Select
+              options={[
+                { value: "public", label: "Публичное" },
+                { value: "private", label: "Приватное" },
+              ]}
+            />
+          </Form.Item>
+          {!hide?.members && (
+            <Form.Item<TCreateStorageModalFields>
+              className={styles["members"]}
+              label="Участники"
+              name="members"
+            >
+              <UsersSelect mode="multiple" allowClear />
+            </Form.Item>
+          )}
+        </Flex>
       </Form>
     </AppModal>
   );

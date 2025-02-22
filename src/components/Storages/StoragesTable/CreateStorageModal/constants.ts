@@ -1,3 +1,4 @@
+import { TCreateStorageModalFields } from "@/containers/Storages/StoragesTableContainer/CreateStorageModalContainer/types";
 import { ICreateStorageModalRules } from "./types";
 
 export const CREATE_STORAGE_MODAL_RULES: ICreateStorageModalRules = {
@@ -14,4 +15,10 @@ export const CREATE_STORAGE_MODAL_RULES: ICreateStorageModalRules = {
       message: "Обязательное поле",
     },
   ],
+};
+
+export const CREATE_STORAGE_MODAL_INITIAL_VALUES: Partial<
+  Record<keyof TCreateStorageModalFields, any>
+> = {
+  access: "public",
 };
