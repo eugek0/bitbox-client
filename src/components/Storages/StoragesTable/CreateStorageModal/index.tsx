@@ -2,6 +2,7 @@ import { FC } from "react";
 import { Button, Form, Input, InputNumber, Modal } from "antd";
 import { CreateStorageModalProps } from "./types";
 import { TCreateStorageModalFields } from "@/containers/Storages/StoragesTableContainer/CreateStorageModalContainer/types";
+import { CREATE_STORAGE_MODAL_RULES } from "./constants";
 
 const CreateStorageModal: FC<CreateStorageModalProps> = ({
   form,
@@ -26,7 +27,7 @@ const CreateStorageModal: FC<CreateStorageModalProps> = ({
     >
       <Form form={form}>
         <Form.Item<TCreateStorageModalFields>
-          rules={[{ required: true, message: "Обязательное поле" }]}
+          rules={CREATE_STORAGE_MODAL_RULES.default}
           label="Название"
           name="name"
         >
@@ -39,7 +40,7 @@ const CreateStorageModal: FC<CreateStorageModalProps> = ({
           <Input.TextArea />
         </Form.Item>
         <Form.Item<TCreateStorageModalFields>
-          rules={[{ required: true, message: "Обязательное поле" }]}
+          rules={CREATE_STORAGE_MODAL_RULES.default}
           label="Размер"
           name="size"
         >

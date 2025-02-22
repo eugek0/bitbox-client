@@ -4,6 +4,7 @@ export const AUTH_FORM_RULES: IAuthFormRules = {
   default: [
     {
       required: true,
+      whitespace: true,
       message: "Обязательное поле",
       validateTrigger: ["onSubmit"],
     },
@@ -11,6 +12,7 @@ export const AUTH_FORM_RULES: IAuthFormRules = {
   email: [
     {
       required: true,
+      whitespace: true,
       message: "Обязательное поле",
       validateTrigger: ["onSubmit"],
     },
@@ -23,6 +25,7 @@ export const AUTH_FORM_RULES: IAuthFormRules = {
   password: [
     {
       required: true,
+      whitespace: true,
       message: "Обязательное поле",
       validateTrigger: ["onSubmit"],
     },
