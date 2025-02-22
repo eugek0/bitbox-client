@@ -1,7 +1,7 @@
 @use "@/core/styles" as *;
 
 .sider {
-  border-right: 1px solid #ffffff26;
+  border-right: 1px solid $bg-service-border-color;
   background: linear-gradient(
     180deg,
     rgba(51, 209, 122, 0.2) calc(334px * 0.33),
@@ -40,7 +40,7 @@
   }
 
   div:global(.ant-layout-sider-trigger) {
-    border-right: 1px solid #ffffff26;
+    border-right: 1px solid $bg-service-border-color;
   }
 
   ul:global(.ant-menu-root) {
