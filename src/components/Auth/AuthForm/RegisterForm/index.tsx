@@ -58,8 +58,9 @@ const RegisterForm: FC<AuthFormInstanceProps> = ({
             />
           </Form.Item>
           <Form.Item<IRegisterFormValues>
-            rules={AUTH_FORM_RULES.repeatPassword(props.form)}
+            rules={AUTH_FORM_RULES.repeatPassword}
             name="repeatPassword"
+            dependencies={["password"]}
           >
             <Input.Password
               placeholder="Повторите пароль"

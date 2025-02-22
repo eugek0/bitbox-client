@@ -32,16 +32,16 @@ export const AUTH_FORM_RULES: IAuthFormRules = {
       validateTrigger: ["onSubmit"],
     },
   ],
-  repeatPassword: (form) => [
-    {
+  repeatPassword: [
+    ({ getFieldsValue }) => ({
       validator: (_, value) => {
-        const password = form?.getFieldsValue()?.password;
+        const password = getFieldsValue()?.password;
 
         if (value && value !== password) {
           return Promise.reject(new Error("Пароли не совпадают"));
         }
         return Promise.resolve();
       },
-    },
+    }),
   ],
 } as const;

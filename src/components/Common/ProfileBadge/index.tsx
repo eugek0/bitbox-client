@@ -20,7 +20,9 @@ const ProfileBadge: FC<ProfileBadgeProps> = ({
       <Avatar src={avatar} size="small" />
       <Flex align="center" gap={5}>
         <Typography.Text>{login}</Typography.Text>
-        {role === "admin" && <CrownFilled className={styles["role-icon"]} />}
+        {role === "admin" && (
+          <CrownFilled className={styles["role-icon"]} title="Администратор" />
+        )}
       </Flex>
     </Flex>
   );
