@@ -31,13 +31,13 @@ const CreateStorageModal: FC<CreateStorageModalProps> = ({
           label="Название"
           name="name"
         >
-          <Input />
+          <Input maxLength={32} />
         </Form.Item>
         <Form.Item<TCreateStorageModalFields>
           label="Описание"
           name="description"
         >
-          <Input.TextArea />
+          <Input.TextArea maxLength={256} />
         </Form.Item>
         <Form.Item<TCreateStorageModalFields>
           rules={CREATE_STORAGE_MODAL_RULES.size}

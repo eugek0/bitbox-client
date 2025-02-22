@@ -10,6 +10,7 @@ export const STORAGES_TABLE_COLUMNS: TableColumnType<IStoragesTableRecord>[] = [
     title: "Название",
     dataIndex: "name",
     width: "25%",
+    ellipsis: true,
     render: (record) => {
       return (
         <Flex className={styles["storage-name"]} align="center" gap={10}>
