@@ -11,7 +11,7 @@ const RegisterFormContainer: FC = () => {
   const [form] = useForm();
   const navigate = useNavigate({ from: "/auth/register" });
 
-  const [register] = useRegisterMutation();
+  const [register, { isLoading }] = useRegisterMutation();
   const [getProfile, { data: profile }] = useLazyGetProfileQuery();
 
   const onFinish: FormProps<IRegisterFormValues>["onFinish"] = async (
@@ -41,8 +41,9 @@ const RegisterFormContainer: FC = () => {
         link: "/auth/login",
         text: "Уже есть аккаунт?",
       }}
-      form={form}
+      loading={isLoading}
       onFinish={onFinish}
+      form={form}
     />
   );
 };

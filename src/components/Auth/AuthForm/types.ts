@@ -6,6 +6,7 @@ import { ReactNode } from "react";
 
 export interface AuthFormProps {
   form: FormProps["form"];
+  loading?: boolean;
   children?: ReactNode;
   redirectButton?: IAuthRedirectButton;
   onFinish?: FormProps["onFinish"];

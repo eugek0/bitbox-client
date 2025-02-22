@@ -11,7 +11,7 @@ const LoginFormContainer: FC = () => {
   const [form] = useForm<ILoginPayload>();
   const navigate = useNavigate({ from: "/auth/login" });
 
-  const [login] = useLoginMutation();
+  const [login, { isLoading }] = useLoginMutation();
   const [getProfile, { data: profile }] = useLazyGetProfileQuery();
 
   const onFinish: FormProps<ILoginPayload>["onFinish"] = async (values) => {
@@ -39,8 +39,9 @@ const LoginFormContainer: FC = () => {
         link: "/auth/register",
         text: "Еще нет аккаунта?",
       }}
-      form={form}
+      loading={isLoading}
       onFinish={onFinish}
+      form={form}
     />
   );
 };

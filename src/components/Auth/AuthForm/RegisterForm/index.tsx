@@ -10,6 +10,7 @@ import { Link } from "@tanstack/react-router";
 
 const RegisterForm: FC<AuthFormInstanceProps> = ({
   redirectButton,
+  loading,
   ...props
 }) => {
   return (
@@ -74,8 +75,9 @@ const RegisterForm: FC<AuthFormInstanceProps> = ({
         <Form.Item className={styles["submit-button-container"]}>
           <Button
             className={styles["submit-button"]}
-            type="primary"
+            loading={loading}
             htmlType="submit"
+            type="primary"
             size="middle"
           >
             Зарегистрироваться

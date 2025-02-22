@@ -8,7 +8,11 @@ import { AUTH_FORM_RULES } from "../constants";
 import styles from "../styles.module.scss";
 import { Link } from "@tanstack/react-router";
 
-const LoginForm: FC<AuthFormInstanceProps> = ({ redirectButton, ...props }) => {
+const LoginForm: FC<AuthFormInstanceProps> = ({
+  redirectButton,
+  loading,
+  ...props
+}) => {
   return (
     <AuthForm {...props}>
       <Flex gap={25} vertical>
@@ -50,8 +54,9 @@ const LoginForm: FC<AuthFormInstanceProps> = ({ redirectButton, ...props }) => {
         <Form.Item className={styles["submit-button-container"]}>
           <Button
             className={styles["submit-button"]}
-            type="primary"
+            loading={loading}
             htmlType="submit"
+            type="primary"
             size="middle"
           >
             Войти
