@@ -8,4 +8,10 @@ export const CREATE_STORAGE_MODAL_RULES: ICreateStorageModalRules = {
       message: "Обязательное поле",
     },
   ],
+  size: [
+    {
+      required: true,
+      message: "Обязательное поле",
+    },
+  ],
 };

@@ -1,3 +1,5 @@
+import { ILoginFormValues } from "@/containers/Auth/LoginFormContainer/types";
+import { IRegisterFormValues } from "@/containers/Auth/RegisterFormContainer/types";
 import { FormProps } from "antd";
 import { Rule } from "antd/es/form";
 import { ReactNode } from "react";
@@ -15,11 +17,11 @@ export interface IAuthRedirectButton {
   link?: string;
 }
 
-export interface IAuthFormRules {
+export interface IAuthFormRules
+  extends Partial<
+    Record<keyof ILoginFormValues | keyof IRegisterFormValues, Rule[]>
+  > {
   default: Rule[];
-  email: Rule[];
-  password: Rule[];
-  repeatPassword: Rule[];
 }
 
 export type AuthFormInstanceProps = Omit<AuthFormProps, "children">;

@@ -40,7 +40,7 @@ const CreateStorageModal: FC<CreateStorageModalProps> = ({
           <Input.TextArea />
         </Form.Item>
         <Form.Item<TCreateStorageModalFields>
-          rules={CREATE_STORAGE_MODAL_RULES.default}
+          rules={CREATE_STORAGE_MODAL_RULES.size}
           label="Размер"
           name="size"
         >
