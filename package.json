@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.4.0",
+    "@ant-design/v5-patch-for-react-19": "^1.0.3",
     "@reduxjs/toolkit": "^2.2.7",
     "@tanstack/react-router": "^1.52.5",
     "@tanstack/react-table": "^8.20.6",
