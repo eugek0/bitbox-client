@@ -1,8 +1,10 @@
 import { FC } from "react";
-import { Button, Form, Input, InputNumber, Modal } from "antd";
-import { CreateStorageModalProps } from "./types";
+import { Button, Flex, Form, Input, InputNumber } from "antd";
 import { TCreateStorageModalFields } from "@/containers/Storages/StoragesTableContainer/CreateStorageModalContainer/types";
 import { CREATE_STORAGE_MODAL_RULES } from "./constants";
+import { CreateStorageModalProps } from "./types";
+import styles from "./styles.module.scss";
+import AppModal from "@/components/Common/AppModal";
 
 const CreateStorageModal: FC<CreateStorageModalProps> = ({
   form,
@@ -12,9 +14,10 @@ const CreateStorageModal: FC<CreateStorageModalProps> = ({
   ...props
 }) => {
   return (
-    <Modal
+    <AppModal
       {...props}
       onCancel={onCancel}
+      width={700}
       title="Создать хранилище"
       footer={() => (
         <>
@@ -26,28 +29,31 @@ const CreateStorageModal: FC<CreateStorageModalProps> = ({
       )}
     >
       <Form form={form}>
-        <Form.Item<TCreateStorageModalFields>
-          rules={CREATE_STORAGE_MODAL_RULES.default}
-          label="Название"
-          name="name"
-        >
-          <Input maxLength={32} />
-        </Form.Item>
+        <Flex align="center" gap={10}>
+          <Form.Item<TCreateStorageModalFields>
+            className={styles["input"]}
+            rules={CREATE_STORAGE_MODAL_RULES.default}
+            label="Название"
+            name="name"
+          >
+            <Input maxLength={32} />
+          </Form.Item>
+          <Form.Item<TCreateStorageModalFields>
+            rules={CREATE_STORAGE_MODAL_RULES.size}
+            label="Размер"
+            name="size"
+          >
+            <InputNumber className={styles["number"]} addonAfter="Бит" />
+          </Form.Item>
+        </Flex>
         <Form.Item<TCreateStorageModalFields>
           label="Описание"
           name="description"
         >
           <Input.TextArea maxLength={256} />
         </Form.Item>
-        <Form.Item<TCreateStorageModalFields>
-          rules={CREATE_STORAGE_MODAL_RULES.size}
-          label="Размер"
-          name="size"
-        >
-          <InputNumber />
-        </Form.Item>
       </Form>
-    </Modal>
+    </AppModal>
   );
 };
 

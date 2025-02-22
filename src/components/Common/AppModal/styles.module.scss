@@ -1,0 +1,32 @@
+@use "@/core/styles" as *;
+
+.body {
+  :global(.ant-modal-content) {
+    padding: 0;
+  }
+
+  :global(.ant-modal-close) {
+    top: 15px;
+  }
+
+  :global(.ant-modal-header) {
+    padding: 15px 15px 10px 15px;
+    margin: 0 0 16px 0;
+    background-color: $bg-service-color;
+    border: 1px solid $bg-service-color_lighten;
+  }
+
+  :global(.ant-modal-title) {
+    height: 32px;
+    display: flex;
+    align-items: center;
+  }
+
+  :global(.ant-modal-body) {
+    padding: 0 24px 0 24px;
+  }
+
+  :global(.ant-modal-footer) {
+    padding: 0 24px 20px 24px;
+  }
+}
