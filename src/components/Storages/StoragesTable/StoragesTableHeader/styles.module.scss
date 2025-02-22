@@ -1,6 +1,8 @@
+@use "@/core/styles" as *;
+
 .body {
   padding: 16px;
-  background-color: #403840;
+  background-color: $bg-service-color_lighten;
   box-shadow: 0px 1px 10px 0px rgba(34, 29, 34, 0.6);
   z-index: 1;
 
