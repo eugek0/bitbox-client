@@ -1,19 +1,21 @@
-import { FC, useState } from "react";
-import StoragesTable from "@/components/Storages/StoragesTable";
+import { FC } from "react";
 import {
   useCreateStorageMutation,
   useDeleteStorageMutation,
   useGetStoragesQuery,
 } from "../api";
 import { TCreateStorageModalFields } from "./CreateStorageModalContainer/types";
-import StorageTableContext from "./context";
 import { TableProps } from "antd";
 import styles from "./styles.module.scss";
 import { useNavigate } from "@tanstack/react-router";
+import BitBoxTableContainer from "@/containers/BitBoxTableContainer";
+import { IStoragesTableRecord } from "./types";
+import { STORAGES_TABLE_COLUMNS } from "./constants";
+import { BitBoxTableButtonProps } from "@/containers/BitBoxTableContainer/types";
+import { PlusOutlined } from "@ant-design/icons";
+import CreateStorageModalContainer from "./CreateStorageModalContainer";
 
 const StoragesTableContainer: FC = () => {
-  const [isModalOpen, setModalOpen] = useState<boolean>(false);
-
   const navigate = useNavigate();
 
   const {
@@ -26,17 +28,18 @@ const StoragesTableContainer: FC = () => {
     useCreateStorageMutation();
   const [deleteStorage] = useDeleteStorageMutation();
 
-  const handleClickCreate = () => {
-    setModalOpen(true);
+  const handleClickCreate: BitBoxTableButtonProps["onClick"] = ({
+    setConfig,
+  }) => {
+    setConfig({
+      open: true,
+      mode: "add",
+    });
   };
 
-  const handleOkModal = async (values: TCreateStorageModalFields) => {
-    await createStorage(values).unwrap();
+  const handleCreateRow = async (values: Record<string, any>) => {
+    await createStorage(values as TCreateStorageModalFields).unwrap();
     refetchStorages();
-  };
-
-  const handleCloseModal = () => {
-    setModalOpen(false);
   };
 
   const onRow: TableProps["onRow"] = (record) => ({
@@ -52,21 +55,27 @@ const StoragesTableContainer: FC = () => {
   });
 
   return (
-    <StorageTableContext
-      value={{
-        isModalOpen,
-        isModalLoading: isStorageCreating,
-        handleCloseModal,
-        handleOkModal,
+    <BitBoxTableContainer<IStoragesTableRecord>
+      records={storages ?? []}
+      columns={STORAGES_TABLE_COLUMNS}
+      header={{
+        title: "Список хранилищ",
+        button: {
+          children: "Создать",
+          onClick: handleClickCreate,
+          icon: <PlusOutlined />,
+        },
       }}
-    >
-      <StoragesTable
-        storages={storages ?? []}
-        loading={isStoragesFetching}
-        handleClickCreate={handleClickCreate}
-        onRow={onRow}
-      />
-    </StorageTableContext>
+      modal={(props) => (
+        <CreateStorageModalContainer
+          isModalLoading={isStorageCreating}
+          {...props}
+        />
+      )}
+      handleAddRow={handleCreateRow}
+      loading={isStoragesFetching}
+      onRow={onRow}
+    />
   );
 };
 

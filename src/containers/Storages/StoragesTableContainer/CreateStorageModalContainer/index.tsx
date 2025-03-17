@@ -1,12 +1,19 @@
-import { FC, useContext, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import CreateStorageModal from "@/components/Storages/StoragesTable/CreateStorageModal";
 import { useForm, useWatch } from "antd/es/form/Form";
-import StorageTableContext from "../context";
 import { setErrorsToField } from "@/core/utils";
 import { isFormException } from "@/core/typeguards";
-import { TCreateStorageModalFields } from "./types";
+import {
+  CreateStorageModalContainerProps,
+  TCreateStorageModalFields,
+} from "./types";
 
-const CreateStorageModalContainer: FC = () => {
+const CreateStorageModalContainer: FC<CreateStorageModalContainerProps> = ({
+  isModalLoading,
+  config,
+  setConfig,
+  handleAddRow,
+}) => {
   const [disabled, setDisabled] = useState<
     Partial<Record<keyof TCreateStorageModalFields, boolean>>
   >({
@@ -21,25 +28,20 @@ const CreateStorageModalContainer: FC = () => {
     max_file_size: false,
   });
 
-  const context = useContext(StorageTableContext);
-
   const [form] = useForm<TCreateStorageModalFields>();
-
-  if (!context) {
-    throw new Error("Context not found");
-  }
 
   const access = useWatch("access", form);
   const restrict_file_size = useWatch("restrict_file_size", form);
   const restrict_files_count = useWatch("restrict_files_count", form);
 
-  const { isModalOpen, isModalLoading, handleOkModal, handleCloseModal } =
-    context;
+  const handleCloseModal = () => {
+    setConfig({ open: false, mode: null });
+  };
 
   const handleSubmit = async () => {
     try {
       const values = await form.validateFields();
-      await handleOkModal(values);
+      await handleAddRow?.(values);
       form.resetFields();
       handleCloseModal();
     } catch (error) {
@@ -82,14 +84,14 @@ const CreateStorageModalContainer: FC = () => {
   }, [restrict_files_count]);
 
   useEffect(() => {
-    if (isModalOpen) {
+    if (config?.open) {
       form.resetFields();
     }
-  }, [isModalOpen]);
+  }, [config?.open]);
 
   return (
     <CreateStorageModal
-      open={isModalOpen}
+      open={config?.open}
       loading={isModalLoading}
       form={form}
       onOk={handleSubmit}
