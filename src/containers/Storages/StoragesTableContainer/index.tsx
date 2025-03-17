@@ -36,7 +36,8 @@ const StoragesTableContainer: FC = () => {
   };
 
   const onRow: TableProps["onRow"] = (record) => ({
-    onDoubleClick: async () => {
+    onContextMenu: async (event) => {
+      event.preventDefault();
       await deleteStorage(record.name);
       refetchStorages();
     },
