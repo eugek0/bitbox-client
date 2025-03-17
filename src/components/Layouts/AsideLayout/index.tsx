@@ -8,7 +8,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import Logotype from "@/components/Common/Logotype";
-import { APP_NAME, SERVER_BASE_URL } from "@/core/constants";
+import { APP_NAME } from "@/core/constants";
 import { AsideLayoutProps } from "./types";
 import styles from "./styles.module.scss";
 
@@ -17,6 +17,7 @@ const AsideLayout: FC<AsideLayoutProps> = ({
   collapsed,
   profile,
   menuSelectedKeys,
+  clickHandlers,
   handleChangeCollapsed,
   handleLogout,
 }) => {
@@ -55,6 +56,7 @@ const AsideLayout: FC<AsideLayoutProps> = ({
                   key: "home",
                   label: "Список хранилищ",
                   icon: <HddFilled />,
+                  onClick: clickHandlers["home"],
                 },
               ]}
             />
@@ -66,7 +68,7 @@ const AsideLayout: FC<AsideLayoutProps> = ({
                 key: "api",
                 label: "API документация",
                 icon: <FileTextOutlined />,
-                onClick: () => window.open(`${SERVER_BASE_URL}/api`, "_blank"),
+                onClick: clickHandlers["api"],
               },
               {
                 key: "settings",
