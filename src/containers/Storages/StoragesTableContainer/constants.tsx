@@ -2,8 +2,8 @@ import { Flex, TableColumnType, Typography } from "antd";
 import { ProductFilled } from "@ant-design/icons";
 import { IStoragesTableRecord } from "@/containers/Storages/StoragesTableContainer/types";
 import ProfileBadgeContainer from "@/containers/Common/ProfileBadgeContainer";
-import styles from "./styles.module.scss";
 import { convertBits } from "@/core/utils";
+import styles from "./styles.module.scss";
 
 export const STORAGES_TABLE_COLUMNS: TableColumnType<IStoragesTableRecord>[] = [
   {

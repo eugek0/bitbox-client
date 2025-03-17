@@ -8,10 +8,3 @@ export interface IStoragesTableRecord {
   used: number;
   size: number;
 }
-
-export interface IStorageTableContext {
-  isModalOpen: boolean;
-  isModalLoading: boolean;
-  handleOkModal: (values: TCreateStorageModalFields) => Promise<void>;
-  handleCloseModal: () => void;
-}

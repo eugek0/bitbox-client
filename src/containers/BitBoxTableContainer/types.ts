@@ -9,7 +9,7 @@ export interface BitBoxTableContainerProps<T extends BitBoxTableRecord>
   extends Pick<TableProps, "onRow"> {
   records: T[];
   columns: TableColumnType<T>[];
-  loading: boolean;
+  loading?: boolean;
   header?: IBitBoxTableHeader;
   modal?: FC<BitBoxTableModalProps>;
   handleAddRow?: (values: Record<string, any>) => Promise<void> | void;
