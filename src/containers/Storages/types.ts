@@ -4,6 +4,10 @@ export interface ICreateStoragePayload {
   size: number;
   access?: TStorageAccess;
   members?: string[];
+  restrict_file_size?: boolean;
+  max_file_size?: number;
+  restrict_files_count?: boolean;
+  max_files_count?: number;
 }
 
 export interface ISearchStoragesOptionsPayload {

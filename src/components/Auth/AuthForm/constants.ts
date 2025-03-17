@@ -1,19 +1,18 @@
+import { REQUIRED_FIELD_MESSAGE } from "@/core/constants";
 import { IAuthFormRules } from "./types";
 
 export const AUTH_FORM_RULES: IAuthFormRules = {
   default: [
     {
       required: true,
-      whitespace: true,
-      message: "Обязательное поле",
+      message: REQUIRED_FIELD_MESSAGE,
       validateTrigger: ["onSubmit"],
     },
   ],
   email: [
     {
       required: true,
-      whitespace: true,
-      message: "Обязательное поле",
+      message: REQUIRED_FIELD_MESSAGE,
       validateTrigger: ["onSubmit"],
     },
     {
@@ -25,8 +24,7 @@ export const AUTH_FORM_RULES: IAuthFormRules = {
   password: [
     {
       required: true,
-      whitespace: true,
-      message: "Обязательное поле",
+      message: REQUIRED_FIELD_MESSAGE,
       validateTrigger: ["onSubmit"],
     },
     {
