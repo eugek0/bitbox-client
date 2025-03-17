@@ -8,9 +8,13 @@ import {
 import { TCreateStorageModalFields } from "./CreateStorageModalContainer/types";
 import StorageTableContext from "./context";
 import { TableProps } from "antd";
+import styles from "./styles.module.scss";
+import { useNavigate } from "@tanstack/react-router";
 
 const StoragesTableContainer: FC = () => {
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   const {
     data: storages,
@@ -36,6 +40,10 @@ const StoragesTableContainer: FC = () => {
   };
 
   const onRow: TableProps["onRow"] = (record) => ({
+    className: styles["row"],
+    onDoubleClick: () => {
+      navigate({ to: `/storage/${record._id}` });
+    },
     onContextMenu: async (event) => {
       event.preventDefault();
       await deleteStorage(record.name);
