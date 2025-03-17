@@ -53,10 +53,10 @@ const AsideLayout: FC<AsideLayoutProps> = ({
                   type: "divider",
                 },
                 {
-                  key: "home",
+                  key: "storages",
                   label: "Список хранилищ",
                   icon: <HddFilled />,
-                  onClick: clickHandlers["home"],
+                  onClick: clickHandlers["storages"],
                 },
               ]}
             />

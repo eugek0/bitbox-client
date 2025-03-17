@@ -1,13 +1,13 @@
 import { FC } from "react";
-import HomeContainer from "@/containers/Home";
+import Storages from "@/components/Storages";
 import styles from "../styles.module.scss";
 
-const HomePage: FC = () => {
+const StoragesPage: FC = () => {
   return (
     <div className={styles["page100vh"]}>
-      <HomeContainer />
+      <Storages />
     </div>
   );
 };
 
-export default HomePage;
+export default StoragesPage;

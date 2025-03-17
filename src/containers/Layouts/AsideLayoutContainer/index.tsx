@@ -21,7 +21,7 @@ const AsideLayoutContainer: FC<PropsWithChildren> = (props) => {
   const [logout] = useLogoutMutation();
 
   const clickHandlers: Record<string, () => void> = {
-    home: () => {
+    storages: () => {
       navigate({ to: "/" });
     },
     api: () => {

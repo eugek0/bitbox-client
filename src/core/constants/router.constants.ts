@@ -1,3 +1,3 @@
 export const PATH_KEYS_DICTIONARY: Record<string, string> = {
-  "/": "home",
+  "/": "storages",
 } as const;
