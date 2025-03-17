@@ -1,10 +1,10 @@
 import { FC } from "react";
 import HomeContainer from "@/containers/Home";
-import styles from "./styles.module.scss";
+import styles from "../styles.module.scss";
 
 const HomePage: FC = () => {
   return (
-    <div className={styles["body"]}>
+    <div className={styles["page100vh"]}>
       <HomeContainer />
     </div>
   );

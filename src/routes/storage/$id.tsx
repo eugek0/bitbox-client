@@ -1,3 +1,5 @@
+import AsideLayoutContainer from "@/containers/Layouts/AsideLayoutContainer";
+import StoragePage from "@/modules/StoragePage";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/storage/$id")({
@@ -5,5 +7,10 @@ export const Route = createFileRoute("/storage/$id")({
 });
 
 function RouteComponent() {
-  return <div>Hello "/storage/$id"!</div>;
+  return (
+    <AsideLayoutContainer>
+      <title>Хранилище</title>
+      <StoragePage />
+    </AsideLayoutContainer>
+  );
 }
