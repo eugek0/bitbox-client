@@ -1,19 +1,19 @@
 import { FC } from "react";
+import { TableProps } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+import { useNavigate } from "@tanstack/react-router";
+import { TCreateStorageModalFields } from "./CreateStorageModalContainer/types";
+import BitBoxTableContainer from "@/containers/Common/BitBoxTableContainer";
+import { BitBoxTableButtonProps } from "@/containers/Common/BitBoxTableContainer/types";
+import CreateStorageModalContainer from "./CreateStorageModalContainer";
 import {
   useCreateStorageMutation,
   useDeleteStorageMutation,
   useGetStoragesQuery,
 } from "../api";
-import { TCreateStorageModalFields } from "./CreateStorageModalContainer/types";
-import { TableProps } from "antd";
-import styles from "./styles.module.scss";
-import { useNavigate } from "@tanstack/react-router";
-import BitBoxTableContainer from "@/containers/BitBoxTableContainer";
-import { IStoragesTableRecord } from "./types";
 import { STORAGES_TABLE_COLUMNS } from "./constants";
-import { BitBoxTableButtonProps } from "@/containers/BitBoxTableContainer/types";
-import { PlusOutlined } from "@ant-design/icons";
-import CreateStorageModalContainer from "./CreateStorageModalContainer";
+import { IStoragesTableRecord } from "./types";
+import styles from "./styles.module.scss";
 
 const StoragesTableContainer: FC = () => {
   const navigate = useNavigate();

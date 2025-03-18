@@ -1,5 +1,5 @@
 import { FC } from "react";
-import BitBoxTableContainer from "@/containers/BitBoxTableContainer";
+import BitBoxTableContainer from "@/containers/Common/BitBoxTableContainer";
 import { STORAGE_TABLE_COLUMNS } from "./constants";
 
 const StorageTableContainer: FC = () => {
