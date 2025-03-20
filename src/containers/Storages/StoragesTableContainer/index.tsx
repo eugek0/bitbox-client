@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { TableProps } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "@tanstack/react-router";

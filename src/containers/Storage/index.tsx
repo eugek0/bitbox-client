@@ -10,7 +10,7 @@ import styles from "./styles.module.scss";
 const StorageContainer: FC = () => {
   const { id } = useParams({ from: "/storage/$id" });
 
-  const { data: storage, error, isLoading } = useGetStorageQuery(id);
+  const { error, isLoading } = useGetStorageQuery(id);
 
   if (isLoading) {
     return <FullscreenLoader />;
