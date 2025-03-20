@@ -1,4 +1,4 @@
-import { FC, Dispatch, MouseEvent } from "react";
+import { FC, Dispatch, MouseEvent, ReactNode } from "react";
 import { TableColumnType, TableProps } from "antd";
 import { ButtonProps } from "antd/lib";
 import { Nullable } from "@/core/types";
@@ -18,6 +18,7 @@ export interface BitBoxTableContainerProps<T extends BitBoxTableRecord>
 export interface IBitBoxTableHeader {
   title?: string;
   button?: BitBoxTableButtonProps;
+  suffix?: ReactNode;
 }
 
 export interface BitBoxTableButtonProps extends Omit<ButtonProps, "onClick"> {

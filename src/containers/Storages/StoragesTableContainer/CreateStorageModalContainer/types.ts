@@ -1,4 +1,4 @@
-import { BitBoxTableModalProps } from "@/containers/BitBoxTableContainer/types";
+import { BitBoxTableModalProps } from "@/containers/Common/BitBoxTableContainer/types";
 import { ICreateStoragePayload } from "../../types";
 
 export interface CreateStorageModalContainerProps

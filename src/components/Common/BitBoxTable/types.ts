@@ -2,7 +2,7 @@ import {
   BitBoxTableContainerProps,
   BitBoxTableModalProps,
   BitBoxTableRecord,
-} from "@/containers/BitBoxTableContainer/types";
+} from "@/containers/Common/BitBoxTableContainer/types";
 
 export interface BitBoxTableProps<T extends BitBoxTableRecord>
   extends BitBoxTableContainerProps<T> {

@@ -1,11 +1,11 @@
 import { ReactNode, useState } from "react";
+import BitBoxTable from "@/components/Common/BitBoxTable";
 import {
   BitBoxTableContainerProps,
   BitBoxTableModalProps,
   BitBoxTableRecord,
   IBitBoxTableModalConfig,
 } from "./types";
-import BitBoxTable from "@/components/BitBoxTable";
 
 const BitBoxTableContainer = <T extends BitBoxTableRecord>({
   handleAddRow,

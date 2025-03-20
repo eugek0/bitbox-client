@@ -3,7 +3,7 @@ import { Button, Flex, Typography } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import StorageSearcher from "@/containers/Common/StorageSearcher";
 import { BitBoxTableHeaderProps } from "./types";
-import { BitBoxTableRecord } from "@/containers/BitBoxTableContainer/types";
+import { BitBoxTableRecord } from "@/containers/Common/BitBoxTableContainer/types";
 import styles from "./styles.module.scss";
 
 const BitBoxTableHeader = <T extends BitBoxTableRecord>({
@@ -13,6 +13,7 @@ const BitBoxTableHeader = <T extends BitBoxTableRecord>({
   return (
     <Flex className={styles["body"]} align="center" justify="space-between">
       <Flex align="center" gap={25}>
+        {header?.suffix}
         <Typography.Title className={styles["body__title"]} level={4}>
           {header?.title}
         </Typography.Title>

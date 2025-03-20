@@ -1,3 +1,14 @@
+@use "@/core/styles" as *;
+
 .row {
   cursor: pointer;
+  user-select: none;
+
+  &__selected {
+    background-color: $primary-color_selected;
+
+    :global(.ant-table-cell-row-hover) {
+      background-color: lighten($primary-color_selected, 5%) !important;
+    }
+  }
 }
