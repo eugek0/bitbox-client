@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { TableProps } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "@tanstack/react-router";
@@ -16,6 +16,8 @@ import { IStoragesTableRecord } from "./types";
 import styles from "./styles.module.scss";
 
 const StoragesTableContainer: FC = () => {
+  const [selected, setSelected] = useState<string[]>([]);
+
   const navigate = useNavigate();
 
   const {
@@ -43,7 +45,14 @@ const StoragesTableContainer: FC = () => {
   };
 
   const onRow: TableProps["onRow"] = (record) => ({
-    className: styles["row"],
+    className: `${styles["row"]} ${selected.includes(record._id) ? styles["row__selected"] : ""}`,
+    onClick: () => {
+      if (selected.includes(record._id)) {
+        setSelected([record._id]);
+      } else {
+        setSelected([record._id]);
+      }
+    },
     onDoubleClick: () => {
       navigate({ to: `/storage/${record._id}` });
     },

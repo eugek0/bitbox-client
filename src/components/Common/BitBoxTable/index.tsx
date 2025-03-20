@@ -18,15 +18,22 @@ const BitBoxTable = <T extends BitBoxTableRecord>({
   return (
     <div className={styles["body"]}>
       <BitBoxTableHeader modalProps={modalProps} header={header} />
-      <Table
-        onRow={onRow}
-        columns={columns}
-        dataSource={records}
-        loading={{ indicator: <LoadingOutlined />, spinning: loading }}
-        pagination={false}
-        rowKey="_id"
-        bordered
-      />
+      <div
+        onDrop={(event) => {
+          event.preventDefault();
+          console.log(event);
+        }}
+      >
+        <Table
+          onRow={onRow}
+          columns={columns}
+          dataSource={records}
+          loading={{ indicator: <LoadingOutlined />, spinning: loading }}
+          pagination={false}
+          rowKey="_id"
+          bordered
+        />
+      </div>
       {modal?.(modalProps) as ReactNode}
     </div>
   );

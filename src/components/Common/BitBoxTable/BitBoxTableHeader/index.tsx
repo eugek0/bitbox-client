@@ -13,6 +13,7 @@ const BitBoxTableHeader = <T extends BitBoxTableRecord>({
   return (
     <Flex className={styles["body"]} align="center" justify="space-between">
       <Flex align="center" gap={25}>
+        {header?.suffix}
         <Typography.Title className={styles["body__title"]} level={4}>
           {header?.title}
         </Typography.Title>
