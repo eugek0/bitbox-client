@@ -1,5 +1,3 @@
-import { TCreateStorageModalFields } from "./CreateStorageModalContainer/types";
-
 export interface IStoragesTableRecord {
   name: string;
   description: string;
