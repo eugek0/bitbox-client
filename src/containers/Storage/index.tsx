@@ -6,6 +6,7 @@ import FullscreenLoader from "../Common/FullscreenLoader";
 import { isRTKQueryError } from "@/core/typeguards/rtkquery.typeguards";
 import { useGetStorageQuery } from "./api";
 import styles from "./styles.module.scss";
+import { now } from "lodash";
 
 const StorageContainer: FC = () => {
   const { id } = useParams({ from: "/storage/$id" });
@@ -41,15 +42,20 @@ const StorageContainer: FC = () => {
           title="403"
           subTitle={
             <span className={styles["message"]}>
-              У вас нет доступа к этому хранилищу. Обратитесь к владельцу, для
-              того чтобы он предоставил вам доступ:{" "}
-              <a
-                target="_blank"
-                href={`${error?.data?.type === "email" ? "mailto:" : "https://t.me/"}${error?.data?.contacts}`}
-              >
-                {error?.data?.type === "telegram" && "@"}
-                {error?.data?.contacts}
-              </a>
+              У вас нет доступа к этому хранилищу
+              {error?.data?.type !== "none" && (
+                <>
+                  . Обратитесь к владельцу, для того чтобы он предоставил вам
+                  доступ:{" "}
+                  <a
+                    target="_blank"
+                    href={`${error?.data?.type === "email" ? "mailto:" : "https://t.me/"}${error?.data?.contacts}`}
+                  >
+                    {error?.data?.type === "telegram" && "@"}
+                    {error?.data?.contacts}
+                  </a>
+                </>
+              )}{" "}
             </span>
           }
           extra={
