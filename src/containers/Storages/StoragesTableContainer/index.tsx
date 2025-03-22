@@ -1,10 +1,15 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { TableProps } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "@tanstack/react-router";
+import { MenuProps } from "antd/lib";
 import { TCreateStorageModalFields } from "./CreateStorageModalContainer/types";
 import BitBoxTableContainer from "@/containers/Common/BitBoxTableContainer";
-import { BitBoxTableButtonProps } from "@/containers/Common/BitBoxTableContainer/types";
+import {
+  BitBoxTableButtonProps,
+  BitBoxTableContextMenuDropdownProps,
+  BitBoxTableRecord,
+} from "@/containers/Common/BitBoxTableContainer/types";
 import CreateStorageModalContainer from "./CreateStorageModalContainer";
 import {
   useCreateStorageMutation,
@@ -13,11 +18,8 @@ import {
 } from "../api";
 import { STORAGES_TABLE_COLUMNS } from "./constants";
 import { IStoragesTableRecord } from "./types";
-import styles from "./styles.module.scss";
 
 const StoragesTableContainer: FC = () => {
-  const [selected, setSelected] = useState<string[]>([]);
-
   const navigate = useNavigate();
 
   const {
@@ -44,29 +46,52 @@ const StoragesTableContainer: FC = () => {
     refetchStorages();
   };
 
+  const handleDeleteRow = async (selected: BitBoxTableRecord[]) => {
+    await deleteStorage(selected[0]?._id);
+  };
+
   const onRow: TableProps["onRow"] = (record) => ({
-    className: `${styles["row"]} ${selected.includes(record._id) ? styles["row__selected"] : ""}`,
-    onClick: (event) => {
-      if (event.altKey) {
-        if (selected.includes(record._id)) {
-          setSelected(selected.filter((id) => id !== record._id));
-        } else {
-          setSelected([...selected, record._id]);
-        }
-      } else {
-        setSelected([record._id]);
-      }
-    },
     onDoubleClick: (event) => {
       if (!event.shiftKey && !event.altKey) {
         navigate({ to: `/storage/${record._id}` });
       }
     },
-    onContextMenu: async (event) => {
-      event.preventDefault();
-      await deleteStorage(record._id);
-      refetchStorages();
-    },
+  });
+
+  const menu = ({
+    selected,
+    setContextMenuOpen,
+    setModalConfig,
+  }: BitBoxTableContextMenuDropdownProps): MenuProps => ({
+    items: [
+      {
+        key: "1",
+        type: "group",
+        label: "Действия",
+        children: [
+          {
+            key: "3",
+            label: "Редактировать",
+            icon: <EditOutlined />,
+            disabled: selected?.length > 1,
+            onClick: () => {
+              setModalConfig({ open: true, mode: "edit" });
+              setContextMenuOpen(false);
+            },
+          },
+          {
+            key: "2",
+            label: "Удалить",
+            icon: <DeleteOutlined />,
+            onClick: () => {
+              handleDeleteRow(selected);
+              setContextMenuOpen(false);
+            },
+            danger: true,
+          },
+        ],
+      },
+    ],
   });
 
   return (
@@ -90,6 +115,10 @@ const StoragesTableContainer: FC = () => {
       handleAddRow={handleCreateRow}
       loading={isStoragesFetching}
       onRow={onRow}
+      contextMenu={{
+        show: true,
+        menu,
+      }}
     />
   );
 };
