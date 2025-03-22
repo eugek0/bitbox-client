@@ -2,7 +2,7 @@ import AsideLayoutContainer from "@/containers/Layouts/AsideLayoutContainer";
 import StoragePage from "@/modules/StoragePage";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/storage/$id")({
+export const Route = createFileRoute("/storage/$storageid/")({
   component: RouteComponent,
 });
 

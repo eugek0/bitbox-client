@@ -9,9 +9,9 @@ import styles from "./styles.module.scss";
 import { StorageContext } from "./context";
 
 const StorageContainer: FC = () => {
-  const { id } = useParams({ from: "/storage/$id" });
+  const { storageid } = useParams({ from: "/storage/$storageid/" });
 
-  const { data: storage, error, isLoading } = useGetStorageQuery(id);
+  const { data: storage, error, isLoading } = useGetStorageQuery(storageid);
 
   if (isLoading) {
     return <FullscreenLoader />;
@@ -43,7 +43,7 @@ const StorageContainer: FC = () => {
           subTitle={
             <span className={styles["message"]}>
               У вас нет доступа к этому хранилищу
-              {error?.data?.type !== "none" && (
+              {error?.data?.type && (
                 <>
                   . Обратитесь к владельцу, для того чтобы он предоставил вам
                   доступ:{" "}

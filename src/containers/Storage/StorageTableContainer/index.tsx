@@ -6,15 +6,16 @@ import BitBoxTableContainer from "@/containers/Common/BitBoxTableContainer";
 import { STORAGE_TABLE_COLUMNS } from "./constants";
 import { StorageContext } from "../context";
 import { useGetStorageEntitiesQuery } from "../api";
+import { TableProps } from "antd/lib";
 
 const StorageTableContainer: FC = () => {
-  const { id } = useParams({ from: "/storage/$id" });
+  const { storageid } = useParams({ from: "/storage/$storageid/" });
   const navigate = useNavigate();
 
   const context = useContext(StorageContext);
 
   const { data: entities } = useGetStorageEntitiesQuery({
-    id,
+    storageid,
     params: { path: "/" },
   });
 
@@ -28,11 +29,20 @@ const StorageTableContainer: FC = () => {
     navigate({ to: "/" });
   };
 
+  const onRow: TableProps["onRow"] = (record) => ({
+    onDoubleClick: () => {
+      if (record?.type === "file") {
+        navigate({ to: `/storage/${storageid}/file/${record._id}` });
+      }
+    },
+  });
+
   return (
     <BitBoxTableContainer
       records={entities ?? []}
       columns={STORAGE_TABLE_COLUMNS}
       loading={false}
+      onRow={onRow}
       header={{
         title: name,
         button: {

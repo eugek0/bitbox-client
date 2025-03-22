@@ -12,21 +12,16 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
-import { Route as StorageIdImport } from './routes/storage/$id'
 import { Route as AuthRegisterImport } from './routes/auth/register'
 import { Route as AuthLoginImport } from './routes/auth/login'
+import { Route as StorageStorageidIndexImport } from './routes/storage/$storageid/index'
+import { Route as StorageStorageidFileFileidImport } from './routes/storage/$storageid/file/$fileid'
 
 // Create/Update Routes
 
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const StorageIdRoute = StorageIdImport.update({
-  id: '/storage/$id',
-  path: '/storage/$id',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -41,6 +36,20 @@ const AuthLoginRoute = AuthLoginImport.update({
   path: '/auth/login',
   getParentRoute: () => rootRoute,
 } as any)
+
+const StorageStorageidIndexRoute = StorageStorageidIndexImport.update({
+  id: '/storage/$storageid/',
+  path: '/storage/$storageid/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const StorageStorageidFileFileidRoute = StorageStorageidFileFileidImport.update(
+  {
+    id: '/storage/$storageid/file/$fileid',
+    path: '/storage/$storageid/file/$fileid',
+    getParentRoute: () => rootRoute,
+  } as any,
+)
 
 // Populate the FileRoutesByPath interface
 
@@ -67,11 +76,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRegisterImport
       parentRoute: typeof rootRoute
     }
-    '/storage/$id': {
-      id: '/storage/$id'
-      path: '/storage/$id'
-      fullPath: '/storage/$id'
-      preLoaderRoute: typeof StorageIdImport
+    '/storage/$storageid/': {
+      id: '/storage/$storageid/'
+      path: '/storage/$storageid'
+      fullPath: '/storage/$storageid'
+      preLoaderRoute: typeof StorageStorageidIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/storage/$storageid/file/$fileid': {
+      id: '/storage/$storageid/file/$fileid'
+      path: '/storage/$storageid/file/$fileid'
+      fullPath: '/storage/$storageid/file/$fileid'
+      preLoaderRoute: typeof StorageStorageidFileFileidImport
       parentRoute: typeof rootRoute
     }
   }
@@ -83,14 +99,16 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
-  '/storage/$id': typeof StorageIdRoute
+  '/storage/$storageid': typeof StorageStorageidIndexRoute
+  '/storage/$storageid/file/$fileid': typeof StorageStorageidFileFileidRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
-  '/storage/$id': typeof StorageIdRoute
+  '/storage/$storageid': typeof StorageStorageidIndexRoute
+  '/storage/$storageid/file/$fileid': typeof StorageStorageidFileFileidRoute
 }
 
 export interface FileRoutesById {
@@ -98,15 +116,32 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
-  '/storage/$id': typeof StorageIdRoute
+  '/storage/$storageid/': typeof StorageStorageidIndexRoute
+  '/storage/$storageid/file/$fileid': typeof StorageStorageidFileFileidRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth/login' | '/auth/register' | '/storage/$id'
+  fullPaths:
+    | '/'
+    | '/auth/login'
+    | '/auth/register'
+    | '/storage/$storageid'
+    | '/storage/$storageid/file/$fileid'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth/login' | '/auth/register' | '/storage/$id'
-  id: '__root__' | '/' | '/auth/login' | '/auth/register' | '/storage/$id'
+  to:
+    | '/'
+    | '/auth/login'
+    | '/auth/register'
+    | '/storage/$storageid'
+    | '/storage/$storageid/file/$fileid'
+  id:
+    | '__root__'
+    | '/'
+    | '/auth/login'
+    | '/auth/register'
+    | '/storage/$storageid/'
+    | '/storage/$storageid/file/$fileid'
   fileRoutesById: FileRoutesById
 }
 
@@ -114,14 +149,16 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthLoginRoute: typeof AuthLoginRoute
   AuthRegisterRoute: typeof AuthRegisterRoute
-  StorageIdRoute: typeof StorageIdRoute
+  StorageStorageidIndexRoute: typeof StorageStorageidIndexRoute
+  StorageStorageidFileFileidRoute: typeof StorageStorageidFileFileidRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthLoginRoute: AuthLoginRoute,
   AuthRegisterRoute: AuthRegisterRoute,
-  StorageIdRoute: StorageIdRoute,
+  StorageStorageidIndexRoute: StorageStorageidIndexRoute,
+  StorageStorageidFileFileidRoute: StorageStorageidFileFileidRoute,
 }
 
 export const routeTree = rootRoute
@@ -137,7 +174,8 @@ export const routeTree = rootRoute
         "/",
         "/auth/login",
         "/auth/register",
-        "/storage/$id"
+        "/storage/$storageid/",
+        "/storage/$storageid/file/$fileid"
       ]
     },
     "/": {
@@ -149,8 +187,11 @@ export const routeTree = rootRoute
     "/auth/register": {
       "filePath": "auth/register.tsx"
     },
-    "/storage/$id": {
-      "filePath": "storage/$id.tsx"
+    "/storage/$storageid/": {
+      "filePath": "storage/$storageid/index.tsx"
+    },
+    "/storage/$storageid/file/$fileid": {
+      "filePath": "storage/$storageid/file/$fileid.tsx"
     }
   }
 }

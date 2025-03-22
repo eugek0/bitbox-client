@@ -5,10 +5,9 @@ import { IEntity } from "../types";
 export const STORAGE_TABLE_COLUMNS: TableColumnType<IEntity>[] = [
   {
     title: "Название",
-    dataIndex: "name",
+    dataIndex: "fullname",
     width: "25%",
     ellipsis: true,
-    render: (name, record) => name || `.${record.extension}`,
   },
   {
     title: "Размер",

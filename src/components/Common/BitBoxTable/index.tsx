@@ -21,7 +21,6 @@ const BitBoxTable = <T extends BitBoxTableRecord>({
       <div
         onDrop={(event) => {
           event.preventDefault();
-          console.log(event);
         }}
       >
         <Table
