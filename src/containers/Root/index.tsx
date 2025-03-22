@@ -1,23 +1,12 @@
-import { routeTree } from "@/routeTree.gen";
 import { useAppSelector } from "@/store";
-import { createRouter, RouterProvider } from "@tanstack/react-router";
+import { RouterProvider } from "@tanstack/react-router";
 import { FC, useEffect } from "react";
 import { useGetProfileQuery } from "../Auth/api";
 import { profileSelector } from "../Auth/selectors";
 import FullscreenLoader from "../Common/FullscreenLoader";
 import { notificationSelector } from "./selectors";
 import useNotification from "antd/es/notification/useNotification";
-
-const router = createRouter({
-  routeTree,
-  context: { profile: null },
-});
-
-declare module "@tanstack/react-router" {
-  interface Register {
-    router: typeof router;
-  }
-}
+import { router } from "@/core/router";
 
 const Root: FC = () => {
   const notification = useAppSelector(notificationSelector);
