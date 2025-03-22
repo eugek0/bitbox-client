@@ -12,7 +12,6 @@ export interface CreateStorageModalProps
   config: IBitBoxTableModalConfig;
   form: FormInstance;
   loading: boolean;
-  selected: BitBoxTableRecord[];
   disabled?: Partial<Record<keyof TCreateStorageModalFields, boolean>>;
   required?: Partial<Record<keyof TCreateStorageModalFields, boolean>>;
   initialValues?: BitBoxTableRecord;
