@@ -1,14 +1,17 @@
-import { FC, useContext } from "react";
+import { FC, useContext, useState } from "react";
 import { Button } from "antd";
 import { ArrowLeftOutlined, UploadOutlined } from "@ant-design/icons";
+import { TableProps } from "antd/lib";
 import { useNavigate, useParams } from "@tanstack/react-router";
 import BitBoxTableContainer from "@/containers/Common/BitBoxTableContainer";
-import { STORAGE_TABLE_COLUMNS } from "./constants";
 import { StorageContext } from "../context";
 import { useGetStorageEntitiesQuery } from "../api";
-import { TableProps } from "antd/lib";
+import { STORAGE_TABLE_COLUMNS } from "./constants";
+import styles from "./styles.module.scss";
 
 const StorageTableContainer: FC = () => {
+  const [selected, setSelected] = useState<string[]>([]);
+
   const { storageid } = useParams({ from: "/storage/$storageid/" });
   const navigate = useNavigate();
 
@@ -30,9 +33,21 @@ const StorageTableContainer: FC = () => {
   };
 
   const onRow: TableProps["onRow"] = (record) => ({
+    className: `${styles["row"]} ${selected.includes(record._id) ? styles["row__selected"] : ""}`,
     onDoubleClick: () => {
       if (record?.type === "file") {
         navigate({ to: `/storage/${storageid}/file/${record._id}` });
+      }
+    },
+    onClick: (event) => {
+      if (event.altKey) {
+        if (selected.includes(record._id)) {
+          setSelected(selected.filter((id) => id !== record._id));
+        } else {
+          setSelected([...selected, record._id]);
+        }
+      } else {
+        setSelected([record._id]);
       }
     },
   });

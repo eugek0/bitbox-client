@@ -1,0 +1,18 @@
+@use "@/core/styles" as *;
+@use "sass:color";
+
+.row {
+  cursor: pointer;
+  user-select: none;
+
+  &__selected {
+    background-color: $primary-color_selected;
+
+    :global(.ant-table-cell-row-hover) {
+      background-color: color.adjust(
+        $primary-color_selected,
+        $lightness: 5%
+      ) !important;
+    }
+  }
+}
