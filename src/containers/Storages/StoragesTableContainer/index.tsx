@@ -63,6 +63,7 @@ const StoragesTableContainer: FC = () => {
 
   const handleDeleteRow = async (selected: BitBoxTableRecord[]) => {
     await deleteStorage(selected[0]?._id);
+    refetchStorages();
   };
 
   const onRow: TableProps["onRow"] = (record) => ({
