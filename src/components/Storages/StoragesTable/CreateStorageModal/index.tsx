@@ -50,7 +50,7 @@ const CreateStorageModal: FC<CreateStorageModalProps> = ({
             label="Размер"
             name="size"
           >
-            <InputNumber className={styles["number"]} addonAfter="Бит" />
+            <InputNumber className={styles["number"]} addonAfter="Байт" />
           </Form.Item>
         </Flex>
         <Form.Item<TCreateStorageModalFields>

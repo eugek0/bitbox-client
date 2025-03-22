@@ -1,16 +1,28 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { Button } from "antd";
 import { ArrowLeftOutlined, UploadOutlined } from "@ant-design/icons";
 import { useNavigate, useParams } from "@tanstack/react-router";
 import BitBoxTableContainer from "@/containers/Common/BitBoxTableContainer";
 import { STORAGE_TABLE_COLUMNS } from "./constants";
-import { useGetStorageQuery } from "../api";
+import { StorageContext } from "../context";
+import { useGetStorageEntitiesQuery } from "../api";
 
 const StorageTableContainer: FC = () => {
   const { id } = useParams({ from: "/storage/$id" });
   const navigate = useNavigate();
 
-  const { data } = useGetStorageQuery(id);
+  const context = useContext(StorageContext);
+
+  const { data: entities } = useGetStorageEntitiesQuery({
+    id,
+    params: { path: "/" },
+  });
+
+  if (!context) {
+    throw new Error("Context not found");
+  }
+
+  const { name } = context;
 
   const handleClickBack = () => {
     navigate({ to: "/" });
@@ -18,11 +30,11 @@ const StorageTableContainer: FC = () => {
 
   return (
     <BitBoxTableContainer
-      records={[]}
+      records={entities ?? []}
       columns={STORAGE_TABLE_COLUMNS}
       loading={false}
       header={{
-        title: data?.name,
+        title: name,
         button: {
           children: "Добавить",
           icon: <UploadOutlined />,

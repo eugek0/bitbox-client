@@ -6,12 +6,12 @@ import FullscreenLoader from "../Common/FullscreenLoader";
 import { isRTKQueryError } from "@/core/typeguards/rtkquery.typeguards";
 import { useGetStorageQuery } from "./api";
 import styles from "./styles.module.scss";
-import { now } from "lodash";
+import { StorageContext } from "./context";
 
 const StorageContainer: FC = () => {
   const { id } = useParams({ from: "/storage/$id" });
 
-  const { error, isLoading } = useGetStorageQuery(id);
+  const { data: storage, error, isLoading } = useGetStorageQuery(id);
 
   if (isLoading) {
     return <FullscreenLoader />;
@@ -70,7 +70,11 @@ const StorageContainer: FC = () => {
     );
   }
 
-  return <Storage />;
+  return (
+    <StorageContext value={storage ?? {}}>
+      <Storage />
+    </StorageContext>
+  );
 };
 
 export default StorageContainer;

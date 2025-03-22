@@ -1,1 +1,1 @@
-export * from "./convertBits";
+export * from "./convertBytes";
