@@ -23,8 +23,8 @@ export const storagesApi = createApi({
     }),
 
     deleteStorage: builder.mutation({
-      query: (id: string) => ({
-        url: `/${id}`,
+      query: (storageid: string) => ({
+        url: `/${storageid}`,
         method: "DELETE",
       }),
     }),
