@@ -107,7 +107,7 @@ const CreateStorageModal: FC<CreateStorageModalProps> = ({
             <InputNumber
               className={styles["number"]}
               disabled={disabled?.max_file_size}
-              addonAfter="Бит"
+              addonAfter="Байт"
               min={1}
             />
           </Form.Item>
