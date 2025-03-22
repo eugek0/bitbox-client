@@ -64,7 +64,7 @@ const StoragesTableContainer: FC = () => {
     },
     onContextMenu: async (event) => {
       event.preventDefault();
-      await deleteStorage(record.name);
+      await deleteStorage(record._id);
       refetchStorages();
     },
   });
