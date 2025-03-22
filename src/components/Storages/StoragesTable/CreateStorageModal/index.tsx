@@ -15,7 +15,6 @@ const CreateStorageModal: FC<CreateStorageModalProps> = ({
   disabled,
   required,
   onCancel,
-  selected,
   config,
   onOk,
   ...props

@@ -113,7 +113,6 @@ const CreateStorageModalContainer: FC<CreateStorageModalContainerProps> = ({
       config={config}
       loading={isModalLoading}
       form={form}
-      selected={selected}
       onOk={handleSubmit}
       onCancel={handleCloseModal}
       disabled={disabled}
