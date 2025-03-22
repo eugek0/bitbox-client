@@ -14,10 +14,12 @@ import CreateStorageModalContainer from "./CreateStorageModalContainer";
 import {
   useCreateStorageMutation,
   useDeleteStorageMutation,
+  useEditStorageMutation,
   useGetStoragesQuery,
 } from "../api";
 import { STORAGES_TABLE_COLUMNS } from "./constants";
 import { IStoragesTableRecord } from "./types";
+import { IStorage } from "../types";
 
 const StoragesTableContainer: FC = () => {
   const navigate = useNavigate();
@@ -30,6 +32,8 @@ const StoragesTableContainer: FC = () => {
 
   const [createStorage, { isLoading: isStorageCreating }] =
     useCreateStorageMutation();
+  const [editStorage, { isLoading: isStorageEditing }] =
+    useEditStorageMutation();
   const [deleteStorage] = useDeleteStorageMutation();
 
   const handleClickCreate: BitBoxTableButtonProps["onClick"] = ({
@@ -41,8 +45,19 @@ const StoragesTableContainer: FC = () => {
     });
   };
 
-  const handleCreateRow = async (values: Record<string, any>) => {
+  const handleCreateRow = async (values: BitBoxTableRecord) => {
     await createStorage(values as TCreateStorageModalFields).unwrap();
+    refetchStorages();
+  };
+
+  const handleEditRow = async (
+    values: BitBoxTableRecord,
+    record: BitBoxTableRecord,
+  ) => {
+    await editStorage({
+      ...(record as IStorage),
+      ...(values as IStorage),
+    }).unwrap();
     refetchStorages();
   };
 
@@ -108,11 +123,12 @@ const StoragesTableContainer: FC = () => {
       }}
       modal={(props) => (
         <CreateStorageModalContainer
-          isModalLoading={isStorageCreating}
+          isModalLoading={isStorageCreating || isStorageEditing}
           {...props}
         />
       )}
       handleAddRow={handleCreateRow}
+      handleEditRow={handleEditRow}
       loading={isStoragesFetching}
       onRow={onRow}
       contextMenu={{

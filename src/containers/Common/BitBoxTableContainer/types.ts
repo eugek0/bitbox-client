@@ -16,6 +16,10 @@ export interface BitBoxTableContainerProps<T extends BitBoxTableRecord>
   selected?: BitBoxTableRecord[];
   handleSelect?: (selected: BitBoxTableRecord[]) => void;
   handleAddRow?: (values: Record<string, any>) => Promise<void> | void;
+  handleEditRow?: (
+    values: Record<string, any>,
+    record: BitBoxTableRecord,
+  ) => Promise<void> | void;
 }
 
 export interface IBitBoxTableContextMenu {
@@ -44,9 +48,13 @@ export interface BitBoxTableButtonProps extends Omit<ButtonProps, "onClick"> {
 }
 
 export interface BitBoxTableModalProps
-  extends Pick<BitBoxTableContainerProps<any>, "handleAddRow"> {
+  extends Pick<
+    BitBoxTableContainerProps<any>,
+    "handleAddRow" | "handleEditRow"
+  > {
   config: IBitBoxTableModalConfig;
   setConfig: Dispatch<IBitBoxTableModalConfig>;
+  selected: BitBoxTableRecord[];
 }
 
 export interface IBitBoxTableModalConfig {

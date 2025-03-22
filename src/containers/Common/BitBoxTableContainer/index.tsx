@@ -1,7 +1,6 @@
 import {
   CSSProperties,
   MouseEvent,
-  MouseEventHandler,
   ReactNode,
   useEffect,
   useState,
@@ -19,7 +18,9 @@ import styles from "./styles.module.scss";
 const BitBoxTableContainer = <T extends BitBoxTableRecord>({
   handleSelect,
   handleAddRow,
+  handleEditRow,
   contextMenu,
+  records,
   onRow: foreignOnRow,
   selected: foreignSelected,
   ...props
@@ -87,6 +88,8 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
     config: modalConfig,
     setConfig: setModalConfig,
     handleAddRow,
+    handleEditRow,
+    selected,
   };
 
   const contextMenuProps: DropDownProps = {
@@ -105,10 +108,15 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
     setSelected(foreignSelected ?? []);
   }, [foreignSelected]);
 
+  useEffect(() => {
+    setSelected([]);
+  }, [records]);
+
   return (
     <BitBoxTable
       contextMenuProps={contextMenuProps}
       modalProps={modalProps}
+      records={records}
       onRow={onRow}
       {...props}
     />

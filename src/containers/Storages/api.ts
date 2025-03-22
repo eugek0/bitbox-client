@@ -1,7 +1,11 @@
 import fetchMainBaseQuery from "@/core/rtkquery";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { IStoragesTableRecord } from "./StoragesTableContainer/types";
-import { ICreateStoragePayload, ISearchStoragesOptionsPayload } from "./types";
+import {
+  TCreateStoragePayload,
+  IEditStoragePayload,
+  ISearchStoragesOptionsPayload,
+} from "./types";
 import { DefaultOptionType } from "antd/es/select";
 
 export const storagesApi = createApi({
@@ -14,10 +18,18 @@ export const storagesApi = createApi({
       }),
     }),
 
-    createStorage: builder.mutation<void, ICreateStoragePayload>({
+    createStorage: builder.mutation<void, TCreateStoragePayload>({
       query: (body) => ({
         url: "/",
         method: "POST",
+        body,
+      }),
+    }),
+
+    editStorage: builder.mutation<void, IEditStoragePayload>({
+      query: (body) => ({
+        url: `/${body._id}`,
+        method: "PUT",
         body,
       }),
     }),
@@ -44,6 +56,7 @@ export const storagesApi = createApi({
 export const {
   useGetStoragesQuery,
   useCreateStorageMutation,
+  useEditStorageMutation,
   useDeleteStorageMutation,
   useLazySearchStoragesOptionsQuery,
 } = storagesApi;

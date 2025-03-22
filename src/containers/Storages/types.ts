@@ -1,8 +1,11 @@
-export interface ICreateStoragePayload {
+export interface IStorage {
+  _id: string;
   name: string;
-  description?: string;
+  description: string;
+  owner: string;
+  used: number;
   size: number;
-  access?: TStorageAccess;
+  access: TStorageAccess;
   members?: string[];
   restrict_file_size?: boolean;
   max_file_size?: number;
@@ -10,8 +13,25 @@ export interface ICreateStoragePayload {
   max_files_count?: number;
 }
 
+export type TStorageAccess = "public" | "private";
+
+export type TCreateStoragePayload = Pick<
+  IStorage,
+  | "name"
+  | "description"
+  | "size"
+  | "access"
+  | "members"
+  | "restrict_file_size"
+  | "max_file_size"
+  | "restrict_files_count"
+  | "max_files_count"
+>;
+
+export interface IEditStoragePayload extends TCreateStoragePayload {
+  _id: string;
+}
+
 export interface ISearchStoragesOptionsPayload {
   name: string;
 }
-
-export type TStorageAccess = "public" | "private";

@@ -7,12 +7,16 @@ import {
   CreateStorageModalContainerProps,
   TCreateStorageModalFields,
 } from "./types";
+import { CREATE_STORAGE_MODAL_INITIAL_VALUES } from "./constants";
+import { BitBoxTableRecord } from "@/containers/Common/BitBoxTableContainer/types";
 
 const CreateStorageModalContainer: FC<CreateStorageModalContainerProps> = ({
   isModalLoading,
   config,
+  selected,
   setConfig,
   handleAddRow,
+  handleEditRow,
 }) => {
   const [disabled, setDisabled] = useState<
     Partial<Record<keyof TCreateStorageModalFields, boolean>>
@@ -27,6 +31,9 @@ const CreateStorageModalContainer: FC<CreateStorageModalContainerProps> = ({
     max_files_count: false,
     max_file_size: false,
   });
+  const [initialValues, setInitialValues] = useState<BitBoxTableRecord>(
+    CREATE_STORAGE_MODAL_INITIAL_VALUES,
+  );
 
   const [form] = useForm<TCreateStorageModalFields>();
 
@@ -41,7 +48,11 @@ const CreateStorageModalContainer: FC<CreateStorageModalContainerProps> = ({
   const handleSubmit = async () => {
     try {
       const values = await form.validateFields();
-      await handleAddRow?.(values);
+      if (config.mode === "add") {
+        await handleAddRow?.(values);
+      } else {
+        await handleEditRow?.(values, selected[0]);
+      }
       form.resetFields();
       handleCloseModal();
     } catch (error) {
@@ -85,19 +96,29 @@ const CreateStorageModalContainer: FC<CreateStorageModalContainerProps> = ({
 
   useEffect(() => {
     if (config?.open) {
-      form.resetFields();
+      setInitialValues(
+        config.mode === "add"
+          ? CREATE_STORAGE_MODAL_INITIAL_VALUES
+          : selected[0],
+      );
     }
-  }, [config?.open]);
+  }, [config, selected]);
+
+  useEffect(() => {
+    form.resetFields();
+  }, [initialValues]);
 
   return (
     <CreateStorageModal
-      open={config?.open}
+      config={config}
       loading={isModalLoading}
       form={form}
+      selected={selected}
       onOk={handleSubmit}
       onCancel={handleCloseModal}
       disabled={disabled}
       required={required}
+      initialValues={initialValues}
     />
   );
 };

@@ -3,29 +3,30 @@ import { Button, Checkbox, Flex, Form, Input, InputNumber, Select } from "antd";
 import { TCreateStorageModalFields } from "@/containers/Storages/StoragesTableContainer/CreateStorageModalContainer/types";
 import AppModal from "@/components/Common/AppModal";
 import UsersSelect from "@/containers/Common/UsersSelect";
-import {
-  CREATE_STORAGE_MODAL_INITIAL_VALUES,
-  CREATE_STORAGE_MODAL_RULES,
-} from "./constants";
+import { CREATE_STORAGE_MODAL_RULES } from "./constants";
 import { CreateStorageModalProps } from "./types";
 import styles from "./styles.module.scss";
 import { REQUIRED_FIELD_MESSAGE } from "@/core/constants";
 
 const CreateStorageModal: FC<CreateStorageModalProps> = ({
+  initialValues,
   form,
   loading,
   disabled,
   required,
   onCancel,
+  selected,
+  config,
   onOk,
   ...props
 }) => {
   return (
     <AppModal
       {...props}
+      open={config.open}
       onCancel={onCancel}
       width={775}
-      title="Создать хранилище"
+      title={`${config.mode === "add" ? "Создать" : "Редактировать"} хранилище`}
       footer={() => (
         <>
           <Button onClick={onCancel}>Отмена</Button>
@@ -35,7 +36,7 @@ const CreateStorageModal: FC<CreateStorageModalProps> = ({
         </>
       )}
     >
-      <Form initialValues={CREATE_STORAGE_MODAL_INITIAL_VALUES} form={form}>
+      <Form initialValues={initialValues} form={form}>
         <Flex align="center" gap={15}>
           <Form.Item<TCreateStorageModalFields>
             className={styles["name"]}
