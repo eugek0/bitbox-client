@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Table } from "antd";
+import { Dropdown, Table } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import BitBoxTableHeader from "./BitBoxTableHeader";
 import { BitBoxTableProps } from "./types";
@@ -13,11 +13,13 @@ const BitBoxTable = <T extends BitBoxTableRecord>({
   header,
   modal,
   modalProps,
+  contextMenuProps,
   onRow,
 }: BitBoxTableProps<T>): ReactNode => {
   return (
     <div className={styles["body"]}>
       <BitBoxTableHeader modalProps={modalProps} header={header} />
+      {contextMenuProps.show && <Dropdown {...contextMenuProps} />}
       <div
         onDrop={(event) => {
           event.preventDefault();

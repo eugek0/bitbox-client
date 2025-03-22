@@ -5,11 +5,11 @@ import {
   FileFilled,
   RollbackOutlined,
 } from "@ant-design/icons";
+import Logotype from "@/components/Common/Logotype";
+import { convertBytes } from "@/core/utils";
+import { APP_NAME } from "@/core/constants";
 import { StorageFileProps } from "./types";
 import styles from "./styles.module.scss";
-import { convertBytes } from "@/core/utils";
-import Logotype from "@/components/Common/Logotype";
-import { APP_NAME } from "@/core/constants";
 
 const StorageFile: FC<StorageFileProps> = ({
   fullname,

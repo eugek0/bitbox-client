@@ -3,7 +3,6 @@ import { ProductFilled } from "@ant-design/icons";
 import { IStoragesTableRecord } from "@/containers/Storages/StoragesTableContainer/types";
 import ProfileBadgeContainer from "@/containers/Common/ProfileBadgeContainer";
 import { convertBytes } from "@/core/utils";
-import styles from "./styles.module.scss";
 
 export const STORAGES_TABLE_COLUMNS: TableColumnType<IStoragesTableRecord>[] = [
   {
@@ -15,11 +14,9 @@ export const STORAGES_TABLE_COLUMNS: TableColumnType<IStoragesTableRecord>[] = [
     showSorterTooltip: false,
     render: (name) => {
       return (
-        <Flex className={styles["storage-name"]} align="center" gap={10}>
-          <ProductFilled className={styles["storage-name__icon"]} />
-          <Typography.Text className={styles["storage-name__text"]}>
-            {name}
-          </Typography.Text>
+        <Flex align="center" gap={10}>
+          <ProductFilled />
+          <Typography.Text>{name}</Typography.Text>
         </Flex>
       );
     },

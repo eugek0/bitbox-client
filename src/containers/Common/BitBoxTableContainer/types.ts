@@ -1,5 +1,5 @@
 import { FC, Dispatch, MouseEvent, ReactNode } from "react";
-import { TableColumnType, TableProps } from "antd";
+import { MenuProps, TableColumnType, TableProps } from "antd";
 import { ButtonProps } from "antd/lib";
 import { Nullable } from "@/core/types";
 
@@ -12,7 +12,26 @@ export interface BitBoxTableContainerProps<T extends BitBoxTableRecord>
   loading?: boolean;
   header?: IBitBoxTableHeader;
   modal?: FC<BitBoxTableModalProps>;
+  contextMenu?: IBitBoxTableContextMenu;
+  selected?: BitBoxTableRecord[];
+  handleSelect?: (selected: BitBoxTableRecord[]) => void;
   handleAddRow?: (values: Record<string, any>) => Promise<void> | void;
+  handleEditRow?: (
+    values: Record<string, any>,
+    record: BitBoxTableRecord,
+  ) => Promise<void> | void;
+}
+
+export interface IBitBoxTableContextMenu {
+  show?: boolean;
+  menu?: (props: BitBoxTableContextMenuDropdownProps) => MenuProps;
+}
+
+export interface BitBoxTableContextMenuDropdownProps {
+  selected: BitBoxTableRecord[];
+  modalConfig: IBitBoxTableModalConfig;
+  setContextMenuOpen: Dispatch<boolean>;
+  setModalConfig: Dispatch<IBitBoxTableModalConfig>;
 }
 
 export interface IBitBoxTableHeader {
@@ -29,9 +48,13 @@ export interface BitBoxTableButtonProps extends Omit<ButtonProps, "onClick"> {
 }
 
 export interface BitBoxTableModalProps
-  extends Pick<BitBoxTableContainerProps<any>, "handleAddRow"> {
+  extends Pick<
+    BitBoxTableContainerProps<any>,
+    "handleAddRow" | "handleEditRow"
+  > {
   config: IBitBoxTableModalConfig;
   setConfig: Dispatch<IBitBoxTableModalConfig>;
+  selected: BitBoxTableRecord[];
 }
 
 export interface IBitBoxTableModalConfig {
