@@ -81,7 +81,7 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
     className: `${styles["row"]} ${selected.some((s) => s._id === record?._id) ? styles["row__selected"] : ""}`,
     onContextMenu: (event) => handleContextMenu(event, record),
     onClick: (event) => handleRowClick(event, record),
-    ...onRow,
+    ...foreignOnRow?.(record),
   });
 
   const modalProps: BitBoxTableModalProps = {
