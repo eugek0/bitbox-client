@@ -2,7 +2,7 @@ import { Flex, TableColumnType, Typography } from "antd";
 import { ProductFilled } from "@ant-design/icons";
 import { IStoragesTableRecord } from "@/containers/Storages/StoragesTableContainer/types";
 import ProfileBadgeContainer from "@/containers/Common/ProfileBadgeContainer";
-import { convertBits } from "@/core/utils";
+import { convertBytes } from "@/core/utils";
 import styles from "./styles.module.scss";
 
 export const STORAGES_TABLE_COLUMNS: TableColumnType<IStoragesTableRecord>[] = [
@@ -13,12 +13,12 @@ export const STORAGES_TABLE_COLUMNS: TableColumnType<IStoragesTableRecord>[] = [
     ellipsis: true,
     sorter: true,
     showSorterTooltip: false,
-    render: (record) => {
+    render: (name) => {
       return (
         <Flex className={styles["storage-name"]} align="center" gap={10}>
           <ProductFilled className={styles["storage-name__icon"]} />
           <Typography.Text className={styles["storage-name__text"]}>
-            {record}
+            {name}
           </Typography.Text>
         </Flex>
       );
@@ -37,7 +37,7 @@ export const STORAGES_TABLE_COLUMNS: TableColumnType<IStoragesTableRecord>[] = [
     width: "12.5%",
     sorter: true,
     showSorterTooltip: false,
-    render: (record) => <ProfileBadgeContainer _id={record} />,
+    render: (owner) => <ProfileBadgeContainer _id={owner} />,
   },
   {
     title: "Занято",
@@ -45,7 +45,7 @@ export const STORAGES_TABLE_COLUMNS: TableColumnType<IStoragesTableRecord>[] = [
     width: "6.25%",
     sorter: true,
     showSorterTooltip: false,
-    render: (record) => convertBits(record),
+    render: (used) => convertBytes(used),
   },
   {
     title: "Размер",
@@ -53,6 +53,6 @@ export const STORAGES_TABLE_COLUMNS: TableColumnType<IStoragesTableRecord>[] = [
     width: "6.25%",
     sorter: true,
     showSorterTooltip: false,
-    render: (record) => convertBits(record),
+    render: (size) => convertBytes(size),
   },
 ];

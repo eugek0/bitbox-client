@@ -46,15 +46,21 @@ const StoragesTableContainer: FC = () => {
 
   const onRow: TableProps["onRow"] = (record) => ({
     className: `${styles["row"]} ${selected.includes(record._id) ? styles["row__selected"] : ""}`,
-    onClick: () => {
-      if (selected.includes(record._id)) {
-        setSelected([record._id]);
+    onClick: (event) => {
+      if (event.altKey) {
+        if (selected.includes(record._id)) {
+          setSelected(selected.filter((id) => id !== record._id));
+        } else {
+          setSelected([...selected, record._id]);
+        }
       } else {
         setSelected([record._id]);
       }
     },
-    onDoubleClick: () => {
-      navigate({ to: `/storage/${record._id}` });
+    onDoubleClick: (event) => {
+      if (!event.shiftKey && !event.altKey) {
+        navigate({ to: `/storage/${record._id}` });
+      }
     },
     onContextMenu: async (event) => {
       event.preventDefault();

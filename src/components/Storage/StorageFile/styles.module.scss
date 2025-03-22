@@ -1,0 +1,32 @@
+@use "@/core/styles" as *;
+
+.body {
+  height: 100vh;
+
+  .card {
+    width: 400px;
+    padding: 30px;
+    -webkit-box-shadow: 0px 10px 19px 7px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 10px 19px 7px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 10px 19px 7px rgba(0, 0, 0, 0.75);
+    background-color: $bg-color_lighten;
+    border-radius: 10px;
+
+    .app-name {
+      font-size: 20px;
+    }
+
+    .icon {
+      font-size: 20px;
+    }
+
+    .fullname {
+      font-size: 20px;
+    }
+
+    .size {
+      font-size: 18px;
+      font-weight: 300;
+    }
+  }
+}
