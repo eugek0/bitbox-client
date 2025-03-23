@@ -14,17 +14,19 @@ const BitBoxTable = <T extends BitBoxTableRecord>({
   modal,
   modalProps,
   contextMenuProps,
+  handleBorderClick,
   onRow,
 }: BitBoxTableProps<T>): ReactNode => {
   return (
     <div className={styles["body"]}>
       <BitBoxTableHeader modalProps={modalProps} header={header} />
-      {contextMenuProps.show && <Dropdown {...contextMenuProps} />}
-      <div
-        onDrop={(event) => {
-          event.preventDefault();
-        }}
-      >
+      {contextMenuProps.show && (
+        <Dropdown
+          className={`${contextMenuProps.className} ${styles["dropdown"]}`}
+          {...contextMenuProps}
+        />
+      )}
+      <div onClick={handleBorderClick} className={styles["table"]}>
         <Table
           onRow={onRow}
           columns={columns}
@@ -33,6 +35,7 @@ const BitBoxTable = <T extends BitBoxTableRecord>({
           pagination={false}
           rowKey="_id"
           bordered
+          sticky
         />
       </div>
       {modal?.(modalProps) as ReactNode}

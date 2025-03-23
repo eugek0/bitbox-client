@@ -1,14 +1,144 @@
-.storage-name {
-  overflow: hidden;
+@use "@/core/styles" as *;
 
-  &__icon {
-    font-size: 18px;
+.body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .dropdown {
+    width: 0;
   }
 
-  &__text {
-    font-size: 14px;
-    font-weight: 600;
+  .storage-name {
     overflow: hidden;
-    text-overflow: ellipsis;
+
+    &__icon {
+      font-size: 18px;
+    }
+
+    &__text {
+      font-size: 14px;
+      font-weight: 600;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .table {
+    display: flex;
+    flex-direction: column;
+    background-color: $bg-service-color;
+    padding: 10px 10px 0 10px;
+    margin: 0 0 10px 0;
+    overflow-y: auto;
+    flex: 1;
+
+    :global(.ant-table-thead) {
+      :global(.ant-table-cell) {
+        background-color: $bg-service-color;
+      }
+      :global(.ant-table-column-sort) {
+        background-color: #443444;
+      }
+    }
+
+    :global(.ant-table-container) {
+      border: 0 !important;
+      background-color: $bg-service-color;
+    }
+
+    // INFO: Убрать правую границу у последних ячеек строки
+    :global(.ant-table-row),
+    :global(.ant-table-thead) {
+      :global(.ant-table-cell):last-child {
+        border-inline-end: 0 !important;
+      }
+    }
+
+    // INFO: Убрать нижнюю границу у последней строки
+    :global(.ant-table-tbody) {
+      :global(.ant-table-row):last-child {
+        :global(.ant-table-cell) {
+          border-bottom: 0 !important;
+        }
+      }
+    }
+
+    // INFO: При отсутствии строк
+    :global(.ant-table-placeholder) {
+      :global(.ant-table-cell) {
+        background-color: $bg-service-color;
+        border-inline-end: 0 !important;
+        height: 100%;
+        border: 0;
+
+        &:hover {
+          background-color: $bg-service-color;
+        }
+      }
+    }
+
+    :global(.ant-table-wrapper) {
+      flex-direction: column;
+      display: flex;
+      flex: 1;
+      :global(.ant-spin-nested-loading) {
+        position: relative;
+        flex-direction: column;
+        display: flex;
+        flex: 1;
+        > div {
+          flex-direction: column;
+          display: flex;
+          position: absolute;
+          width: 100%;
+          height: 100%;
+
+          :global(.ant-spin) {
+            max-height: none;
+          }
+        }
+        :global(.ant-spin-container) {
+          flex-direction: column;
+          display: flex;
+          flex: 1;
+          :global(.ant-table-empty) {
+            table {
+              flex: 1 !important;
+            }
+          }
+          :global(.ant-table) {
+            flex-direction: column;
+            display: flex;
+            flex: 1;
+            :global(.ant-table-container) {
+              flex-direction: column;
+              display: flex;
+              flex: 1;
+              :global(.ant-table-content),
+              :global(.ant-table-body) {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                overflow: auto;
+                table {
+                  height: auto;
+                  flex: unset;
+                  colgroup {
+                    height: auto;
+                  }
+                }
+                tbody {
+                  flex: unset;
+                }
+                tr {
+                  height: auto !important;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }

@@ -1,6 +1,7 @@
 import {
   CSSProperties,
   MouseEvent,
+  MouseEventHandler,
   ReactNode,
   useEffect,
   useState,
@@ -46,6 +47,7 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
   };
 
   const handleRowClick = (event: MouseEvent, record: BitBoxTableRecord) => {
+    event.stopPropagation();
     if (event.altKey) {
       if (selected.some((s) => s._id === record._id)) {
         handleChangeSelected(selected.filter((s) => s._id !== record._id));
@@ -55,6 +57,10 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
     } else {
       setSelected([record]);
     }
+  };
+
+  const handleClearSelected: MouseEventHandler<HTMLDivElement> = () => {
+    setSelected([]);
   };
 
   const handleContextMenu = (event: MouseEvent, record: BitBoxTableRecord) => {
@@ -114,6 +120,7 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
 
   return (
     <BitBoxTable
+      handleBorderClick={handleClearSelected}
       contextMenuProps={contextMenuProps}
       modalProps={modalProps}
       records={records}

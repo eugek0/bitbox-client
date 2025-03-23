@@ -37,6 +37,7 @@ const AsideLayout: FC<AsideLayoutProps> = ({
           <div>
             <Flex
               className={`${styles["collapser"]} ${collapsed ? styles["collapser_closed"] : ""}`}
+              align="center"
               gap={10}
             >
               <Logotype />
@@ -49,9 +50,6 @@ const AsideLayout: FC<AsideLayoutProps> = ({
             <Menu
               selectedKeys={menuSelectedKeys}
               items={[
-                {
-                  type: "divider",
-                },
                 {
                   key: "storages",
                   label: "Список хранилищ",

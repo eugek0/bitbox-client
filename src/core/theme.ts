@@ -5,6 +5,7 @@ export const appTheme: ThemeConfig = {
     colorPrimary: "#33d17a",
     colorInfo: "#33d17a",
     colorBgBase: "#221d22",
+    colorPrimaryBg: "#145732",
   },
   algorithm: theme.darkAlgorithm,
   components: {

@@ -29,8 +29,7 @@ const BitBoxTableHeader = <T extends BitBoxTableRecord>({
                 event,
               )
             }
-            color={header?.button?.color ?? "default"}
-            variant={header?.button?.variant ?? "filled"}
+            type={header?.button?.type ?? "primary"}
           />
         )}
       </Flex>

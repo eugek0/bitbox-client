@@ -1,3 +1,4 @@
+import { MouseEventHandler } from "react";
 import { DropDownProps } from "antd";
 import { TableProps } from "antd/lib";
 import {
@@ -11,6 +12,7 @@ export interface BitBoxTableProps<T extends BitBoxTableRecord>
   extends Omit<BitBoxTableContainerProps<T>, "contextMenu"> {
   modalProps: BitBoxTableModalProps;
   contextMenuProps: BitBoxTableContextMenuProps;
+  handleBorderClick?: MouseEventHandler<HTMLDivElement>;
   onRow: TableProps["onRow"];
 }
 
