@@ -7,6 +7,7 @@ import { CREATE_STORAGE_MODAL_RULES } from "./constants";
 import { CreateStorageModalProps } from "./types";
 import styles from "./styles.module.scss";
 import { REQUIRED_FIELD_MESSAGE } from "@/core/constants";
+import FileSizeInput from "@/containers/Common/FileSizeInput";
 
 const CreateStorageModal: FC<CreateStorageModalProps> = ({
   initialValues,
@@ -50,7 +51,7 @@ const CreateStorageModal: FC<CreateStorageModalProps> = ({
             label="Размер"
             name="size"
           >
-            <InputNumber className={styles["number"]} addonAfter="Байт" />
+            <FileSizeInput className={styles["number"]} />
           </Form.Item>
         </Flex>
         <Form.Item<TCreateStorageModalFields>
@@ -104,10 +105,9 @@ const CreateStorageModal: FC<CreateStorageModalProps> = ({
             ]}
             name="max_file_size"
           >
-            <InputNumber
+            <FileSizeInput
               className={styles["number"]}
               disabled={disabled?.max_file_size}
-              addonAfter="Байт"
               min={1}
             />
           </Form.Item>
