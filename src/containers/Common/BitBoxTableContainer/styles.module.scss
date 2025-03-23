@@ -14,5 +14,12 @@
         $lightness: 5%
       ) !important;
     }
+
+    :global(.ant-table-column-sort) {
+      background-color: color.adjust(
+        $primary-color_selected,
+        $lightness: 5%
+      ) !important;
+    }
   }
 }

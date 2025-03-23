@@ -10,7 +10,9 @@ export const STORAGES_TABLE_COLUMNS: TableColumnType<IStoragesTableRecord>[] = [
     dataIndex: "name",
     width: "25%",
     ellipsis: true,
-    sorter: true,
+    sorter: {
+      compare: (a, b) => b.name.localeCompare(a.name),
+    },
     showSorterTooltip: false,
     render: (name) => {
       return (
@@ -25,14 +27,19 @@ export const STORAGES_TABLE_COLUMNS: TableColumnType<IStoragesTableRecord>[] = [
     title: "Описание",
     dataIndex: "description",
     width: "50%",
-    sorter: true,
+    sorter: {
+      compare: (a, b) =>
+        (b.description ?? "").localeCompare(a.description ?? ""),
+    },
     showSorterTooltip: false,
   },
   {
     title: "Владелец",
     dataIndex: "owner",
     width: "12.5%",
-    sorter: true,
+    sorter: {
+      compare: (a, b) => b.owner.localeCompare(a.owner),
+    },
     showSorterTooltip: false,
     render: (owner) => <ProfileBadgeContainer _id={owner} />,
   },
@@ -40,7 +47,9 @@ export const STORAGES_TABLE_COLUMNS: TableColumnType<IStoragesTableRecord>[] = [
     title: "Занято",
     dataIndex: "used",
     width: "6.25%",
-    sorter: true,
+    sorter: {
+      compare: (a, b) => a.used - b.used,
+    },
     showSorterTooltip: false,
     render: (used) => convertBytes(used),
   },
@@ -48,7 +57,9 @@ export const STORAGES_TABLE_COLUMNS: TableColumnType<IStoragesTableRecord>[] = [
     title: "Размер",
     dataIndex: "size",
     width: "6.25%",
-    sorter: true,
+    sorter: {
+      compare: (a, b) => a.size - b.size,
+    },
     showSorterTooltip: false,
     render: (size) => convertBytes(size),
   },
