@@ -105,6 +105,12 @@ const CreateStorageModalContainer: FC<CreateStorageModalContainerProps> = ({
   }, [config, selected]);
 
   useEffect(() => {
+    if (config.open) {
+      form.resetFields();
+    }
+  }, [config.open]);
+
+  useEffect(() => {
     form.resetFields();
   }, [initialValues]);
 
