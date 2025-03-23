@@ -22,18 +22,14 @@ const FileSizeInput: FC<FileSizeInputProps> = ({
   const [value, setValue] =
     useState<Nullable<string | number | undefined>>(null);
 
-  const triggerChange = (newValue: Nullable<number>, newMeasure: number) => {
-    foreingOnChange?.(newValue ? newValue * newMeasure : null);
-    setMeasure(newMeasure);
-    setValue(newValue);
-  };
-
   const handleChange: InputNumberProps["onChange"] = (value) => {
-    triggerChange(value ? +value : null, measure);
+    foreingOnChange?.(value ? +value * measure : null);
+    setValue(value);
   };
 
   const handleChangeMeasure: SelectProps["onChange"] = (measure) => {
-    triggerChange?.(value ? +value : null, measure);
+    value && foreingOnChange?.(+value * measure);
+    setMeasure(measure);
   };
 
   const handleFixValue = () => {
