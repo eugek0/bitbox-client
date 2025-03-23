@@ -28,8 +28,10 @@ const FileSizeInput: FC<FileSizeInputProps> = ({
   };
 
   const handleChangeMeasure: SelectProps["onChange"] = (measure) => {
-    value && foreingOnChange?.(+value * measure);
     setMeasure(measure);
+    if (value) {
+      foreingOnChange?.(+value * measure);
+    }
   };
 
   const handleFixValue = () => {
