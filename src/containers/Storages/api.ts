@@ -5,6 +5,7 @@ import {
   TCreateStoragePayload,
   IEditStoragePayload,
   ISearchStoragesOptionsPayload,
+  IDeleteStoragesPayload,
 } from "./types";
 import { DefaultOptionType } from "antd/es/select";
 
@@ -34,10 +35,11 @@ export const storagesApi = createApi({
       }),
     }),
 
-    deleteStorage: builder.mutation({
-      query: (storageid: string) => ({
-        url: `/${storageid}`,
+    deleteStorage: builder.mutation<void, IDeleteStoragesPayload>({
+      query: (body) => ({
+        url: `/`,
         method: "DELETE",
+        body,
       }),
     }),
 

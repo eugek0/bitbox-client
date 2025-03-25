@@ -32,6 +32,10 @@ export interface IEditStoragePayload extends TCreateStoragePayload {
   _id: string;
 }
 
+export interface IDeleteStoragesPayload {
+  storages: string[];
+}
+
 export interface ISearchStoragesOptionsPayload {
   name: string;
 }
