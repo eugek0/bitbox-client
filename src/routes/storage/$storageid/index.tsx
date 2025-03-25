@@ -9,7 +9,6 @@ export const Route = createFileRoute("/storage/$storageid/")({
   component: () => (
     <AsideLayoutContainer>
       <StorageLayoutContainer>
-        <title>Хранилище</title>
         <StoragePage />
       </StorageLayoutContainer>
     </AsideLayoutContainer>

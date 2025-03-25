@@ -31,7 +31,12 @@ const StorageLayoutContainer: FC<StorageLayoutContainerProps> = ({
     return <StorageForbidden error={error} />;
   }
 
-  return <StorageContext value={storage ?? {}}>{children}</StorageContext>;
+  return (
+    <StorageContext value={storage ?? {}}>
+      <title>{storage?.name ?? "Хранилище"}</title>
+      {children}
+    </StorageContext>
+  );
 };
 
 export default StorageLayoutContainer;
