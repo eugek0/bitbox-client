@@ -5,14 +5,10 @@ import StoragePage from "@/modules/StoragePage";
 
 export const Route = createFileRoute("/storage/$storageid/")({
   beforeLoad: protectedRoute(),
-  component: RouteComponent,
-});
-
-function RouteComponent() {
-  return (
+  component: () => (
     <AsideLayoutContainer>
       <title>Хранилище</title>
       <StoragePage />
     </AsideLayoutContainer>
-  );
-}
+  ),
+});

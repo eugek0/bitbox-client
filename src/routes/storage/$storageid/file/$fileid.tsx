@@ -4,9 +4,5 @@ import StorageFilePage from "@/modules/StorageFilePage";
 
 export const Route = createFileRoute("/storage/$storageid/file/$fileid")({
   beforeLoad: protectedRoute(),
-  component: RouteComponent,
+  component: StorageFilePage,
 });
-
-function RouteComponent() {
-  return <StorageFilePage />;
-}
