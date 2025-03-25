@@ -1,12 +1,11 @@
-import NotFound from "@/components/NotFound";
-import { Flex } from "antd";
 import { FC } from "react";
-import styles from "../styles.module.scss";
+import { Flex } from "antd";
+import NotFound from "@/components/Statuses/NotFound";
 
 const NotFoundPage: FC = () => {
   return (
-    <Flex className={styles["page100vh"]}>
-      <NotFound />
+    <Flex className="page100vh">
+      <NotFound subTitle="Страница не найдена" />
     </Flex>
   );
 };

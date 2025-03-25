@@ -1,5 +1,3 @@
-import { IStoragesTableRecord } from "../Storages/StoragesTableContainer/types";
-
 export type EntityType = "file" | "folder";
 
 export interface IEntity {
@@ -19,8 +17,6 @@ export interface IEntity {
 
   path: string;
 }
-
-export type TStorageContext = Partial<IStoragesTableRecord>;
 
 export interface IGetStorageEntitiesPayload {
   storageid: string;

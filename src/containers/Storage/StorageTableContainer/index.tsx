@@ -4,7 +4,7 @@ import { ArrowLeftOutlined, UploadOutlined } from "@ant-design/icons";
 import { TableProps } from "antd/lib";
 import { useNavigate, useParams } from "@tanstack/react-router";
 import BitBoxTableContainer from "@/containers/Common/BitBoxTableContainer";
-import { StorageContext } from "../context";
+import { StorageContext } from "../../Layouts/StorageLayoutContainer/context";
 import { useGetStorageEntitiesQuery } from "../api";
 import { STORAGE_TABLE_COLUMNS } from "./constants";
 import styles from "./styles.module.scss";

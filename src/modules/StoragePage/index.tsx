@@ -1,11 +1,10 @@
 import { FC } from "react";
-import StorageContainer from "@/containers/Storage";
-import styles from "../styles.module.scss";
+import Storage from "@/components/Storage";
 
 const StoragePage: FC = () => {
   return (
-    <div className={styles["page100vh"]}>
-      <StorageContainer />
+    <div className="page100vh">
+      <Storage />
     </div>
   );
 };

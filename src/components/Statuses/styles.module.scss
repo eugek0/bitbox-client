@@ -1,0 +1,10 @@
+.body {
+  .message {
+    display: block;
+    width: 400px;
+  }
+
+  :global(.ant-result-content) {
+    background-color: transparent;
+  }
+}

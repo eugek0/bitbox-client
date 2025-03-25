@@ -9,6 +9,7 @@ import ruRu from "antd/locale/ru_RU";
 import "@ant-design/v5-patch-for-react-19";
 import "@/core/styles/normalize.css";
 import "@/core/styles/defaults.scss";
+import "@/core/styles/global.scss";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
