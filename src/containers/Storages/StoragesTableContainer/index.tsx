@@ -23,11 +23,14 @@ import { IStorage } from "../types";
 import { useAppSelector } from "@/store";
 import { profileSelector } from "@/containers/Auth/selectors";
 import { checkStorageAccess } from "./utils";
+import useNotification from "antd/es/notification/useNotification";
 
 const StoragesTableContainer: FC = () => {
   const profile = useAppSelector(profileSelector);
 
   const navigate = useNavigate();
+
+  const [notify, context] = useNotification();
 
   const {
     data: storages,
@@ -116,33 +119,36 @@ const StoragesTableContainer: FC = () => {
   });
 
   return (
-    <BitBoxTableContainer<IStoragesTableRecord>
-      records={storages ?? []}
-      columns={STORAGES_TABLE_COLUMNS}
-      header={{
-        title: "Список хранилищ",
-        button: {
-          children: "Создать",
-          onClick: handleClickCreate,
-          icon: <PlusOutlined />,
-        },
-      }}
-      modal={(props) => (
-        <CreateStorageModalContainer
-          isModalLoading={isStorageCreating || isStorageEditing}
-          {...props}
-        />
-      )}
-      handleAddRow={handleCreateRow}
-      handleEditRow={handleEditRow}
-      loading={isStoragesFetching}
-      onRow={onRow}
-      contextMenu={{
-        show: (record, selected) =>
-          !!profile && checkStorageAccess(profile, record, selected),
-        menu,
-      }}
-    />
+    <>
+      {context}
+      <BitBoxTableContainer<IStoragesTableRecord>
+        records={storages ?? []}
+        columns={STORAGES_TABLE_COLUMNS}
+        header={{
+          title: "Список хранилищ",
+          button: {
+            children: "Создать",
+            onClick: handleClickCreate,
+            icon: <PlusOutlined />,
+          },
+        }}
+        modal={(props) => (
+          <CreateStorageModalContainer
+            isModalLoading={isStorageCreating || isStorageEditing}
+            {...props}
+          />
+        )}
+        handleAddRow={handleCreateRow}
+        handleEditRow={handleEditRow}
+        loading={isStoragesFetching}
+        onRow={onRow}
+        contextMenu={{
+          show: (record, selected) =>
+            !!profile && checkStorageAccess(profile, record, selected, notify),
+          menu,
+        }}
+      />
+    </>
   );
 };
 
