@@ -30,12 +30,11 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
     foreignSelected ?? [],
   );
   const [isContextMenuOpen, setContextMenuOpen] = useState<boolean>(false);
-  const [contextMenuPosition, setContextMenuPosition] = useState<CSSProperties>(
-    {
+  const [contextMenuPosition, setIsContextMenuPosition] =
+    useState<CSSProperties>({
       left: "",
       top: "",
-    },
-  );
+    });
   const [modalConfig, setModalConfig] = useState<IBitBoxTableModalConfig>({
     open: false,
     mode: null,
@@ -48,6 +47,7 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
 
   const handleRowClick = (event: MouseEvent, record: BitBoxTableRecord) => {
     event.stopPropagation();
+    setContextMenuOpen(false);
     if (event.altKey) {
       if (selected.some((s) => s._id === record._id)) {
         handleChangeSelected(selected.filter((s) => s._id !== record._id));
@@ -77,7 +77,7 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
     }
 
     setContextMenuOpen(true);
-    setContextMenuPosition({
+    setIsContextMenuPosition({
       left: `${event.clientX}px`,
       top: `${event.clientY}px`,
     });

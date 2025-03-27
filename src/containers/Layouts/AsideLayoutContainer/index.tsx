@@ -12,11 +12,10 @@ const AsideLayoutContainer: FC<PropsWithChildren> = (props) => {
   const [collapsed, setCollapsed] = useState<boolean>(true);
   const [menuSelectedKeys, setMenuSelectedKeys] = useState<string[]>([]);
 
-  const navigate = useNavigate();
-
-  const location = useLocation();
-
   const profile = useAppSelector(profileSelector);
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const [logout] = useLogoutMutation();
 
