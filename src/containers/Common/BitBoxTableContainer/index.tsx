@@ -29,12 +29,13 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
   const [selected, setSelected] = useState<BitBoxTableRecord[]>(
     foreignSelected ?? [],
   );
-  const [isContextMenuOpen, setContextMenuOpen] = useState<boolean>(false);
-  const [contextMenuPosition, setIsContextMenuPosition] =
-    useState<CSSProperties>({
+  const [isContextMenuOpen, setIsContextMenuOpen] = useState<boolean>(false);
+  const [contextMenuPosition, setContextMenuPosition] = useState<CSSProperties>(
+    {
       left: "",
       top: "",
-    });
+    },
+  );
   const [modalConfig, setModalConfig] = useState<IBitBoxTableModalConfig>({
     open: false,
     mode: null,
@@ -47,7 +48,7 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
 
   const handleRowClick = (event: MouseEvent, record: BitBoxTableRecord) => {
     event.stopPropagation();
-    setContextMenuOpen(false);
+    setIsContextMenuOpen(false);
     if (event.altKey) {
       if (selected.some((s) => s._id === record._id)) {
         handleChangeSelected(selected.filter((s) => s._id !== record._id));
@@ -65,9 +66,18 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
 
   const handleContextMenu = (event: MouseEvent, record: BitBoxTableRecord) => {
     event.preventDefault();
+    if (
+      (typeof contextMenu?.show === "boolean" && !contextMenu.show) ||
+      (typeof contextMenu?.show === "function" &&
+        !contextMenu?.show(record, selected))
+    ) {
+      setIsContextMenuOpen(false);
+      return;
+    }
+
     if (!isContextMenuOpen) {
       document.addEventListener("click", function onClickOutside() {
-        setContextMenuOpen(false);
+        setIsContextMenuOpen(false);
         document.removeEventListener("click", onClickOutside);
       });
     }
@@ -76,8 +86,8 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
       setSelected([record]);
     }
 
-    setContextMenuOpen(true);
-    setIsContextMenuPosition({
+    setIsContextMenuOpen(true);
+    setContextMenuPosition({
       left: `${event.clientX}px`,
       top: `${event.clientY}px`,
     });
@@ -103,7 +113,7 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
     menu: contextMenu?.menu?.({
       selected,
       modalConfig,
-      setContextMenuOpen,
+      setContextMenuOpen: setIsContextMenuOpen,
       setModalConfig,
     }),
     overlayStyle: contextMenuPosition,

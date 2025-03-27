@@ -20,12 +20,10 @@ const BitBoxTable = <T extends BitBoxTableRecord>({
   return (
     <div className={styles["body"]}>
       <BitBoxTableHeader modalProps={modalProps} header={header} />
-      {contextMenuProps.show && (
-        <Dropdown
-          className={`${contextMenuProps.className} ${styles["dropdown"]}`}
-          {...contextMenuProps}
-        />
-      )}
+      <Dropdown
+        className={`${contextMenuProps.className} ${styles["dropdown"]}`}
+        {...contextMenuProps}
+      />
       <div onClick={handleBorderClick} className={styles["table"]}>
         <Table
           onRow={onRow}

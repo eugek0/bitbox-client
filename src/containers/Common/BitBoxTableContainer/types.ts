@@ -23,7 +23,9 @@ export interface BitBoxTableContainerProps<T extends BitBoxTableRecord>
 }
 
 export interface IBitBoxTableContextMenu {
-  show?: boolean;
+  show?:
+    | boolean
+    | ((record: BitBoxTableRecord, selected: BitBoxTableRecord[]) => boolean);
   menu?: (props: BitBoxTableContextMenuDropdownProps) => MenuProps;
 }
 

@@ -20,8 +20,13 @@ import {
 import { STORAGES_TABLE_COLUMNS } from "./constants";
 import { IStoragesTableRecord } from "./types";
 import { IStorage } from "../types";
+import { useAppSelector } from "@/store";
+import { profileSelector } from "@/containers/Auth/selectors";
+import { checkStorageAccess } from "./utils";
 
 const StoragesTableContainer: FC = () => {
+  const profile = useAppSelector(profileSelector);
+
   const navigate = useNavigate();
 
   const {
@@ -133,7 +138,8 @@ const StoragesTableContainer: FC = () => {
       loading={isStoragesFetching}
       onRow={onRow}
       contextMenu={{
-        show: true,
+        show: (record, selected) =>
+          !!profile && checkStorageAccess(profile, record, selected),
         menu,
       }}
     />
