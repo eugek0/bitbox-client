@@ -20,7 +20,17 @@ export const usersApi = createApi({
         url: "/options",
       }),
     }),
+
+    getUsersRecord: builder.query<Record<string, IProfile>, void>({
+      query: () => ({
+        url: "/record",
+      }),
+    }),
   }),
 });
 
-export const { useGetUserQuery, useGetUsersOptionsQuery } = usersApi;
+export const {
+  useGetUserQuery,
+  useGetUsersOptionsQuery,
+  useGetUsersRecordQuery,
+} = usersApi;

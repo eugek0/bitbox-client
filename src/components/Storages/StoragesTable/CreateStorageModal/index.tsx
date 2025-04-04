@@ -11,6 +11,7 @@ import styles from "./styles.module.scss";
 import { REQUIRED_FIELD_MESSAGE } from "@/core/constants";
 import FileSizeInput from "@/containers/Common/FileSizeInput";
 import CreateStorageModalRoleTooltip from "./Tooltips/CreateStorageModalRoleTooltip";
+import StorageMemberRoles from "@/containers/Storages/StoragesTableContainer/CreateStorageModalContainer/StorageMemberRoles";
 
 const CreateStorageModal: FC<CreateStorageModalProps> = ({
   initialValues,
@@ -142,6 +143,9 @@ const CreateStorageModal: FC<CreateStorageModalProps> = ({
             <Select options={CREATE_STORAGE_MODAL_OPTIONS.defaultRole} />
           </Form.Item>
         </Flex>
+        <Form.Item<TCreateStorageModalFields> name="members">
+          <StorageMemberRoles />
+        </Form.Item>
       </Form>
     </AppModal>
   );

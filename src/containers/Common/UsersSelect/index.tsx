@@ -1,13 +1,13 @@
 import { FC, useEffect, useState } from "react";
 import { Avatar, Flex, Select, Tag, Typography } from "antd";
-import { SelectProps } from "antd/lib";
 import { useGetUsersOptionsQuery } from "@/core/api";
 import { useAppSelector } from "@/store";
 import { profileIdSelector } from "@/containers/Auth/selectors";
 import { Nullable } from "@/core/types";
 import styles from "./styles.module.scss";
+import { UsersSelectProps } from "./types";
 
-const UsersSelect: FC<SelectProps> = (props) => {
+const UsersSelect: FC<UsersSelectProps> = ({ filterFn, ...props }) => {
   const [avatars, setAvatars] =
     useState<Nullable<Record<string, string>>>(null);
 
@@ -30,7 +30,11 @@ const UsersSelect: FC<SelectProps> = (props) => {
   return (
     <Select
       {...props}
-      options={options?.filter((option) => option.value !== id) ?? []}
+      options={
+        options?.filter(
+          (option, index) => option.value !== id && filterFn?.(option, index),
+        ) ?? []
+      }
       loading={isFetching}
       tagRender={(option) => (
         <Tag className={styles["tag"]} bordered={false}>

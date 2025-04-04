@@ -11,8 +11,9 @@ export const checkStorageAccess = (
   const isMaintainer = (record: IStorage) =>
     profile.role === "admin" ||
     record.owner === profile._id ||
+    record.defaultRole === "administrator" ||
     record?.members?.some(
-      (member) => member._id === profile._id && member.role === "maintainer",
+      (member) => member._id === profile._id && member.role === "administrator",
     );
 
   const result =
