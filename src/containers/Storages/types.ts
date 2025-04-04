@@ -6,12 +6,20 @@ export interface IStorage {
   used: number;
   size: number;
   access: TStorageAccess;
-  members?: string[];
-  restrict_file_size?: boolean;
-  max_file_size?: number;
-  restrict_files_count?: boolean;
-  max_files_count?: number;
+  members?: IStorageMember[];
+  restrictFileSize?: boolean;
+  maxFileSize?: number;
+  restrictFilesCount?: boolean;
+  maxFilesCount?: number;
+  defaultRole: TStorageMemberRole;
 }
+
+export interface IStorageMember {
+  _id: string;
+  role: TStorageMemberRole;
+}
+
+export type TStorageMemberRole = "watcher" | "maintainer" | "administrator";
 
 export type TStorageAccess = "public" | "private";
 
@@ -22,10 +30,11 @@ export type TCreateStoragePayload = Pick<
   | "size"
   | "access"
   | "members"
-  | "restrict_file_size"
-  | "max_file_size"
-  | "restrict_files_count"
-  | "max_files_count"
+  | "restrictFileSize"
+  | "maxFileSize"
+  | "restrictFilesCount"
+  | "maxFilesCount"
+  | "defaultRole"
 >;
 
 export interface IEditStoragePayload extends TCreateStoragePayload {

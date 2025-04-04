@@ -67,9 +67,9 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
   const handleContextMenu = (event: MouseEvent, record: BitBoxTableRecord) => {
     event.preventDefault();
     if (
-      (typeof contextMenu?.show === "boolean" && !contextMenu.show) ||
+      (typeof contextMenu?.show === "boolean" && !contextMenu?.show) ||
       (typeof contextMenu?.show === "function" &&
-        !contextMenu?.show(record, selected))
+        !contextMenu?.show?.(record, selected))
     ) {
       setIsContextMenuOpen(false);
       return;

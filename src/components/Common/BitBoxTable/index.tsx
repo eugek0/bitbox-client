@@ -21,7 +21,8 @@ const BitBoxTable = <T extends BitBoxTableRecord>({
     <div className={styles["body"]}>
       <BitBoxTableHeader modalProps={modalProps} header={header} />
       <Dropdown
-        className={`${contextMenuProps.className} ${styles["dropdown"]}`}
+        className={`${contextMenuProps?.className ?? ""} ${styles["dropdown"]}`}
+        trigger={["contextMenu"]}
         {...contextMenuProps}
       />
       <div onClick={handleBorderClick} className={styles["table"]}>

@@ -2,12 +2,15 @@ import { FC } from "react";
 import { Button, Checkbox, Flex, Form, Input, InputNumber, Select } from "antd";
 import { TCreateStorageModalFields } from "@/containers/Storages/StoragesTableContainer/CreateStorageModalContainer/types";
 import AppModal from "@/components/Common/AppModal";
-import UsersSelect from "@/containers/Common/UsersSelect";
-import { CREATE_STORAGE_MODAL_RULES } from "./constants";
+import {
+  CREATE_STORAGE_MODAL_OPTIONS,
+  CREATE_STORAGE_MODAL_RULES,
+} from "./constants";
 import { CreateStorageModalProps } from "./types";
 import styles from "./styles.module.scss";
 import { REQUIRED_FIELD_MESSAGE } from "@/core/constants";
 import FileSizeInput from "@/containers/Common/FileSizeInput";
+import CreateStorageModalRoleTooltip from "./Tooltips/CreateStorageModalRoleTooltip";
 
 const CreateStorageModal: FC<CreateStorageModalProps> = ({
   initialValues,
@@ -60,7 +63,58 @@ const CreateStorageModal: FC<CreateStorageModalProps> = ({
         >
           <Input.TextArea maxLength={256} />
         </Form.Item>
-        <Flex align="center" gap={15}>
+        <Flex align="center" justify="space-between">
+          <Form.Item<TCreateStorageModalFields>
+            label="Ограничить максимальный размер файла"
+            name="restrictFileSize"
+            valuePropName="checked"
+          >
+            <Checkbox />
+          </Form.Item>
+          <Form.Item<TCreateStorageModalFields>
+            label="Максимальный размер файла"
+            rules={[
+              {
+                required: required?.maxFileSize,
+                message: REQUIRED_FIELD_MESSAGE,
+              },
+            ]}
+            name="maxFileSize"
+          >
+            <FileSizeInput
+              className={styles["number"]}
+              disabled={disabled?.maxFileSize}
+              min={1}
+            />
+          </Form.Item>
+        </Flex>
+        <Flex align="center" justify="space-between">
+          <Form.Item<TCreateStorageModalFields>
+            label="Ограничить кол-во файлов"
+            name="restrictFilesCount"
+            valuePropName="checked"
+          >
+            <Checkbox />
+          </Form.Item>
+          <Form.Item<TCreateStorageModalFields>
+            label="Максимальное кол-во файлов"
+            rules={[
+              {
+                required: required?.maxFilesCount,
+                message: REQUIRED_FIELD_MESSAGE,
+              },
+            ]}
+            name="maxFilesCount"
+          >
+            <InputNumber
+              className={styles["number"]}
+              disabled={disabled?.maxFilesCount}
+              addonAfter="Шт."
+              min={1}
+            />
+          </Form.Item>
+        </Flex>
+        <Flex align="center" justify="space-between">
           <Form.Item<TCreateStorageModalFields>
             className={styles["access"]}
             rules={CREATE_STORAGE_MODAL_RULES.default}
@@ -75,67 +129,17 @@ const CreateStorageModal: FC<CreateStorageModalProps> = ({
             />
           </Form.Item>
           <Form.Item<TCreateStorageModalFields>
-            className={styles["members"]}
-            label="Участники"
-            name="members"
+            className={styles["role"]}
+            rules={CREATE_STORAGE_MODAL_RULES.default}
+            label="Стандартная роль"
+            name="defaultRole"
+            tooltip={{
+              placement: "topLeft",
+              title: <CreateStorageModalRoleTooltip />,
+              rootClassName: styles["tooltip"],
+            }}
           >
-            <UsersSelect
-              disabled={disabled?.members}
-              maxTagCount="responsive"
-              mode="multiple"
-              allowClear
-            />
-          </Form.Item>
-        </Flex>
-        <Flex align="center" justify="space-between">
-          <Form.Item<TCreateStorageModalFields>
-            label="Ограничить максимальный размер файла"
-            name="restrict_file_size"
-            valuePropName="checked"
-          >
-            <Checkbox />
-          </Form.Item>
-          <Form.Item<TCreateStorageModalFields>
-            label="Максимальный размер файла"
-            rules={[
-              {
-                required: required?.max_file_size,
-                message: REQUIRED_FIELD_MESSAGE,
-              },
-            ]}
-            name="max_file_size"
-          >
-            <FileSizeInput
-              className={styles["number"]}
-              disabled={disabled?.max_file_size}
-              min={1}
-            />
-          </Form.Item>
-        </Flex>
-        <Flex align="center" justify="space-between">
-          <Form.Item<TCreateStorageModalFields>
-            label="Ограничить кол-во файлов"
-            name="restrict_files_count"
-            valuePropName="checked"
-          >
-            <Checkbox />
-          </Form.Item>
-          <Form.Item<TCreateStorageModalFields>
-            label="Максимальное кол-во файлов"
-            rules={[
-              {
-                required: required?.max_files_count,
-                message: REQUIRED_FIELD_MESSAGE,
-              },
-            ]}
-            name="max_files_count"
-          >
-            <InputNumber
-              className={styles["number"]}
-              disabled={disabled?.max_files_count}
-              addonAfter="Шт."
-              min={1}
-            />
+            <Select options={CREATE_STORAGE_MODAL_OPTIONS.defaultRole} />
           </Form.Item>
         </Flex>
       </Form>

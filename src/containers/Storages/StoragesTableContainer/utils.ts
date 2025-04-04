@@ -1,20 +1,22 @@
 import { IProfile } from "@/containers/Auth/types";
-import { BitBoxTableRecord } from "@/containers/Common/BitBoxTableContainer/types";
 import { NotificationInstance } from "antd/es/notification/interface";
+import { IStorage } from "../types";
 
 export const checkStorageAccess = (
   profile: IProfile,
-  record: BitBoxTableRecord,
-  selected: BitBoxTableRecord[],
+  record: IStorage,
+  selected: IStorage[],
   notify: NotificationInstance,
 ): boolean => {
-  const checkOwnership = (record: BitBoxTableRecord) =>
-    profile.role === "admin" || record.owner === profile._id;
+  const isMaintainer = (record: IStorage) =>
+    profile.role === "admin" ||
+    record.owner === profile._id ||
+    record?.members?.some(
+      (member) => member._id === profile._id && member.role === "maintainer",
+    );
 
   const result =
-    selected.length > 1
-      ? selected.every(checkOwnership)
-      : checkOwnership(record);
+    selected.length > 1 ? selected.every(isMaintainer) : isMaintainer(record);
 
   if (!result) {
     notify.error({
@@ -24,5 +26,5 @@ export const checkStorageAccess = (
     });
   }
 
-  return result;
+  return result ?? false;
 };

@@ -144,7 +144,13 @@ const StoragesTableContainer: FC = () => {
         onRow={onRow}
         contextMenu={{
           show: (record, selected) =>
-            !!profile && checkStorageAccess(profile, record, selected, notify),
+            !!profile &&
+            checkStorageAccess(
+              profile,
+              record as IStorage,
+              selected as IStorage[],
+              notify,
+            ),
           menu,
         }}
       />

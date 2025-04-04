@@ -10,31 +10,31 @@ import {
 
 export const storageApi = createApi({
   reducerPath: "storage/api",
-  baseQuery: fetchMainBaseQuery("/storages"),
+  baseQuery: fetchMainBaseQuery(""),
   endpoints: (builder) => ({
     getStorage: builder.query<IStoragesTableRecord, string>({
       query: (storageid: string) => ({
-        url: `/${storageid}`,
+        url: `/storages/${storageid}`,
       }),
       keepUnusedDataFor: 0,
     }),
 
     getStorageEntities: builder.query<IEntity[], IGetStorageEntitiesPayload>({
       query: ({ storageid, params }) => ({
-        url: `/${storageid}/entities`,
+        url: `/entities/${storageid}`,
         params,
       }),
     }),
 
     getStorageEntity: builder.query<IEntity, IGetStorageEntityPayload>({
       query: ({ storageid, entityid }) => ({
-        url: `/${storageid}/entity/${entityid}`,
+        url: `/entities/${storageid}/${entityid}`,
       }),
     }),
 
     getStorageFile: builder.query<Blob, IGetStorageFilePayload>({
       query: ({ storageid, fileid }) => ({
-        url: `/${storageid}/file/${fileid}`,
+        url: `/entities/${storageid}/blob/${fileid}`,
         responseHandler: (response) => response.blob(),
       }),
     }),

@@ -1,6 +1,10 @@
 import { FC, useContext, useState } from "react";
-import { Button } from "antd";
-import { ArrowLeftOutlined, UploadOutlined } from "@ant-design/icons";
+import { Button, MenuProps } from "antd";
+import {
+  ArrowLeftOutlined,
+  DeleteOutlined,
+  UploadOutlined,
+} from "@ant-design/icons";
 import { TableProps } from "antd/lib";
 import { useNavigate, useParams } from "@tanstack/react-router";
 import BitBoxTableContainer from "@/containers/Common/BitBoxTableContainer";
@@ -52,12 +56,35 @@ const StorageTableContainer: FC = () => {
     },
   });
 
+  const menu = (): MenuProps => ({
+    items: [
+      {
+        key: "1",
+        type: "group",
+        label: "Действия",
+        children: [
+          {
+            key: "2",
+            label: "Удалить",
+            icon: <DeleteOutlined />,
+            onClick: () => {},
+            danger: true,
+          },
+        ],
+      },
+    ],
+  });
+
   return (
     <BitBoxTableContainer
       records={entities ?? []}
       columns={STORAGE_TABLE_COLUMNS}
       loading={false}
       onRow={onRow}
+      contextMenu={{
+        show: true,
+        menu,
+      }}
       header={{
         title: name,
         button: {
