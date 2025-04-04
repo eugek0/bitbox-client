@@ -5,7 +5,7 @@ import styles from "./styles.module.scss";
 
 const CreateStorageModalRoleTooltip: FC = () => {
   return (
-    <Flex className={styles["body"]} gap={10} vertical>
+    <Flex gap={10} vertical>
       <Typography.Text>Что смогут делать все пользователи:</Typography.Text>
       <Typography.Text>
         <span className={styles["role"]}>
@@ -23,7 +23,8 @@ const CreateStorageModalRoleTooltip: FC = () => {
         <span className={styles["role"]}>
           {CREATE_STORAGE_MODAL_ROLE_LABELS.administrator}
         </span>{" "}
-        - пользователи могут загружать и редактировать файлы
+        - пользователи могут редактировать хранилище, а также могут полностью
+        его удалить
       </Typography.Text>
     </Flex>
   );
