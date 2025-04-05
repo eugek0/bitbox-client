@@ -12,6 +12,7 @@ export interface IStorage {
   restrictFilesCount?: boolean;
   maxFilesCount?: number;
   defaultRole: TStorageMemberRole;
+  createdAt: string;
 }
 
 export interface IStorageMember {

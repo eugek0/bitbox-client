@@ -1,6 +1,11 @@
 import { FC } from "react";
 import { TableProps } from "antd";
-import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  InfoCircleOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
 import { useNavigate } from "@tanstack/react-router";
 import { MenuProps } from "antd/lib";
 import { TCreateStorageModalFields } from "./CreateStorageModalContainer/types";
@@ -23,14 +28,12 @@ import { IStorage } from "../types";
 import { useAppSelector } from "@/store";
 import { profileSelector } from "@/containers/Auth/selectors";
 import { checkStorageAccess } from "./utils";
-import useNotification from "antd/es/notification/useNotification";
+import StorageInfoModalContainer from "./StorageInfoModalContainer";
 
 const StoragesTableContainer: FC = () => {
   const profile = useAppSelector(profileSelector);
 
   const navigate = useNavigate();
-
-  const [notify, context] = useNotification();
 
   const {
     data: storages,
@@ -86,41 +89,60 @@ const StoragesTableContainer: FC = () => {
     selected,
     setContextMenuOpen,
     setModalConfig,
-  }: BitBoxTableContextMenuDropdownProps): MenuProps => ({
-    items: [
-      {
-        key: "1",
-        type: "group",
-        label: "Действия",
-        children: [
-          {
-            key: "3",
-            label: "Редактировать",
-            icon: <EditOutlined />,
-            disabled: selected?.length > 1,
-            onClick: () => {
-              setModalConfig({ open: true, mode: "edit" });
-              setContextMenuOpen(false);
+    setInfoModalConfig,
+  }: BitBoxTableContextMenuDropdownProps): MenuProps => {
+    const accessed =
+      profile && checkStorageAccess(selected as IStorage[], profile);
+
+    return {
+      items: [
+        {
+          key: "1",
+          type: "group",
+          label: "Действия",
+          children: [
+            {
+              key: "2",
+              label: "Редактировать",
+              icon: <EditOutlined />,
+              disabled: selected.length > 1 || !accessed,
+              onClick: () => {
+                setModalConfig({ open: true, mode: "edit" });
+                setContextMenuOpen(false);
+              },
             },
-          },
-          {
-            key: "2",
-            label: "Удалить",
-            icon: <DeleteOutlined />,
-            onClick: () => {
-              handleDeleteRow(selected);
-              setContextMenuOpen(false);
+            {
+              key: "3",
+              label: "Удалить",
+              icon: <DeleteOutlined />,
+              disabled: !accessed,
+              onClick: () => {
+                handleDeleteRow(selected);
+                setContextMenuOpen(false);
+              },
+              danger: true,
             },
-            danger: true,
-          },
-        ],
-      },
-    ],
-  });
+            {
+              key: "4",
+              type: "divider",
+            },
+            {
+              key: "5",
+              label: "Информация",
+              icon: <InfoCircleOutlined />,
+              onClick: () => {
+                setInfoModalConfig({ open: true });
+                setContextMenuOpen(false);
+              },
+            },
+          ],
+        },
+      ],
+    };
+  };
 
   return (
     <>
-      {context}
       <BitBoxTableContainer<IStoragesTableRecord>
         records={storages ?? []}
         columns={STORAGES_TABLE_COLUMNS}
@@ -138,19 +160,13 @@ const StoragesTableContainer: FC = () => {
             {...props}
           />
         )}
+        infoModal={StorageInfoModalContainer}
         handleAddRow={handleCreateRow}
         handleEditRow={handleEditRow}
         loading={isStoragesFetching}
         onRow={onRow}
         contextMenu={{
-          show: (record, selected) =>
-            !!profile &&
-            checkStorageAccess(
-              profile,
-              record as IStorage,
-              selected as IStorage[],
-              notify,
-            ),
+          show: true,
           menu,
         }}
       />

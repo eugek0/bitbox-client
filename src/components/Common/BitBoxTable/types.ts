@@ -3,6 +3,7 @@ import { DropDownProps } from "antd";
 import { TableProps } from "antd/lib";
 import {
   BitBoxTableContainerProps,
+  BitBoxTableInfoModalProps,
   BitBoxTableModalProps,
   BitBoxTableRecord,
   IBitBoxTableContextMenu,
@@ -11,6 +12,7 @@ import {
 export interface BitBoxTableProps<T extends BitBoxTableRecord>
   extends Omit<BitBoxTableContainerProps<T>, "contextMenu"> {
   modalProps: BitBoxTableModalProps;
+  infoModalProps: BitBoxTableInfoModalProps;
   contextMenuProps: BitBoxTableContextMenuProps;
   handleBorderClick?: MouseEventHandler<HTMLDivElement>;
   onRow: TableProps["onRow"];

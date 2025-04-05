@@ -12,6 +12,7 @@ export interface BitBoxTableContainerProps<T extends BitBoxTableRecord>
   loading?: boolean;
   header?: IBitBoxTableHeader;
   modal?: FC<BitBoxTableModalProps>;
+  infoModal?: FC<BitBoxTableInfoModalProps>;
   contextMenu?: IBitBoxTableContextMenu;
   selected?: BitBoxTableRecord[];
   handleSelect?: (selected: BitBoxTableRecord[]) => void;
@@ -32,8 +33,10 @@ export interface IBitBoxTableContextMenu {
 export interface BitBoxTableContextMenuDropdownProps {
   selected: BitBoxTableRecord[];
   modalConfig: IBitBoxTableModalConfig;
+  infoModalConfig: IBitBoxTableInfoModalConfig;
   setContextMenuOpen: Dispatch<boolean>;
   setModalConfig: Dispatch<IBitBoxTableModalConfig>;
+  setInfoModalConfig: Dispatch<IBitBoxTableInfoModalConfig>;
 }
 
 export interface IBitBoxTableHeader {
@@ -59,7 +62,17 @@ export interface BitBoxTableModalProps
   selected: BitBoxTableRecord[];
 }
 
+export interface BitBoxTableInfoModalProps {
+  config: IBitBoxTableInfoModalConfig;
+  setConfig: Dispatch<IBitBoxTableInfoModalConfig>;
+  selected: BitBoxTableRecord;
+}
+
 export interface IBitBoxTableModalConfig {
   open: boolean;
   mode: Nullable<"add" | "edit">;
+}
+
+export interface IBitBoxTableInfoModalConfig {
+  open: boolean;
 }

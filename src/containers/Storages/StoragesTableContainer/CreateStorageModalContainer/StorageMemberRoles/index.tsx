@@ -10,13 +10,17 @@ import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
 import AddStorageMembersModalContainer from "./AddStorageMembersModalContainer";
 import { IAddStorageMembersModalFields } from "@/components/Storages/StoragesTable/CreateStorageModal/StorageMemberRoles/AddStorageMembersModal/types";
 import styles from "./styles.module.scss";
-import { CREATE_STORAGE_MODAL_OPTIONS } from "@/components/Storages/StoragesTable/CreateStorageModal/constants";
+import {
+  CREATE_STORAGE_MODAL_OPTIONS,
+  CREATE_STORAGE_MODAL_ROLE_LABELS,
+} from "@/components/Storages/StoragesTable/CreateStorageModal/constants";
 import { useAppSelector } from "@/store";
 import { profileIdSelector } from "@/containers/Auth/selectors";
 
 const StorageMemberRoles: FC<StorageMemberRolesProps> = ({
   value: foreignValue,
   onChange: foreignOnChange,
+  readOnly,
 }) => {
   const [value, setValue] = useState<IStorageMember[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -69,17 +73,19 @@ const StorageMemberRoles: FC<StorageMemberRolesProps> = ({
     <>
       <Flex gap={15} vertical>
         <List
-          className={styles['list']}
+          className={styles["list"]}
           header={
             <Flex gap={15} align="center">
               <Typography.Text>Участники</Typography.Text>
-              <Button
-                onClick={handleClickAddMember}
-                icon={<PlusOutlined />}
-                type="text"
-              >
-                Добавить
-              </Button>
+              {!readOnly && (
+                <Button
+                  onClick={handleClickAddMember}
+                  icon={<PlusOutlined />}
+                  type="text"
+                >
+                  Добавить
+                </Button>
+              )}
             </Flex>
           }
           loading={isFetching}
@@ -92,19 +98,31 @@ const StorageMemberRoles: FC<StorageMemberRolesProps> = ({
                   gap={15}
                   align="center"
                 >
-                  <Select
-                    className={styles["role"]}
-                    onChange={(role) => handleEditMemberRole(item._id, role)}
-                    options={CREATE_STORAGE_MODAL_OPTIONS.defaultRole}
-                    variant="borderless"
-                    value={item.role}
-                  />
-                  <Button
-                    onClick={() => handleRemoveMember(item._id)}
-                    icon={<CloseOutlined />}
-                    type="text"
-                    danger
-                  />
+                  {readOnly ? (
+                    <div className={styles["list-item-role_readonly"]}>
+                      <Typography.Text>
+                        {CREATE_STORAGE_MODAL_ROLE_LABELS[item.role]}
+                      </Typography.Text>
+                    </div>
+                  ) : (
+                    <>
+                      <Select
+                        className={styles["role"]}
+                        onChange={(role) =>
+                          handleEditMemberRole(item._id, role)
+                        }
+                        options={CREATE_STORAGE_MODAL_OPTIONS.defaultRole}
+                        variant="borderless"
+                        value={item.role}
+                      />
+                      <Button
+                        onClick={() => handleRemoveMember(item._id)}
+                        icon={<CloseOutlined />}
+                        type="text"
+                        danger
+                      />
+                    </>
+                  )}
                 </Flex>
               }
             >

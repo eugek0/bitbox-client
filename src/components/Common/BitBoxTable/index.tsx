@@ -12,7 +12,9 @@ const BitBoxTable = <T extends BitBoxTableRecord>({
   loading,
   header,
   modal,
+  infoModal,
   modalProps,
+  infoModalProps,
   contextMenuProps,
   handleBorderClick,
   onRow,
@@ -38,6 +40,7 @@ const BitBoxTable = <T extends BitBoxTableRecord>({
         />
       </div>
       {modal?.(modalProps) as ReactNode}
+      {infoModal?.(infoModalProps) as ReactNode}
     </div>
   );
 };

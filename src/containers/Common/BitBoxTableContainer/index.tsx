@@ -10,8 +10,10 @@ import { DropDownProps, TableProps } from "antd";
 import BitBoxTable from "@/components/Common/BitBoxTable";
 import {
   BitBoxTableContainerProps,
+  BitBoxTableInfoModalProps,
   BitBoxTableModalProps,
   BitBoxTableRecord,
+  IBitBoxTableInfoModalConfig,
   IBitBoxTableModalConfig,
 } from "./types";
 import styles from "./styles.module.scss";
@@ -40,6 +42,10 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
     open: false,
     mode: null,
   });
+  const [infoModalConfig, setInfoModalConfig] =
+    useState<IBitBoxTableInfoModalConfig>({
+      open: false,
+    });
 
   const handleChangeSelected = (selected: BitBoxTableRecord[]) => {
     setSelected(selected);
@@ -108,13 +114,21 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
     selected,
   };
 
+  const infoModalProps: BitBoxTableInfoModalProps = {
+    config: infoModalConfig,
+    setConfig: setInfoModalConfig,
+    selected: selected[0],
+  };
+
   const contextMenuProps: DropDownProps = {
     ...(contextMenu ?? {}),
     menu: contextMenu?.menu?.({
       selected,
       modalConfig,
+      infoModalConfig,
       setContextMenuOpen: setIsContextMenuOpen,
       setModalConfig,
+      setInfoModalConfig,
     }),
     overlayStyle: contextMenuPosition,
     open: isContextMenuOpen,
@@ -132,6 +146,7 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
     <BitBoxTable
       handleBorderClick={handleClearSelected}
       contextMenuProps={contextMenuProps}
+      infoModalProps={infoModalProps}
       modalProps={modalProps}
       records={records}
       onRow={onRow}
