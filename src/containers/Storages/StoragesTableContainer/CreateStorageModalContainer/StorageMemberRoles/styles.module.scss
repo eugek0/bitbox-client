@@ -1,7 +1,22 @@
-.list-item-extra {
-  padding: 0 10px;
-}
+.list {
+  :global(.ant-list-items) {
+    max-height: 275px;
+    overflow-y: auto;
+  }
 
-.role {
-  width: 175px !important;
+  .list-item-extra {
+    padding: 0 10px;
+  }
+
+  .role {
+    width: 175px !important;
+  }
+
+  :global(.ant-list-item-meta) {
+    align-items: center !important;
+  }
+
+  :global(.ant-list-item-meta-title) {
+    margin: 0 !important;
+  }
 }

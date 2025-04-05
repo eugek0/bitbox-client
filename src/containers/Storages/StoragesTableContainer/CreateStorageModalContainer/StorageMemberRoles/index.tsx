@@ -69,6 +69,7 @@ const StorageMemberRoles: FC<StorageMemberRolesProps> = ({
     <>
       <Flex gap={15} vertical>
         <List
+          className={styles['list']}
           header={
             <Flex gap={15} align="center">
               <Typography.Text>Участники</Typography.Text>
