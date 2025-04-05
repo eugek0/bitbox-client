@@ -35,7 +35,7 @@ const UsersSelect: FC<UsersSelectProps> = ({ filterFn, ...props }) => {
           (option, index) => option.value !== id && filterFn?.(option, index),
         ) ?? []
       }
-      optionFilterProp="label"
+      optionFilterProp="search"
       loading={isFetching}
       tagRender={(option) => (
         <Tag className={styles["tag"]} bordered={false}>
