@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Button, Flex, Typography } from "antd";
+import { Dropdown, Flex, Typography } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import StorageSearcher from "@/containers/Common/StorageSearcher";
 import { BitBoxTableHeaderProps } from "./types";
@@ -13,12 +13,12 @@ const BitBoxTableHeader = <T extends BitBoxTableRecord>({
   return (
     <Flex className={styles["body"]} align="center" justify="space-between">
       <Flex align="center" gap={25}>
-        {header?.suffix}
+        {header?.prefix}
         <Typography.Title className={styles["body__title"]} level={4}>
           {header?.title}
         </Typography.Title>
         {header?.button && (
-          <Button
+          <Dropdown.Button
             {...header?.button}
             onClick={(event) =>
               header?.button?.onClick?.(
@@ -32,6 +32,7 @@ const BitBoxTableHeader = <T extends BitBoxTableRecord>({
             type={header?.button?.type ?? "primary"}
           />
         )}
+        {header?.suffix}
       </Flex>
       <StorageSearcher
         className={styles["body__search"]}

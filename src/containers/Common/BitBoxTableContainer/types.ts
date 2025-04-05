@@ -1,7 +1,7 @@
 import { FC, Dispatch, MouseEvent, ReactNode } from "react";
 import { MenuProps, TableColumnType, TableProps } from "antd";
-import { ButtonProps } from "antd/lib";
 import { Nullable } from "@/core/types";
+import { DropdownButtonProps } from "antd/es/dropdown";
 
 export type BitBoxTableRecord = Record<string, any>;
 
@@ -42,10 +42,12 @@ export interface BitBoxTableContextMenuDropdownProps {
 export interface IBitBoxTableHeader {
   title?: string;
   button?: BitBoxTableButtonProps;
+  prefix?: ReactNode;
   suffix?: ReactNode;
 }
 
-export interface BitBoxTableButtonProps extends Omit<ButtonProps, "onClick"> {
+export interface BitBoxTableButtonProps
+  extends Omit<DropdownButtonProps, "onClick"> {
   onClick?: (
     tools: Pick<BitBoxTableModalProps, "config" | "setConfig">,
     event: MouseEvent,

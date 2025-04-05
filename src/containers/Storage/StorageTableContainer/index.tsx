@@ -1,9 +1,10 @@
 import { FC, useContext, useState } from "react";
-import { Button, MenuProps } from "antd";
+import { Button, Dropdown, MenuProps } from "antd";
 import {
   ArrowLeftOutlined,
   DeleteOutlined,
-  UploadOutlined,
+  FolderAddOutlined,
+  PlusOutlined,
 } from "@ant-design/icons";
 import { TableProps } from "antd/lib";
 import { useNavigate, useParams } from "@tanstack/react-router";
@@ -87,11 +88,25 @@ const StorageTableContainer: FC = () => {
       }}
       header={{
         title: name,
-        button: {
-          children: "Добавить",
-          icon: <UploadOutlined />,
-        },
         suffix: (
+          <Dropdown
+            trigger={["click"]}
+            menu={{
+              items: [
+                {
+                  key: "1",
+                  label: "Создать директорию",
+                  icon: <FolderAddOutlined />,
+                },
+              ],
+            }}
+          >
+            <Button type="primary" icon={<PlusOutlined />}>
+              Создать
+            </Button>
+          </Dropdown>
+        ),
+        prefix: (
           <Button
             onClick={handleClickBack}
             icon={<ArrowLeftOutlined />}
