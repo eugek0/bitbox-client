@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Dropdown, Flex, Typography } from "antd";
+import { Button, Flex, Typography } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import StorageSearcher from "@/containers/Common/StorageSearcher";
 import { BitBoxTableHeaderProps } from "./types";
@@ -18,7 +18,7 @@ const BitBoxTableHeader = <T extends BitBoxTableRecord>({
           {header?.title}
         </Typography.Title>
         {header?.button && (
-          <Dropdown.Button
+          <Button
             {...header?.button}
             onClick={(event) =>
               header?.button?.onClick?.(
