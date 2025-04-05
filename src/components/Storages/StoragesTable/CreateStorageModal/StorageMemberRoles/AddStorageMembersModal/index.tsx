@@ -24,6 +24,7 @@ const AddStorageMembersModal: FC<AddStorageMembersModalProps> = ({
         <Flex gap={15}>
           <Form.Item<IAddStorageMembersModalFields>
             className={styles["members"]}
+            help="Искать можно по логину и по email"
             name="members"
             label="Участники"
           >
