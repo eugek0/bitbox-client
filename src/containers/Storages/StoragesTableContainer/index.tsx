@@ -129,6 +129,7 @@ const StoragesTableContainer: FC = () => {
             {
               key: "5",
               label: "Информация",
+              disabled: selected.length > 1,
               icon: <InfoCircleOutlined />,
               onClick: () => {
                 setInfoModalConfig({ open: true });
