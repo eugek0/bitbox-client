@@ -19,7 +19,7 @@ const StorageLayoutContainer: FC<StorageLayoutContainerProps> = ({
     isLoading,
   } = useGetStorageQuery(storageid!, { skip: !storageid });
 
-  if (isLoading) {
+  if (true) {
     return <FullscreenLoader />;
   }
 
