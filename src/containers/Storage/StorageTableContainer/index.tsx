@@ -292,7 +292,7 @@ const StorageTableContainer: FC = () => {
 
   return (
     <>
-      <BitBoxTableContainer
+      <BitBoxTableContainer<IEntity>
         records={entities?.items ?? []}
         columns={STORAGE_TABLE_COLUMNS}
         loading={false}

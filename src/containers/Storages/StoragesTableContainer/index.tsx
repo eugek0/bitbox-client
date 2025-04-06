@@ -142,36 +142,60 @@ const StoragesTableContainer: FC = () => {
     };
   };
 
+  const borderMenu = ({
+    setContextMenuOpen,
+    setModalConfig,
+  }: BitBoxTableContextMenuDropdownProps): MenuProps => ({
+    items: [
+      {
+        key: "1",
+        type: "group",
+        label: "Действия",
+      },
+      {
+        key: "2",
+        label: "Создать хранилище",
+        icon: <PlusOutlined />,
+        onClick: () => {
+          setModalConfig({ mode: "add", open: true });
+          setContextMenuOpen(false);
+        },
+      },
+    ],
+  });
+
   return (
-    <>
-      <BitBoxTableContainer<IStoragesTableRecord>
-        records={storages ?? []}
-        columns={STORAGES_TABLE_COLUMNS}
-        header={{
-          title: "Список хранилищ",
-          button: {
-            children: "Создать",
-            onClick: handleClickCreate,
-            icon: <PlusOutlined />,
-          },
-        }}
-        modal={(props) => (
-          <CreateStorageModalContainer
-            isModalLoading={isStorageCreating || isStorageEditing}
-            {...props}
-          />
-        )}
-        infoModal={StorageInfoModalContainer}
-        handleAddRow={handleCreateRow}
-        handleEditRow={handleEditRow}
-        loading={isStoragesFetching}
-        onRow={onRow}
-        contextMenu={{
-          show: true,
-          menu,
-        }}
-      />
-    </>
+    <BitBoxTableContainer<IStoragesTableRecord>
+      records={storages ?? []}
+      columns={STORAGES_TABLE_COLUMNS}
+      header={{
+        title: "Список хранилищ",
+        button: {
+          children: "Создать",
+          onClick: handleClickCreate,
+          icon: <PlusOutlined />,
+        },
+      }}
+      modal={(props) => (
+        <CreateStorageModalContainer
+          isModalLoading={isStorageCreating || isStorageEditing}
+          {...props}
+        />
+      )}
+      infoModal={StorageInfoModalContainer}
+      handleAddRow={handleCreateRow}
+      handleEditRow={handleEditRow}
+      loading={isStoragesFetching}
+      onRow={onRow}
+      borderContextMenu={{
+        show: true,
+        menu: borderMenu,
+      }}
+      contextMenu={{
+        show: true,
+        menu,
+      }}
+    />
   );
 };
 
