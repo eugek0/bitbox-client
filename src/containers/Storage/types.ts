@@ -18,11 +18,21 @@ export interface IEntity {
   path: string;
 }
 
+export interface IEntityBreadcrumb {
+  _id: string;
+  fullname: string;
+}
+
 export interface IGetStorageEntitiesPayload {
   storageid: string;
   params: {
     parent?: string;
   };
+}
+
+export interface IGetStorageEntitiesResponse {
+  items: IEntity[];
+  breadcrumbs: IEntityBreadcrumb[];
 }
 
 export interface IGetStorageEntityPayload {
@@ -39,5 +49,6 @@ export interface ICreateDirectoryPayload {
   storageid: string;
   body: {
     name: string;
+    parent?: string;
   };
 }

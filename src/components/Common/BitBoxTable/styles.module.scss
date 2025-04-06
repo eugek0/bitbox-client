@@ -5,6 +5,21 @@
   flex-direction: column;
   height: 100%;
 
+  .breadcrumb {
+    padding: 0 15px;
+
+    * {
+      font-size: 16px;
+    }
+
+    :global(.ant-breadcrumb-link) {
+      max-width: 200px !important;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+
   .dropdown {
     width: 0;
   }

@@ -1,5 +1,5 @@
 import { FC, Dispatch, MouseEvent, ReactNode } from "react";
-import { MenuProps, TableColumnType, TableProps } from "antd";
+import { BreadcrumbProps, MenuProps, TableColumnType, TableProps } from "antd";
 import { Nullable } from "@/core/types";
 import { ButtonProps } from "antd/lib";
 
@@ -15,6 +15,7 @@ export interface BitBoxTableContainerProps<T extends BitBoxTableRecord>
   infoModal?: FC<BitBoxTableInfoModalProps>;
   contextMenu?: IBitBoxTableContextMenu;
   selected?: BitBoxTableRecord[];
+  breadcrumbs?: BreadcrumbProps["items"];
   handleSelect?: (selected: BitBoxTableRecord[]) => void;
   handleAddRow?: (values: Record<string, any>) => Promise<void> | void;
   handleEditRow?: (

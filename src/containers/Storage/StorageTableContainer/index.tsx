@@ -1,10 +1,12 @@
-import { FC, useContext, useState } from "react";
-import { Button, Dropdown, MenuProps } from "antd";
+import { FC, MouseEvent, useContext, useState } from "react";
+import { BreadcrumbProps, Button, Dropdown, Flex, MenuProps } from "antd";
 import {
   ArrowLeftOutlined,
   DeleteOutlined,
   FolderAddOutlined,
+  HomeOutlined,
   PlusOutlined,
+  ProductFilled,
 } from "@ant-design/icons";
 import { TableProps } from "antd/lib";
 import { useNavigate, useParams, useSearch } from "@tanstack/react-router";
@@ -52,6 +54,7 @@ const StorageTableContainer: FC = () => {
       storageid,
       body: {
         name: values.name,
+        parent,
       },
     });
     refetchEntities();
@@ -87,6 +90,37 @@ const StorageTableContainer: FC = () => {
     },
   });
 
+  const breadcrumbs: BreadcrumbProps["items"] = [
+    {
+      key: "storage",
+      title: (
+        <Flex gap={5} align="center">
+          <ProductFilled />
+          <span>{name}</span>
+        </Flex>
+      ),
+      onClick: (event) => {
+        event.preventDefault();
+        navigate({ to: `/storage/${storageid}` });
+      },
+      href: "",
+    },
+    ...(entities?.breadcrumbs?.map?.((breadcrumb) => ({
+      key: breadcrumb._id,
+      title: breadcrumb.fullname,
+      onClick: (event: MouseEvent) => {
+        event.preventDefault();
+        navigate({
+          to: `/storage/${storageid}`,
+          search: {
+            parent: breadcrumb._id,
+          },
+        });
+      },
+      href: "",
+    })) ?? []),
+  ];
+
   const menu = (): MenuProps => ({
     items: [
       {
@@ -109,10 +143,11 @@ const StorageTableContainer: FC = () => {
   return (
     <>
       <BitBoxTableContainer
-        records={entities ?? []}
+        records={entities?.items ?? []}
         columns={STORAGE_TABLE_COLUMNS}
         loading={false}
         onRow={onRow}
+        breadcrumbs={breadcrumbs}
         contextMenu={{
           show: true,
           menu,

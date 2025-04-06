@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Dropdown, Table } from "antd";
+import { Breadcrumb, Dropdown, Flex, Table } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import BitBoxTableHeader from "./BitBoxTableHeader";
 import { BitBoxTableProps } from "./types";
@@ -12,6 +12,7 @@ const BitBoxTable = <T extends BitBoxTableRecord>({
   loading,
   header,
   modal,
+  breadcrumbs,
   infoModal,
   modalProps,
   infoModalProps,
@@ -27,7 +28,17 @@ const BitBoxTable = <T extends BitBoxTableRecord>({
         trigger={["contextMenu"]}
         {...contextMenuProps}
       />
-      <div onClick={handleBorderClick} className={styles["table"]}>
+      <Flex
+        className={styles["table"]}
+        onClick={handleBorderClick}
+        gap={15}
+        vertical
+      >
+        {breadcrumbs && (
+          <div className={styles["breadcrumb"]}>
+            <Breadcrumb items={breadcrumbs} />
+          </div>
+        )}
         <Table
           onRow={onRow}
           columns={columns}
@@ -38,7 +49,7 @@ const BitBoxTable = <T extends BitBoxTableRecord>({
           bordered
           sticky
         />
-      </div>
+      </Flex>
       {modal?.(modalProps) as ReactNode}
       {infoModal?.(infoModalProps) as ReactNode}
     </div>

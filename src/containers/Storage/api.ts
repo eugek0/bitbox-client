@@ -6,6 +6,7 @@ import {
   IEntity,
   IGetStorageEntitiesPayload,
   IGetStorageEntityPayload,
+  IGetStorageEntitiesResponse,
   IGetStorageFilePayload,
 } from "./types";
 
@@ -20,11 +21,15 @@ export const storageApi = createApi({
       keepUnusedDataFor: 0,
     }),
 
-    getStorageEntities: builder.query<IEntity[], IGetStorageEntitiesPayload>({
+    getStorageEntities: builder.query<
+      IGetStorageEntitiesResponse,
+      IGetStorageEntitiesPayload
+    >({
       query: ({ storageid, params }) => ({
         url: `/entities/${storageid}`,
         params,
       }),
+      keepUnusedDataFor: 0,
     }),
 
     getStorageEntity: builder.query<IEntity, IGetStorageEntityPayload>({
