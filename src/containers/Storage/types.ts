@@ -1,4 +1,4 @@
-export type EntityType = "file" | "folder";
+export type EntityType = "file" | "directory";
 
 export interface IEntity {
   _id: string;
@@ -21,7 +21,7 @@ export interface IEntity {
 export interface IGetStorageEntitiesPayload {
   storageid: string;
   params: {
-    path: string;
+    parent?: string;
   };
 }
 
@@ -33,4 +33,11 @@ export interface IGetStorageEntityPayload {
 export interface IGetStorageFilePayload {
   storageid: string;
   fileid: string;
+}
+
+export interface ICreateDirectoryPayload {
+  storageid: string;
+  body: {
+    name: string;
+  };
 }

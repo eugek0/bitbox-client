@@ -13,4 +13,7 @@ export const Route = createFileRoute("/storage/$storageid/")({
       </StorageLayoutContainer>
     </AsideLayoutContainer>
   ),
+  validateSearch: (search) => ({
+    parent: search.parent as string,
+  }),
 });

@@ -2,6 +2,7 @@ import fetchMainBaseQuery from "@/core/rtkquery";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { IStoragesTableRecord } from "../Storages/StoragesTableContainer/types";
 import {
+  ICreateDirectoryPayload,
   IEntity,
   IGetStorageEntitiesPayload,
   IGetStorageEntityPayload,
@@ -38,6 +39,14 @@ export const storageApi = createApi({
         responseHandler: (response) => response.blob(),
       }),
     }),
+
+    createDirectory: builder.mutation<void, ICreateDirectoryPayload>({
+      query: ({ storageid, body }) => ({
+        url: `/entities/mkdir/${storageid}`,
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -46,4 +55,5 @@ export const {
   useGetStorageEntitiesQuery,
   useGetStorageEntityQuery,
   useLazyGetStorageFileQuery,
+  useCreateDirectoryMutation,
 } = storageApi;

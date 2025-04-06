@@ -1,17 +1,32 @@
-import { TableColumnType } from "antd";
+import { Flex, TableColumnType, Typography } from "antd";
 import { convertBytes } from "@/core/utils";
-import { IEntity } from "../types";
+import { EntityType, IEntity } from "../types";
+import { ReactNode } from "react";
+import { FileFilled, FolderFilled } from "@ant-design/icons";
+
+export const STORAGE_TABLE_ENTITY_TYPE_ICONS: Record<EntityType, ReactNode> = {
+  file: <FileFilled />,
+  directory: <FolderFilled />,
+};
 
 export const STORAGE_TABLE_COLUMNS: TableColumnType<IEntity>[] = [
   {
     title: "Название",
     dataIndex: "fullname",
     width: "25%",
+    ellipsis: true,
     sorter: {
       compare: (a, b) => b.name.localeCompare(a.name),
     },
     showSorterTooltip: false,
-    ellipsis: true,
+    render: (name, record) => {
+      return (
+        <Flex align="center" gap={10}>
+          {STORAGE_TABLE_ENTITY_TYPE_ICONS[record.type]}
+          <Typography.Text>{name}</Typography.Text>
+        </Flex>
+      );
+    },
   },
   {
     title: "Размер",
@@ -21,6 +36,6 @@ export const STORAGE_TABLE_COLUMNS: TableColumnType<IEntity>[] = [
       compare: (a, b) => a.size - b.size,
     },
     showSorterTooltip: false,
-    render: (size) => convertBytes(size),
+    render: (size) => convertBytes(size ?? 0),
   },
 ];
