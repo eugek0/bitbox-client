@@ -1,4 +1,17 @@
+import { Nullable } from "@/core/types";
+
 export type EntityType = "file" | "directory";
+
+export interface IStorageSliceState {
+  buffer: IStorageBuffer;
+}
+
+export interface IStorageBuffer {
+  items: IEntity[];
+  type: TStorageBufferType;
+}
+
+export type TStorageBufferType = Nullable<"copy" | "cut">;
 
 export interface IEntity {
   _id: string;
