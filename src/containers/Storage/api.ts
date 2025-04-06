@@ -8,6 +8,8 @@ import {
   IGetStorageEntityPayload,
   IGetStorageEntitiesResponse,
   IGetStorageFilePayload,
+  IUploadEntitiesPayload,
+  IDeleteEntitiesPayload,
 } from "./types";
 
 export const storageApi = createApi({
@@ -52,6 +54,22 @@ export const storageApi = createApi({
         body,
       }),
     }),
+
+    uploadEntities: builder.mutation<void, IUploadEntitiesPayload>({
+      query: ({ storageid, body }) => ({
+        url: `/entities/${storageid}`,
+        method: "POST",
+        body,
+      }),
+    }),
+
+    deleteEntities: builder.mutation<void, IDeleteEntitiesPayload>({
+      query: ({ storageid, body }) => ({
+        url: `/entities/rm/${storageid}`,
+        method: "DELETE",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -61,4 +79,6 @@ export const {
   useGetStorageEntityQuery,
   useLazyGetStorageFileQuery,
   useCreateDirectoryMutation,
+  useUploadEntitiesMutation,
+  useDeleteEntitiesMutation,
 } = storageApi;

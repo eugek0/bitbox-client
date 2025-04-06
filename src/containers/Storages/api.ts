@@ -17,6 +17,7 @@ export const storagesApi = createApi({
       query: () => ({
         url: "/",
       }),
+      keepUnusedDataFor: 0,
     }),
 
     createStorage: builder.mutation<void, TCreateStoragePayload>({

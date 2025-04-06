@@ -3,7 +3,6 @@ import { BreadcrumbProps, Button, Dropdown, Flex, MenuProps } from "antd";
 import {
   ArrowLeftOutlined,
   DeleteOutlined,
-  FileAddFilled,
   FolderAddOutlined,
   PlusOutlined,
   ProductFilled,
@@ -12,13 +11,19 @@ import { TableProps } from "antd/lib";
 import { useNavigate, useParams, useSearch } from "@tanstack/react-router";
 import BitBoxTableContainer from "@/containers/Common/BitBoxTableContainer";
 import { StorageContext } from "../../Layouts/StorageLayoutContainer/context";
-import { useCreateDirectoryMutation, useGetStorageEntitiesQuery } from "../api";
+import {
+  useCreateDirectoryMutation,
+  useDeleteEntitiesMutation,
+  useGetStorageEntitiesQuery,
+  useUploadEntitiesMutation,
+} from "../api";
 import { STORAGE_TABLE_COLUMNS } from "./constants";
-import styles from "./styles.module.scss";
 import CreateDirectoryModalContainer from "./CreateDirectoryModalContainer";
+import { IEntity } from "../types";
+import { BitBoxTableContextMenuDropdownProps } from "@/containers/Common/BitBoxTableContainer/types";
+import { LuFileUp, LuFolderUp } from "react-icons/lu";
 
 const StorageTableContainer: FC = () => {
-  const [selected, setSelected] = useState<string[]>([]);
   const [isCreateDirectoryModalOpen, setIsCreateDirectoryModalOpen] =
     useState<boolean>(false);
 
@@ -34,6 +39,8 @@ const StorageTableContainer: FC = () => {
       params: { parent },
     });
   const [createDirectory] = useCreateDirectoryMutation();
+  const [uploadEntities] = useUploadEntitiesMutation();
+  const [deleteEntities] = useDeleteEntitiesMutation();
 
   if (!context) {
     throw new Error("Context not found");
@@ -47,6 +54,48 @@ const StorageTableContainer: FC = () => {
 
   const handleCloseCreateDirectoryModal = () => {
     setIsCreateDirectoryModalOpen(false);
+  };
+
+  const handleUploadDirectory = (directory: boolean) => {
+    const upload = document.createElement("input");
+    upload.setAttribute("type", "file");
+    upload.setAttribute("multiple", "");
+    if (directory) {
+      upload.setAttribute("webkitdirectory", "");
+    }
+
+    const changeEventHandler = async () => {
+      const formdata = new FormData();
+
+      formdata.append("parent", parent);
+      for (const file of upload?.files ?? []) {
+        formdata.append(
+          "entities",
+          file,
+          directory ? file.webkitRelativePath : undefined,
+        );
+        if (directory) {
+          formdata.append("metadata", file.webkitRelativePath);
+        }
+      }
+
+      await uploadEntities({ body: formdata, storageid });
+      upload.removeEventListener("change", changeEventHandler);
+      refetchEntities();
+    };
+
+    upload.addEventListener("change", changeEventHandler);
+    upload.click();
+  };
+
+  const handleDeleteEntities = async (selected: IEntity[]) => {
+    await deleteEntities({
+      storageid,
+      body: {
+        entities: selected.map((entity) => entity._id),
+      },
+    });
+    refetchEntities();
   };
 
   const handleOkCreateDirectoryModal = async (values: Record<string, any>) => {
@@ -66,7 +115,6 @@ const StorageTableContainer: FC = () => {
   };
 
   const onRow: TableProps["onRow"] = (record) => ({
-    className: `${styles["row"]} ${selected.includes(record._id) ? styles["row__selected"] : ""}`,
     onDoubleClick: () => {
       if (record.type === "file") {
         navigate({ to: `/storage/${storageid}/file/${record._id}` });
@@ -75,17 +123,6 @@ const StorageTableContainer: FC = () => {
           to: `/storage/${storageid}`,
           search: { parent: record._id },
         });
-      }
-    },
-    onClick: (event) => {
-      if (event.altKey) {
-        if (selected.includes(record._id)) {
-          setSelected(selected.filter((id) => id !== record._id));
-        } else {
-          setSelected([...selected, record._id]);
-        }
-      } else {
-        setSelected([record._id]);
       }
     },
   });
@@ -121,7 +158,10 @@ const StorageTableContainer: FC = () => {
     })) ?? []),
   ];
 
-  const menu = (): MenuProps => ({
+  const menu = ({
+    selected,
+    setContextMenuOpen,
+  }: BitBoxTableContextMenuDropdownProps): MenuProps => ({
     items: [
       {
         key: "1",
@@ -132,7 +172,10 @@ const StorageTableContainer: FC = () => {
             key: "2",
             label: "Удалить",
             icon: <DeleteOutlined />,
-            onClick: () => {},
+            onClick: () => {
+              handleDeleteEntities(selected as IEntity[]);
+              setContextMenuOpen(false);
+            },
             danger: true,
           },
         ],
@@ -164,6 +207,18 @@ const StorageTableContainer: FC = () => {
                     label: "Создать директорию",
                     onClick: handleOpenCreateDirectoryModal,
                     icon: <FolderAddOutlined />,
+                  },
+                  {
+                    key: "2",
+                    label: "Загрузить файлы",
+                    onClick: () => handleUploadDirectory(false),
+                    icon: <LuFileUp />,
+                  },
+                  {
+                    key: "3",
+                    label: "Загрузить директорию",
+                    onClick: () => handleUploadDirectory(true),
+                    icon: <LuFolderUp />,
                   },
                 ],
               }}

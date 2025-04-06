@@ -52,3 +52,15 @@ export interface ICreateDirectoryPayload {
     parent?: string;
   };
 }
+
+export interface IUploadEntitiesPayload {
+  storageid: string;
+  body: FormData;
+}
+
+export interface IDeleteEntitiesPayload {
+  storageid: string;
+  body: {
+    entities: string[];
+  };
+}
