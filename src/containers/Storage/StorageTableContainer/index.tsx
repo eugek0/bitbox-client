@@ -3,8 +3,8 @@ import { BreadcrumbProps, Button, Dropdown, Flex, MenuProps } from "antd";
 import {
   ArrowLeftOutlined,
   DeleteOutlined,
+  FileAddFilled,
   FolderAddOutlined,
-  HomeOutlined,
   PlusOutlined,
   ProductFilled,
 } from "@ant-design/icons";
