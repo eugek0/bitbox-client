@@ -126,6 +126,7 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
       selected,
       modalConfig,
       infoModalConfig,
+      setSelected: handleChangeSelected,
       setContextMenuOpen: setIsContextMenuOpen,
       setModalConfig,
       setInfoModalConfig,

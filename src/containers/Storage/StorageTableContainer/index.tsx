@@ -1,7 +1,11 @@
 import { FC, MouseEvent, useContext, useState } from "react";
 import { BreadcrumbProps, Button, Dropdown, Flex, MenuProps } from "antd";
+import { LuFileUp, LuFolderUp } from "react-icons/lu";
+import { IoCutOutline } from "react-icons/io5";
+import { useDispatch } from "react-redux";
 import {
   ArrowLeftOutlined,
+  CopyOutlined,
   DeleteOutlined,
   FolderAddOutlined,
   PlusOutlined,
@@ -19,9 +23,11 @@ import {
 } from "../api";
 import { STORAGE_TABLE_COLUMNS } from "./constants";
 import CreateDirectoryModalContainer from "./CreateDirectoryModalContainer";
-import { IEntity } from "../types";
 import { BitBoxTableContextMenuDropdownProps } from "@/containers/Common/BitBoxTableContainer/types";
-import { LuFileUp, LuFolderUp } from "react-icons/lu";
+import { useAppSelector } from "@/store";
+import { storageBufferSelector } from "../selectors";
+import { IEntity } from "../types";
+import { clearStorageBuffer, setStorageBuffer } from "../slice";
 
 const StorageTableContainer: FC = () => {
   const [isCreateDirectoryModalOpen, setIsCreateDirectoryModalOpen] =
@@ -31,7 +37,10 @@ const StorageTableContainer: FC = () => {
   const { parent } = useSearch({ from: "/storage/$storageid/" });
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
+
   const context = useContext(StorageContext);
+  const buffer = useAppSelector(storageBufferSelector);
 
   const { data: entities, refetch: refetchEntities } =
     useGetStorageEntitiesQuery({
@@ -114,6 +123,28 @@ const StorageTableContainer: FC = () => {
     navigate({ to: "/" });
   };
 
+  const handleCopyEntities = (selected: IEntity[]) => {
+    dispatch(
+      setStorageBuffer({
+        items: selected,
+        type: "copy",
+      }),
+    );
+  };
+
+  const handleCutEntities = (selected: IEntity[]) => {
+    dispatch(
+      setStorageBuffer({
+        items: selected,
+        type: "cut",
+      }),
+    );
+  };
+
+  const handleClearBuffer = () => {
+    dispatch(clearStorageBuffer());
+  };
+
   const onRow: TableProps["onRow"] = (record) => ({
     onDoubleClick: () => {
       if (record.type === "file") {
@@ -160,6 +191,7 @@ const StorageTableContainer: FC = () => {
 
   const menu = ({
     selected,
+    setSelected,
     setContextMenuOpen,
   }: BitBoxTableContextMenuDropdownProps): MenuProps => ({
     items: [
@@ -170,6 +202,36 @@ const StorageTableContainer: FC = () => {
         children: [
           {
             key: "2",
+            label: "Скопировать",
+            icon: <CopyOutlined />,
+            onClick: () => {
+              handleCopyEntities(selected as IEntity[]);
+              setSelected([]);
+              setContextMenuOpen(false);
+            },
+          },
+          {
+            key: "3",
+            label: "Вырезать",
+            icon: <IoCutOutline />,
+            onClick: () => {
+              handleCutEntities(selected as IEntity[]);
+              setSelected([]);
+              setContextMenuOpen(false);
+            },
+          },
+          {
+            key: "4",
+            label: "Вставить",
+            icon: <PlusOutlined />,
+            disabled: !buffer.items.length,
+            onClick: () => {
+              handleClearBuffer();
+              setContextMenuOpen(false);
+            },
+          },
+          {
+            key: "5",
             label: "Удалить",
             icon: <DeleteOutlined />,
             onClick: () => {

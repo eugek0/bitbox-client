@@ -33,6 +33,7 @@ export interface IBitBoxTableContextMenu {
 
 export interface BitBoxTableContextMenuDropdownProps {
   selected: BitBoxTableRecord[];
+  setSelected: Dispatch<BitBoxTableRecord[]>;
   modalConfig: IBitBoxTableModalConfig;
   infoModalConfig: IBitBoxTableInfoModalConfig;
   setContextMenuOpen: Dispatch<boolean>;
