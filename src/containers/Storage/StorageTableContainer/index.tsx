@@ -65,7 +65,7 @@ const StorageTableContainer: FC = () => {
     setIsCreateDirectoryModalOpen(false);
   };
 
-  const handleUploadDirectory = (directory: boolean) => {
+  const handleUploadEntities = (directory: boolean) => {
     const upload = document.createElement("input");
     upload.setAttribute("type", "file");
     upload.setAttribute("multiple", "");
@@ -222,16 +222,6 @@ const StorageTableContainer: FC = () => {
           },
           {
             key: "4",
-            label: "Вставить",
-            icon: <PlusOutlined />,
-            disabled: !buffer.items.length,
-            onClick: () => {
-              handleClearBuffer();
-              setContextMenuOpen(false);
-            },
-          },
-          {
-            key: "5",
             label: "Удалить",
             icon: <DeleteOutlined />,
             onClick: () => {
@@ -239,6 +229,61 @@ const StorageTableContainer: FC = () => {
               setContextMenuOpen(false);
             },
             danger: true,
+          },
+        ],
+      },
+    ],
+  });
+
+  const borderMenu = ({
+    setContextMenuOpen,
+  }: BitBoxTableContextMenuDropdownProps): MenuProps => ({
+    items: [
+      {
+        key: "1",
+        type: "group",
+        label: "Действия",
+        children: [
+          {
+            key: "2",
+            label: "Создать директорию",
+            icon: <FolderAddOutlined />,
+            onClick: () => {
+              handleOpenCreateDirectoryModal();
+              setContextMenuOpen(false);
+            },
+          },
+          {
+            key: "3",
+            label: "Загрузить файлы",
+            icon: <LuFileUp />,
+            onClick: () => {
+              handleUploadEntities(false);
+              setContextMenuOpen(false);
+            },
+          },
+          {
+            key: "4",
+            label: "Загрузить директорию",
+            icon: <LuFolderUp />,
+            onClick: () => {
+              handleUploadEntities(false);
+              setContextMenuOpen(false);
+            },
+          },
+          {
+            key: "5",
+            type: "divider",
+          },
+          {
+            key: "6",
+            label: "Вставить",
+            icon: <PlusOutlined />,
+            disabled: !buffer.items.length,
+            onClick: () => {
+              handleClearBuffer();
+              setContextMenuOpen(false);
+            },
           },
         ],
       },
@@ -253,6 +298,10 @@ const StorageTableContainer: FC = () => {
         loading={false}
         onRow={onRow}
         breadcrumbs={breadcrumbs}
+        borderContextMenu={{
+          show: true,
+          menu: borderMenu,
+        }}
         contextMenu={{
           show: true,
           menu,
@@ -273,13 +322,13 @@ const StorageTableContainer: FC = () => {
                   {
                     key: "2",
                     label: "Загрузить файлы",
-                    onClick: () => handleUploadDirectory(false),
+                    onClick: () => handleUploadEntities(false),
                     icon: <LuFileUp />,
                   },
                   {
                     key: "3",
                     label: "Загрузить директорию",
-                    onClick: () => handleUploadDirectory(true),
+                    onClick: () => handleUploadEntities(true),
                     icon: <LuFolderUp />,
                   },
                 ],
