@@ -14,6 +14,7 @@ export interface BitBoxTableContainerProps<T extends BitBoxTableRecord>
   modal?: FC<BitBoxTableModalProps>;
   infoModal?: FC<BitBoxTableInfoModalProps>;
   contextMenu?: IBitBoxTableContextMenu;
+  borderContextMenu?: IBitBoxTableContextMenu;
   selected?: BitBoxTableRecord[];
   breadcrumbs?: BreadcrumbProps["items"];
   handleSelect?: (selected: BitBoxTableRecord[]) => void;

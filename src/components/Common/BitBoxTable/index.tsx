@@ -18,6 +18,7 @@ const BitBoxTable = <T extends BitBoxTableRecord>({
   infoModalProps,
   contextMenuProps,
   handleBorderClick,
+  handleBorderContextMenu,
   onRow,
 }: BitBoxTableProps<T>): ReactNode => {
   return (
@@ -31,6 +32,7 @@ const BitBoxTable = <T extends BitBoxTableRecord>({
       <Flex
         className={styles["table"]}
         onClick={handleBorderClick}
+        onContextMenu={handleBorderContextMenu}
         gap={15}
         vertical
       >

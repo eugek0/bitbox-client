@@ -14,7 +14,8 @@ export interface BitBoxTableProps<T extends BitBoxTableRecord>
   modalProps: BitBoxTableModalProps;
   infoModalProps: BitBoxTableInfoModalProps;
   contextMenuProps: BitBoxTableContextMenuProps;
-  handleBorderClick?: MouseEventHandler<HTMLDivElement>;
+  handleBorderClick: MouseEventHandler<HTMLDivElement>;
+  handleBorderContextMenu: MouseEventHandler<HTMLDivElement>;
   onRow: TableProps["onRow"];
 }
 

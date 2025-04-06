@@ -17,12 +17,14 @@ import {
   IBitBoxTableModalConfig,
 } from "./types";
 import styles from "./styles.module.scss";
+import { Nullable } from "@/core/types";
 
 const BitBoxTableContainer = <T extends BitBoxTableRecord>({
   handleSelect,
   handleAddRow,
   handleEditRow,
   contextMenu,
+  borderContextMenu,
   records,
   onRow: foreignOnRow,
   selected: foreignSelected,
@@ -32,6 +34,8 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
     foreignSelected ?? [],
   );
   const [isContextMenuOpen, setIsContextMenuOpen] = useState<boolean>(false);
+  const [contextMenuType, setContextMenuType] =
+    useState<Nullable<"table" | "border">>(null);
   const [contextMenuPosition, setContextMenuPosition] = useState<CSSProperties>(
     {
       left: "",
@@ -70,8 +74,30 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
     setSelected([]);
   };
 
+  const handleBorderContextMenu: MouseEventHandler<HTMLDivElement> = (
+    event,
+  ) => {
+    event.preventDefault();
+    handleChangeSelected([]);
+
+    if (!isContextMenuOpen) {
+      document.addEventListener("click", function onClickOutside() {
+        setIsContextMenuOpen(false);
+        document.removeEventListener("click", onClickOutside);
+      });
+    }
+
+    setContextMenuType("border");
+    setIsContextMenuOpen(true);
+    setContextMenuPosition({
+      left: `${event.clientX}px`,
+      top: `${event.clientY}px`,
+    });
+  };
+
   const handleContextMenu = (event: MouseEvent, record: BitBoxTableRecord) => {
     event.preventDefault();
+    event.stopPropagation();
     if (
       (typeof contextMenu?.show === "boolean" && !contextMenu?.show) ||
       (typeof contextMenu?.show === "function" &&
@@ -92,6 +118,7 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
       setSelected([record]);
     }
 
+    setContextMenuType("table");
     setIsContextMenuOpen(true);
     setContextMenuPosition({
       left: `${event.clientX}px`,
@@ -121,8 +148,10 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
   };
 
   const contextMenuProps: DropDownProps = {
-    ...(contextMenu ?? {}),
-    menu: contextMenu?.menu?.({
+    ...((contextMenuType === "table" ? contextMenu : borderContextMenu) ?? {}),
+    menu: (contextMenuType === "table"
+      ? contextMenu?.menu
+      : borderContextMenu?.menu)?.({
       selected,
       modalConfig,
       infoModalConfig,
@@ -130,7 +159,7 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
       setContextMenuOpen: setIsContextMenuOpen,
       setModalConfig,
       setInfoModalConfig,
-    }),
+    }) ?? { items: [] },
     overlayStyle: contextMenuPosition,
     open: isContextMenuOpen,
   };
@@ -145,6 +174,7 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
 
   return (
     <BitBoxTable
+      handleBorderContextMenu={handleBorderContextMenu}
       handleBorderClick={handleClearSelected}
       contextMenuProps={contextMenuProps}
       infoModalProps={infoModalProps}
