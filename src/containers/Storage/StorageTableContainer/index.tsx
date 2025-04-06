@@ -267,7 +267,7 @@ const StorageTableContainer: FC = () => {
             label: "Загрузить директорию",
             icon: <LuFolderUp />,
             onClick: () => {
-              handleUploadEntities(false);
+              handleUploadEntities(true);
               setContextMenuOpen(false);
             },
           },
