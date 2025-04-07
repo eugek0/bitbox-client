@@ -37,7 +37,6 @@ import { useAppSelector } from "@/store";
 import { storageBufferSelector } from "../selectors";
 import { IEntity } from "../types";
 import { clearStorageBuffer, setStorageBuffer } from "../slice";
-import axios from "axios";
 import { getNoun } from "@/core/utils";
 import { v4 } from "uuid";
 import { appAxios } from "@/core/axios";
