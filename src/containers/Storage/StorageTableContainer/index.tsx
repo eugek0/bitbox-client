@@ -14,8 +14,11 @@ import { IoCutOutline } from "react-icons/io5";
 import { useDispatch } from "react-redux";
 import {
   ArrowLeftOutlined,
+  CheckOutlined,
+  CloseOutlined,
   CopyOutlined,
   DeleteOutlined,
+  DownloadOutlined,
   FolderAddOutlined,
   LoadingOutlined,
   PlusOutlined,
@@ -29,6 +32,7 @@ import {
   useCreateDirectoryMutation,
   useDeleteEntitiesMutation,
   useGetStorageEntitiesQuery,
+  useLazyGetStorageFileQuery,
 } from "../api";
 import { STORAGE_TABLE_COLUMNS } from "./constants";
 import CreateDirectoryModalContainer from "./CreateDirectoryModalContainer";
@@ -37,9 +41,11 @@ import { useAppSelector } from "@/store";
 import { storageBufferSelector } from "../selectors";
 import { IEntity } from "../types";
 import { clearStorageBuffer, setStorageBuffer } from "../slice";
-import { getNoun } from "@/core/utils";
+import { downloadBlob, getNoun } from "@/core/utils";
 import { v4 } from "uuid";
 import { appAxios } from "@/core/axios";
+import { isAxiosError } from "axios";
+import styles from "./styles.module.scss";
 
 const StorageTableContainer: FC = () => {
   const [isCreateDirectoryModalOpen, setIsCreateDirectoryModalOpen] =
@@ -60,8 +66,9 @@ const StorageTableContainer: FC = () => {
     });
   const [createDirectory] = useCreateDirectoryMutation();
   const [deleteEntities] = useDeleteEntitiesMutation();
+  const [downloadEntity] = useLazyGetStorageFileQuery();
 
-  const { notification } = App.useApp();
+  const { notification, modal } = App.useApp();
 
   if (!context) {
     throw new Error("Context not found");
@@ -75,6 +82,14 @@ const StorageTableContainer: FC = () => {
 
   const handleCloseCreateDirectoryModal = () => {
     setIsCreateDirectoryModalOpen(false);
+  };
+
+  const handleDownloadEntities = async (entity: IEntity) => {
+    const blob = await downloadEntity({
+      fileid: entity._id,
+      storageid,
+    }).unwrap();
+    downloadBlob(blob, entity.fullname);
   };
 
   const handleUploadEntities = (directory: boolean) => {
@@ -101,31 +116,95 @@ const StorageTableContainer: FC = () => {
       }
       const uploadKey = v4();
 
-      await appAxios.post(`/entities/${storageid}`, formdata, {
-        onUploadProgress: (event) => {
-          const progress = Math.round((event.progress ?? 0) * 100);
+      const message = `Загрузка ${upload?.files?.length ?? 0} ${getNoun(upload?.files?.length ?? 0, "файла", "файлов", "файлов")}`;
+
+      const controller = new AbortController();
+
+      const handleCancelUpload = async () => {
+        const result = await modal.confirm({
+          title: "Отменить загрузку?",
+          content: `${(upload?.files?.length ?? 0) > 1 ? "Файлы" : "Файл"} еще не ${(upload?.files?.length ?? 0) > 1 ? "загружены" : "загружен"}. Отменить?`,
+        });
+
+        if (result) {
+          controller.abort();
+        }
+      };
+
+      try {
+        await appAxios.post(`/entities/${storageid}`, formdata, {
+          signal: controller.signal,
+          onUploadProgress: (event) => {
+            const progress = Math.round((event.progress ?? 0) * 100);
+            notification.open({
+              key: uploadKey,
+              type: "info",
+              description:
+                progress === 100 ? (
+                  <Flex gap={10} align="center">
+                    <span>Запись файлов на диск</span>
+                    <Spin
+                      indicator={<LoadingOutlined />}
+                      size="small"
+                      spinning
+                    />
+                  </Flex>
+                ) : (
+                  <Progress size="small" percent={progress} />
+                ),
+              actions: (
+                <Button
+                  onClick={handleCancelUpload}
+                  icon={<CloseOutlined />}
+                  type="text"
+                  danger
+                >
+                  Отменить
+                </Button>
+              ),
+              placement: "bottomRight",
+              closable: false,
+              duration: 0,
+              message,
+            });
+          },
+        });
+        notification.open({
+          key: uploadKey,
+          type: "info",
+          description: (
+            <Flex gap={10} align="center">
+              <span>Запись файлов на диск</span>
+              <CheckOutlined className={styles["check"]} />
+            </Flex>
+          ),
+          placement: "bottomRight",
+          duration: 5,
+          message,
+        });
+      } catch (error) {
+        if (isAxiosError(error) && error.status === 400) {
           notification.open({
             key: uploadKey,
-            type: "info",
-            message: `Загрузка ${upload?.files?.length ?? 0} ${getNoun(upload?.files?.length ?? 0, "файла", "файлов", "файлов")}`,
-            description:
-              progress === 100 ? (
-                <Flex gap={10} align="center">
-                  <span>Запись файлов на диск</span>
-                  <Spin indicator={<LoadingOutlined />} size="small" spinning />
-                </Flex>
-              ) : (
-                <Progress size="small" percent={progress} />
-              ),
+            type: "error",
+            duration: 5,
+            message: "Ошибка",
             placement: "bottomRight",
-            duration: 0,
+            description: error?.response?.data.message,
           });
-        },
-        withCredentials: true,
-      });
-      setTimeout(() => {
-        notification.destroy(uploadKey);
-      }, 500);
+        } else if (isAxiosError(error) && error.code === "ERR_CANCELED") {
+          notification.open({
+            key: uploadKey,
+            type: "warning",
+            duration: 5,
+            placement: "bottomRight",
+            description: "Загрузка была отменена",
+            message,
+          });
+        } else {
+          throw error;
+        }
+      }
       upload.removeEventListener("change", changeEventHandler);
       refetchEntities();
     };
@@ -239,6 +318,19 @@ const StorageTableContainer: FC = () => {
         children: [
           {
             key: "2",
+            label: "Скачать",
+            icon: <DownloadOutlined />,
+            onClick: () => {
+              handleDownloadEntities(selected[0] as IEntity);
+              setContextMenuOpen(false);
+            },
+          },
+          {
+            key: "3",
+            type: "divider",
+          },
+          {
+            key: "4",
             label: "Скопировать",
             icon: <CopyOutlined />,
             onClick: () => {
@@ -248,7 +340,7 @@ const StorageTableContainer: FC = () => {
             },
           },
           {
-            key: "3",
+            key: "5",
             label: "Вырезать",
             icon: <IoCutOutline />,
             onClick: () => {
@@ -258,7 +350,11 @@ const StorageTableContainer: FC = () => {
             },
           },
           {
-            key: "4",
+            key: "6",
+            type: "divider",
+          },
+          {
+            key: "7",
             label: "Удалить",
             icon: <DeleteOutlined />,
             onClick: () => {

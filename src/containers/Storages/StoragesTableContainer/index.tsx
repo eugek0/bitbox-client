@@ -29,9 +29,12 @@ import { useAppSelector } from "@/store";
 import { profileSelector } from "@/containers/Auth/selectors";
 import { checkStorageAccess } from "./utils";
 import StorageInfoModalContainer from "./StorageInfoModalContainer";
+import useApp from "antd/es/app/useApp";
 
 const StoragesTableContainer: FC = () => {
   const profile = useAppSelector(profileSelector);
+
+  const { modal } = useApp();
 
   const navigate = useNavigate();
 
@@ -116,9 +119,16 @@ const StoragesTableContainer: FC = () => {
               label: "Удалить",
               icon: <DeleteOutlined />,
               disabled: !accessed,
-              onClick: () => {
-                handleDeleteRow(selected);
+              onClick: async () => {
                 setContextMenuOpen(false);
+                const result = await modal.confirm({
+                  title: `Удаление ${selected.length > 1 ? "хранилищ" : "хранилища"}`,
+                  content: `Вы действительно хотите удалить ${selected.length > 1 ? "эти хранилища" : "это хранилище"}?`,
+                });
+
+                if (result) {
+                  handleDeleteRow(selected);
+                }
               },
               danger: true,
             },

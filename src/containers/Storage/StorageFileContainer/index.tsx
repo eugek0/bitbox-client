@@ -2,6 +2,7 @@ import { FC } from "react";
 import StorageFile from "@/components/Storage/StorageFile";
 import { useGetStorageEntityQuery, useLazyGetStorageFileQuery } from "../api";
 import { useParams, useRouter } from "@tanstack/react-router";
+import { downloadBlob } from "@/core/utils";
 
 const StorageFileContainer: FC = () => {
   const { storageid, fileid } = useParams({
@@ -18,13 +19,7 @@ const StorageFileContainer: FC = () => {
 
   const handleDownload = async () => {
     const blob = await getFileBuffer({ storageid, fileid }).unwrap();
-    const url = URL.createObjectURL(blob);
-
-    const link = document.createElement("a");
-    link.download = `${file?.fullname ?? "file"}`;
-    link.href = url;
-    link.click();
-    URL.revokeObjectURL(url);
+    downloadBlob(blob, file?.fullname ?? "file");
   };
 
   const handleClickBack = () => {
