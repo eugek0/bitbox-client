@@ -1,5 +1,14 @@
 import { FC, MouseEvent, useContext, useState } from "react";
-import { BreadcrumbProps, Button, Dropdown, Flex, MenuProps } from "antd";
+import {
+  App,
+  BreadcrumbProps,
+  Button,
+  Dropdown,
+  Flex,
+  MenuProps,
+  Progress,
+  Spin,
+} from "antd";
 import { LuFileUp, LuFolderUp } from "react-icons/lu";
 import { IoCutOutline } from "react-icons/io5";
 import { useDispatch } from "react-redux";
@@ -8,6 +17,7 @@ import {
   CopyOutlined,
   DeleteOutlined,
   FolderAddOutlined,
+  LoadingOutlined,
   PlusOutlined,
   ProductFilled,
 } from "@ant-design/icons";
@@ -19,7 +29,6 @@ import {
   useCreateDirectoryMutation,
   useDeleteEntitiesMutation,
   useGetStorageEntitiesQuery,
-  useUploadEntitiesMutation,
 } from "../api";
 import { STORAGE_TABLE_COLUMNS } from "./constants";
 import CreateDirectoryModalContainer from "./CreateDirectoryModalContainer";
@@ -28,11 +37,14 @@ import { useAppSelector } from "@/store";
 import { storageBufferSelector } from "../selectors";
 import { IEntity } from "../types";
 import { clearStorageBuffer, setStorageBuffer } from "../slice";
+import axios from "axios";
+import { getNoun } from "@/core/utils";
+import { v4 } from "uuid";
+import { appAxios } from "@/core/axios";
 
 const StorageTableContainer: FC = () => {
   const [isCreateDirectoryModalOpen, setIsCreateDirectoryModalOpen] =
     useState<boolean>(false);
-
   const { storageid } = useParams({ from: "/storage/$storageid/" });
   const { parent } = useSearch({ from: "/storage/$storageid/" });
   const navigate = useNavigate();
@@ -48,8 +60,9 @@ const StorageTableContainer: FC = () => {
       params: { parent },
     });
   const [createDirectory] = useCreateDirectoryMutation();
-  const [uploadEntities] = useUploadEntitiesMutation();
   const [deleteEntities] = useDeleteEntitiesMutation();
+
+  const { notification } = App.useApp();
 
   if (!context) {
     throw new Error("Context not found");
@@ -87,8 +100,33 @@ const StorageTableContainer: FC = () => {
           formdata.append("metadata", file.webkitRelativePath);
         }
       }
+      const uploadKey = v4();
 
-      await uploadEntities({ body: formdata, storageid });
+      await appAxios.post(`/entities/${storageid}`, formdata, {
+        onUploadProgress: (event) => {
+          const progress = Math.round((event.progress ?? 0) * 100);
+          notification.open({
+            key: uploadKey,
+            type: "info",
+            message: `Загрузка ${upload?.files?.length ?? 0} ${getNoun(upload?.files?.length ?? 0, "файла", "файлов", "файлов")}`,
+            description:
+              progress === 100 ? (
+                <Flex gap={10} align="center">
+                  <span>Запись файлов на диск</span>
+                  <Spin indicator={<LoadingOutlined />} size="small" spinning />
+                </Flex>
+              ) : (
+                <Progress size="small" percent={progress} />
+              ),
+            placement: "bottomRight",
+            duration: 0,
+          });
+        },
+        withCredentials: true,
+      });
+      setTimeout(() => {
+        notification.destroy(uploadKey);
+      }, 500);
       upload.removeEventListener("change", changeEventHandler);
       refetchEntities();
     };
