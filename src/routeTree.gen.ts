@@ -15,7 +15,7 @@ import { Route as IndexImport } from './routes/index'
 import { Route as AuthRegisterImport } from './routes/auth/register'
 import { Route as AuthLoginImport } from './routes/auth/login'
 import { Route as StorageStorageidIndexImport } from './routes/storage/$storageid/index'
-import { Route as StorageStorageidFileFileidImport } from './routes/storage/$storageid/file/$fileid'
+import { Route as StorageStorageidEntityEntityidImport } from './routes/storage/$storageid/entity/$entityid'
 
 // Create/Update Routes
 
@@ -43,13 +43,12 @@ const StorageStorageidIndexRoute = StorageStorageidIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const StorageStorageidFileFileidRoute = StorageStorageidFileFileidImport.update(
-  {
-    id: '/storage/$storageid/file/$fileid',
-    path: '/storage/$storageid/file/$fileid',
+const StorageStorageidEntityEntityidRoute =
+  StorageStorageidEntityEntityidImport.update({
+    id: '/storage/$storageid/entity/$entityid',
+    path: '/storage/$storageid/entity/$entityid',
     getParentRoute: () => rootRoute,
-  } as any,
-)
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -83,11 +82,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StorageStorageidIndexImport
       parentRoute: typeof rootRoute
     }
-    '/storage/$storageid/file/$fileid': {
-      id: '/storage/$storageid/file/$fileid'
-      path: '/storage/$storageid/file/$fileid'
-      fullPath: '/storage/$storageid/file/$fileid'
-      preLoaderRoute: typeof StorageStorageidFileFileidImport
+    '/storage/$storageid/entity/$entityid': {
+      id: '/storage/$storageid/entity/$entityid'
+      path: '/storage/$storageid/entity/$entityid'
+      fullPath: '/storage/$storageid/entity/$entityid'
+      preLoaderRoute: typeof StorageStorageidEntityEntityidImport
       parentRoute: typeof rootRoute
     }
   }
@@ -100,7 +99,7 @@ export interface FileRoutesByFullPath {
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
   '/storage/$storageid': typeof StorageStorageidIndexRoute
-  '/storage/$storageid/file/$fileid': typeof StorageStorageidFileFileidRoute
+  '/storage/$storageid/entity/$entityid': typeof StorageStorageidEntityEntityidRoute
 }
 
 export interface FileRoutesByTo {
@@ -108,7 +107,7 @@ export interface FileRoutesByTo {
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
   '/storage/$storageid': typeof StorageStorageidIndexRoute
-  '/storage/$storageid/file/$fileid': typeof StorageStorageidFileFileidRoute
+  '/storage/$storageid/entity/$entityid': typeof StorageStorageidEntityEntityidRoute
 }
 
 export interface FileRoutesById {
@@ -117,7 +116,7 @@ export interface FileRoutesById {
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
   '/storage/$storageid/': typeof StorageStorageidIndexRoute
-  '/storage/$storageid/file/$fileid': typeof StorageStorageidFileFileidRoute
+  '/storage/$storageid/entity/$entityid': typeof StorageStorageidEntityEntityidRoute
 }
 
 export interface FileRouteTypes {
@@ -127,21 +126,21 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/auth/register'
     | '/storage/$storageid'
-    | '/storage/$storageid/file/$fileid'
+    | '/storage/$storageid/entity/$entityid'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth/login'
     | '/auth/register'
     | '/storage/$storageid'
-    | '/storage/$storageid/file/$fileid'
+    | '/storage/$storageid/entity/$entityid'
   id:
     | '__root__'
     | '/'
     | '/auth/login'
     | '/auth/register'
     | '/storage/$storageid/'
-    | '/storage/$storageid/file/$fileid'
+    | '/storage/$storageid/entity/$entityid'
   fileRoutesById: FileRoutesById
 }
 
@@ -150,7 +149,7 @@ export interface RootRouteChildren {
   AuthLoginRoute: typeof AuthLoginRoute
   AuthRegisterRoute: typeof AuthRegisterRoute
   StorageStorageidIndexRoute: typeof StorageStorageidIndexRoute
-  StorageStorageidFileFileidRoute: typeof StorageStorageidFileFileidRoute
+  StorageStorageidEntityEntityidRoute: typeof StorageStorageidEntityEntityidRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -158,7 +157,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthLoginRoute: AuthLoginRoute,
   AuthRegisterRoute: AuthRegisterRoute,
   StorageStorageidIndexRoute: StorageStorageidIndexRoute,
-  StorageStorageidFileFileidRoute: StorageStorageidFileFileidRoute,
+  StorageStorageidEntityEntityidRoute: StorageStorageidEntityEntityidRoute,
 }
 
 export const routeTree = rootRoute
@@ -175,7 +174,7 @@ export const routeTree = rootRoute
         "/auth/login",
         "/auth/register",
         "/storage/$storageid/",
-        "/storage/$storageid/file/$fileid"
+        "/storage/$storageid/entity/$entityid"
       ]
     },
     "/": {
@@ -190,8 +189,8 @@ export const routeTree = rootRoute
     "/storage/$storageid/": {
       "filePath": "storage/$storageid/index.tsx"
     },
-    "/storage/$storageid/file/$fileid": {
-      "filePath": "storage/$storageid/file/$fileid.tsx"
+    "/storage/$storageid/entity/$entityid": {
+      "filePath": "storage/$storageid/entity/$entityid.tsx"
     }
   }
 }

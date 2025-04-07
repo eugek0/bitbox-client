@@ -3,7 +3,7 @@ import { protectedRoute } from "@/core/router";
 import StorageFilePage from "@/modules/StorageFilePage";
 import StorageLayoutContainer from "@/containers/Layouts/StorageLayoutContainer";
 
-export const Route = createFileRoute("/storage/$storageid/file/$fileid")({
+export const Route = createFileRoute("/storage/$storageid/entity/$entityid")({
   beforeLoad: protectedRoute(),
   component: () => (
     <StorageLayoutContainer>

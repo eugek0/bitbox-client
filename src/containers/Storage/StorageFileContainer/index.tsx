@@ -5,21 +5,26 @@ import { useParams, useRouter } from "@tanstack/react-router";
 import { downloadBlob } from "@/core/utils";
 
 const StorageFileContainer: FC = () => {
-  const { storageid, fileid } = useParams({
-    from: "/storage/$storageid/file/$fileid",
+  const { storageid, entityid } = useParams({
+    from: "/storage/$storageid/entity/$entityid",
   });
   const router = useRouter();
 
   const { data: file } = useGetStorageEntityQuery({
     storageid,
-    entityid: fileid,
+    entityid,
   });
   const [getFileBuffer, { isLoading: isFileBufferFetching }] =
     useLazyGetStorageFileQuery();
 
   const handleDownload = async () => {
-    const blob = await getFileBuffer({ storageid, fileid }).unwrap();
-    downloadBlob(blob, file?.fullname ?? "file");
+    const blob = await getFileBuffer({
+      storageid,
+      body: {
+        entities: [entityid],
+      },
+    }).unwrap();
+    downloadBlob(blob);
   };
 
   const handleClickBack = () => {

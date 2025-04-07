@@ -41,9 +41,11 @@ export const storageApi = createApi({
     }),
 
     getStorageFile: builder.query<Blob, IGetStorageFilePayload>({
-      query: ({ storageid, fileid }) => ({
-        url: `/entities/${storageid}/blob/${fileid}`,
+      query: ({ storageid, body }) => ({
+        url: `/entities/blob/${storageid}`,
         responseHandler: (response) => response.blob(),
+        method: "POST",
+        body,
       }),
     }),
 

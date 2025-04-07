@@ -84,12 +84,14 @@ const StorageTableContainer: FC = () => {
     setIsCreateDirectoryModalOpen(false);
   };
 
-  const handleDownloadEntities = async (entity: IEntity) => {
+  const handleDownloadEntities = async (selected: IEntity[]) => {
     const blob = await downloadEntity({
-      fileid: entity._id,
       storageid,
+      body: {
+        entities: selected.map((entity) => entity._id),
+      },
     }).unwrap();
-    downloadBlob(blob, entity.fullname);
+    downloadBlob(blob);
   };
 
   const handleUploadEntities = (directory: boolean) => {
@@ -264,7 +266,7 @@ const StorageTableContainer: FC = () => {
   const onRow: TableProps["onRow"] = (record) => ({
     onDoubleClick: () => {
       if (record.type === "file") {
-        navigate({ to: `/storage/${storageid}/file/${record._id}` });
+        navigate({ to: `/storage/${storageid}/entity/${record._id}` });
       } else if (record.type === "directory") {
         navigate({
           to: `/storage/${storageid}`,
@@ -321,7 +323,7 @@ const StorageTableContainer: FC = () => {
             label: "Скачать",
             icon: <DownloadOutlined />,
             onClick: () => {
-              handleDownloadEntities(selected[0] as IEntity);
+              handleDownloadEntities(selected as IEntity[]);
               setContextMenuOpen(false);
             },
           },

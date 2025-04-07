@@ -55,7 +55,9 @@ export interface IGetStorageEntityPayload {
 
 export interface IGetStorageFilePayload {
   storageid: string;
-  fileid: string;
+  body: {
+    entities: string[];
+  };
 }
 
 export interface ICreateDirectoryPayload {
