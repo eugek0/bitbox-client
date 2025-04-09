@@ -1,7 +1,7 @@
 import { FC } from "react";
-import CreateDirectoryModal from "@/components/Storage/CreateDirectoryModal";
-import { CreateDirectoryModalContainerProps } from "./types";
 import { useForm } from "antd/es/form/Form";
+import CreateDirectoryModal from "@/components/Storage/StorageTable/CreateDirectoryModal";
+import { CreateDirectoryModalContainerProps } from "./types";
 
 const CreateDirectoryModalContainer: FC<CreateDirectoryModalContainerProps> = ({
   handleCloseModal,

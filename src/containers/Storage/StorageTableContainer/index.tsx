@@ -20,6 +20,7 @@ import {
   DeleteOutlined,
   DownloadOutlined,
   FolderAddOutlined,
+  InfoCircleOutlined,
   LoadingOutlined,
   PlusOutlined,
   ProductFilled,
@@ -46,6 +47,7 @@ import { v4 } from "uuid";
 import { appAxios } from "@/core/axios";
 import { isAxiosError } from "axios";
 import styles from "./styles.module.scss";
+import StorageEntityInfoModalContainer from "./StorageEntityInfoModalContainer";
 
 const StorageTableContainer: FC = () => {
   const [isCreateDirectoryModalOpen, setIsCreateDirectoryModalOpen] =
@@ -311,6 +313,7 @@ const StorageTableContainer: FC = () => {
     selected,
     setSelected,
     setContextMenuOpen,
+    setInfoModalConfig,
   }: BitBoxTableContextMenuDropdownProps): MenuProps => ({
     items: [
       {
@@ -364,6 +367,19 @@ const StorageTableContainer: FC = () => {
               setContextMenuOpen(false);
             },
             danger: true,
+          },
+          {
+            key: "8",
+            type: "divider",
+          },
+          {
+            key: "9",
+            label: "Информация",
+            icon: <InfoCircleOutlined />,
+            onClick: () => {
+              setInfoModalConfig({ open: true });
+              setContextMenuOpen(false);
+            },
           },
         ],
       },
@@ -484,6 +500,7 @@ const StorageTableContainer: FC = () => {
             </Button>
           ),
         }}
+        infoModal={StorageEntityInfoModalContainer}
       />
       <CreateDirectoryModalContainer
         open={isCreateDirectoryModalOpen}
