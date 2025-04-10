@@ -15,20 +15,14 @@ export type TStorageBufferType = Nullable<"copy" | "cut">;
 
 export interface IEntity {
   _id: string;
-
   fullname: string;
-
   name: string;
-
   extension: string;
-
   type: EntityType;
-
   size: number;
-
   storage: string;
-
   path: string;
+  uploadedAt: string;
 }
 
 export interface IEntityBreadcrumb {

@@ -4,6 +4,8 @@ import { Descriptions, Flex } from "antd";
 import AppModal from "@/components/Common/AppModal";
 import { FileFilled, FolderFilled } from "@ant-design/icons";
 import { convertBytes } from "@/core/utils";
+import moment from "moment";
+import ProfileBadgeContainer from "@/containers/Common/ProfileBadgeContainer";
 
 const StorageEntityInfoModal: FC<StorageEntityInfoModalProps> = ({
   config,
@@ -49,7 +51,19 @@ const StorageEntityInfoModal: FC<StorageEntityInfoModalProps> = ({
             {
               key: "4",
               label: "Размер",
-              children: convertBytes(selected?.size),
+              children: convertBytes(selected?.size ?? 0),
+            },
+            {
+              key: "5",
+              label: "Загрузил",
+              children: <ProfileBadgeContainer _id={selected?.uploader} />,
+            },
+            {
+              key: "6",
+              label: "Время загрузки",
+              children: selected?.uploadedAt
+                ? moment(selected?.uploadedAt).format("DD.MM.YYYY HH:mm:ss")
+                : "-",
             },
           ]}
         />

@@ -3,17 +3,15 @@ import { FC } from "react";
 import { StorageInfoModalProps } from "./types";
 import { Descriptions, Flex } from "antd";
 import { convertBytes } from "@/core/utils";
-import ProfileBadge from "@/components/Common/ProfileBadge";
 import { STORAGE_ACCESS_DICTIONARY } from "@/containers/Storages/constants";
 import { TStorageAccess } from "@/containers/Storages/types";
 import moment from "moment";
 import StorageMemberRoles from "@/containers/Storages/StoragesTableContainer/CreateStorageModalContainer/StorageMemberRoles";
+import ProfileBadgeContainer from "@/containers/Common/ProfileBadgeContainer";
 
 const StorageInfoModal: FC<StorageInfoModalProps> = ({
   config,
   selected,
-  owner,
-  isOwnerFetching,
   ...props
 }) => {
   return (
@@ -38,14 +36,7 @@ const StorageInfoModal: FC<StorageInfoModalProps> = ({
             },
             {
               label: "Владелец",
-              children: (
-                <ProfileBadge
-                  avatar={owner?.avatar}
-                  login={owner?.login}
-                  loading={isOwnerFetching}
-                  role={owner?.role}
-                />
-              ),
+              children: <ProfileBadgeContainer _id={selected?.owner} />,
             },
             {
               label: "Создано",

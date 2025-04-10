@@ -51,7 +51,7 @@ export const STORAGES_TABLE_COLUMNS: TableColumnType<IStoragesTableRecord>[] = [
       compare: (a, b) => a.used - b.used,
     },
     showSorterTooltip: false,
-    render: (used) => convertBytes(used),
+    render: (used) => convertBytes(used ?? 0),
   },
   {
     title: "Размер",
@@ -61,6 +61,6 @@ export const STORAGES_TABLE_COLUMNS: TableColumnType<IStoragesTableRecord>[] = [
       compare: (a, b) => a.size - b.size,
     },
     showSorterTooltip: false,
-    render: (size) => convertBytes(size),
+    render: (size) => convertBytes(size ?? 0),
   },
 ];

@@ -44,7 +44,7 @@ const StorageFile: FC<StorageFileProps> = ({
             </Typography.Text>
           </Flex>
           <Typography.Text className={styles["size"]}>
-            {convertBytes(size)}
+            {convertBytes(size ?? 0)}
           </Typography.Text>
         </Flex>
         <Button
