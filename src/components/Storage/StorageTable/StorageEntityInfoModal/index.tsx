@@ -18,7 +18,7 @@ const StorageEntityInfoModal: FC<StorageEntityInfoModalProps> = ({
       width={1000}
       open={config.open}
       footer={(_, { OkBtn }) => <OkBtn />}
-      title={`Информация о ${selected?.type === "file" ? "файле" : "папке"}`}
+      title={`Информация о ${selected?.type === "file" ? "файле" : "директории"}`}
     >
       <Flex gap={15} vertical>
         <Descriptions
@@ -38,7 +38,7 @@ const StorageEntityInfoModal: FC<StorageEntityInfoModalProps> = ({
               key: "3",
               label: "Тип",
               children: (
-                <Flex gap={5} align="center">
+                <Flex gap={10} align="center">
                   {selected?.type === "file" ? (
                     <FileFilled />
                   ) : (
