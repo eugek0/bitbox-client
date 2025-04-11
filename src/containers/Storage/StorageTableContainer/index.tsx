@@ -323,7 +323,7 @@ const StorageTableContainer: FC = () => {
       key: "storage",
       title: (
         <Flex gap={5} align="center">
-          <ProductFilled />
+          <ProductFilled className={styles["icon"]} />
           <span>{name}</span>
         </Flex>
       ),
@@ -563,7 +563,7 @@ const StorageTableContainer: FC = () => {
               icon={<ArrowLeftOutlined />}
               type="text"
             >
-              Назад
+              К списку
             </Button>
           ),
         }}

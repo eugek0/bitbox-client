@@ -33,7 +33,7 @@ const BitBoxTable = <T extends BitBoxTableRecord>({
         className={styles["table"]}
         onClick={handleBorderClick}
         onContextMenu={handleBorderContextMenu}
-        gap={15}
+        gap={6}
         vertical
       >
         {breadcrumbs && (
