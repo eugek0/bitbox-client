@@ -1,4 +1,11 @@
-import { FC, MouseEvent, useContext, useState } from "react";
+import {
+  FC,
+  MouseEvent,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import {
   App,
   BreadcrumbProps,
@@ -38,11 +45,14 @@ import {
 } from "../api";
 import { STORAGE_TABLE_COLUMNS } from "./constants";
 import CreateDirectoryModalContainer from "./CreateDirectoryModalContainer";
-import { BitBoxTableContextMenuDropdownProps } from "@/containers/Common/BitBoxTableContainer/types";
+import {
+  BitBoxTableContextMenuDropdownProps,
+  BitBoxTableRecord,
+} from "@/containers/Common/BitBoxTableContainer/types";
 import { useAppSelector } from "@/store";
 import { storageBufferSelector } from "../selectors";
 import { IEntity } from "../types";
-import { clearStorageBuffer, setStorageBuffer } from "../slice";
+import { setStorageBuffer } from "../slice";
 import { downloadBlob, getNoun } from "@/core/utils";
 import { v4 } from "uuid";
 import { appAxios } from "@/core/axios";
@@ -53,6 +63,8 @@ import StorageEntityInfoModalContainer from "./StorageEntityInfoModalContainer";
 const StorageTableContainer: FC = () => {
   const [isCreateDirectoryModalOpen, setIsCreateDirectoryModalOpen] =
     useState<boolean>(false);
+  const [selected, setSelected] = useState<IEntity[]>([]);
+
   const { storageid } = useParams({ from: "/storage/$storageid/" });
   const { parent } = useSearch({ from: "/storage/$storageid/" });
   const navigate = useNavigate();
@@ -72,7 +84,7 @@ const StorageTableContainer: FC = () => {
   const [downloadEntities] = useLazyGetStorageFileQuery();
   const [pasteEntities] = usePasteEntitiesMutation();
 
-  const { notification, modal } = App.useApp();
+  const { notification, modal, message } = App.useApp();
 
   if (!context) {
     throw new Error("Context not found");
@@ -80,7 +92,7 @@ const StorageTableContainer: FC = () => {
 
   const { name } = context;
 
-  const handlePasteEntities = async () => {
+  const handlePasteEntities = useCallback(async () => {
     if (buffer.type) {
       await pasteEntities({
         storageid,
@@ -90,7 +102,12 @@ const StorageTableContainer: FC = () => {
           type: buffer.type,
         },
       });
+      refetchEntities();
     }
+  }, [buffer, storageid, parent]);
+
+  const handleSelect = (selected: BitBoxTableRecord[]) => {
+    setSelected(selected as IEntity[]);
   };
 
   const handleOpenCreateDirectoryModal = () => {
@@ -259,25 +276,33 @@ const StorageTableContainer: FC = () => {
   };
 
   const handleCopyEntities = (selected: IEntity[]) => {
-    dispatch(
-      setStorageBuffer({
-        items: selected,
-        type: "copy",
-      }),
-    );
+    if (selected.length) {
+      message.info({
+        content: `${getNoun(selected.length, "Скопирована", "Скопированы", "Скопировано")} ${selected.length} ${getNoun(selected.length, "сущность", "сущности", "сущностей")}`,
+        duration: 0.75,
+      });
+      dispatch(
+        setStorageBuffer({
+          items: selected,
+          type: "copy",
+        }),
+      );
+    }
   };
 
   const handleCutEntities = (selected: IEntity[]) => {
-    dispatch(
-      setStorageBuffer({
-        items: selected,
-        type: "cut",
-      }),
-    );
-  };
-
-  const handleClearBuffer = () => {
-    dispatch(clearStorageBuffer());
+    if (selected.length) {
+      message.info({
+        content: `${getNoun(selected.length, "Вырезана", "Вырезаны", "Вырезано")} ${selected.length} ${getNoun(selected.length, "сущность", "сущности", "сущностей")}`,
+        duration: 0.75,
+      });
+      dispatch(
+        setStorageBuffer({
+          items: selected,
+          type: "cut",
+        }),
+      );
+    }
   };
 
   const onRow: TableProps["onRow"] = (record) => ({
@@ -448,10 +473,8 @@ const StorageTableContainer: FC = () => {
             icon: <PlusOutlined />,
             disabled: !buffer.items.length,
             onClick: async () => {
-              await handlePasteEntities();
-              handleClearBuffer();
+              handlePasteEntities();
               setContextMenuOpen(false);
-              refetchEntities();
               setSelected([]);
             },
           },
@@ -459,6 +482,31 @@ const StorageTableContainer: FC = () => {
       },
     ],
   });
+
+  useEffect(() => {
+    const handler = (event: KeyboardEvent) => {
+      if (event.ctrlKey) {
+        switch (event.key) {
+          case "c":
+            console.log(selected);
+            handleCopyEntities(selected);
+            break;
+          case "x":
+            handleCutEntities(selected);
+            break;
+          case "v":
+            handlePasteEntities();
+            break;
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handler);
+
+    return () => {
+      document.removeEventListener("keydown", handler);
+    };
+  }, [handlePasteEntities, selected]);
 
   return (
     <>
@@ -520,6 +568,7 @@ const StorageTableContainer: FC = () => {
           ),
         }}
         infoModal={StorageEntityInfoModalContainer}
+        handleSelect={handleSelect}
       />
       <CreateDirectoryModalContainer
         open={isCreateDirectoryModalOpen}

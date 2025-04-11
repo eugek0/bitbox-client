@@ -66,12 +66,12 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
         handleChangeSelected([...selected, record]);
       }
     } else {
-      setSelected([record]);
+      handleChangeSelected([record]);
     }
   };
 
   const handleClearSelected: MouseEventHandler<HTMLDivElement> = () => {
-    setSelected([]);
+    handleChangeSelected([]);
   };
 
   const handleBorderContextMenu: MouseEventHandler<HTMLDivElement> = (
@@ -115,7 +115,7 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
     }
 
     if (!selected.some((s) => s._id === record._id)) {
-      setSelected([record]);
+      handleChangeSelected([record]);
     }
 
     setContextMenuType("table");
