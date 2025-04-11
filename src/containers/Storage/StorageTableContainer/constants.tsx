@@ -3,6 +3,7 @@ import { convertBytes } from "@/core/utils";
 import { EntityType, IEntity } from "../types";
 import { ReactNode } from "react";
 import { FileFilled, FolderFilled } from "@ant-design/icons";
+import ProfileBadgeContainer from "@/containers/Common/ProfileBadgeContainer";
 
 export const STORAGE_TABLE_ENTITY_TYPE_ICONS: Record<EntityType, ReactNode> = {
   file: <FileFilled />,
@@ -27,6 +28,16 @@ export const STORAGE_TABLE_COLUMNS: TableColumnType<IEntity>[] = [
         </Flex>
       );
     },
+  },
+  {
+    title: "Загрузил",
+    dataIndex: "uploader",
+    width: "4%",
+    sorter: {
+      compare: (a, b) => b.uploader.localeCompare(a.uploader),
+    },
+    showSorterTooltip: false,
+    render: (uploader) => <ProfileBadgeContainer _id={uploader} />,
   },
   {
     title: "Размер",

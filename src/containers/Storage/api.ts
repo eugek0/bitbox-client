@@ -10,6 +10,7 @@ import {
   IGetStorageFilePayload,
   IUploadEntitiesPayload,
   IDeleteEntitiesPayload,
+  IPasteEntitiesPayload,
 } from "./types";
 
 export const storageApi = createApi({
@@ -72,6 +73,14 @@ export const storageApi = createApi({
         body,
       }),
     }),
+
+    pasteEntities: builder.mutation<void, IPasteEntitiesPayload>({
+      query: ({ storageid, body }) => ({
+        url: `/entities/paste/${storageid}`,
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -83,4 +92,5 @@ export const {
   useCreateDirectoryMutation,
   useUploadEntitiesMutation,
   useDeleteEntitiesMutation,
+  usePasteEntitiesMutation,
 } = storageApi;

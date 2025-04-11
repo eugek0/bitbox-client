@@ -34,6 +34,7 @@ import {
   useDeleteEntitiesMutation,
   useGetStorageEntitiesQuery,
   useLazyGetStorageFileQuery,
+  usePasteEntitiesMutation,
 } from "../api";
 import { STORAGE_TABLE_COLUMNS } from "./constants";
 import CreateDirectoryModalContainer from "./CreateDirectoryModalContainer";
@@ -68,7 +69,8 @@ const StorageTableContainer: FC = () => {
     });
   const [createDirectory] = useCreateDirectoryMutation();
   const [deleteEntities] = useDeleteEntitiesMutation();
-  const [downloadEntity] = useLazyGetStorageFileQuery();
+  const [downloadEntities] = useLazyGetStorageFileQuery();
+  const [pasteEntities] = usePasteEntitiesMutation();
 
   const { notification, modal } = App.useApp();
 
@@ -77,6 +79,19 @@ const StorageTableContainer: FC = () => {
   }
 
   const { name } = context;
+
+  const handlePasteEntities = async () => {
+    if (buffer.type) {
+      await pasteEntities({
+        storageid,
+        body: {
+          entities: buffer.items.map((entity) => entity._id),
+          target: parent ?? null,
+          type: buffer.type,
+        },
+      });
+    }
+  };
 
   const handleOpenCreateDirectoryModal = () => {
     setIsCreateDirectoryModalOpen(true);
@@ -87,7 +102,7 @@ const StorageTableContainer: FC = () => {
   };
 
   const handleDownloadEntities = async (selected: IEntity[]) => {
-    const blob = await downloadEntity({
+    const blob = await downloadEntities({
       storageid,
       body: {
         entities: selected.map((entity) => entity._id),
@@ -388,6 +403,7 @@ const StorageTableContainer: FC = () => {
 
   const borderMenu = ({
     setContextMenuOpen,
+    setSelected,
   }: BitBoxTableContextMenuDropdownProps): MenuProps => ({
     items: [
       {
@@ -431,9 +447,12 @@ const StorageTableContainer: FC = () => {
             label: "Вставить",
             icon: <PlusOutlined />,
             disabled: !buffer.items.length,
-            onClick: () => {
+            onClick: async () => {
+              await handlePasteEntities();
               handleClearBuffer();
               setContextMenuOpen(false);
+              refetchEntities();
+              setSelected([]);
             },
           },
         ],

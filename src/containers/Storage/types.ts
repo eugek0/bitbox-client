@@ -22,6 +22,7 @@ export interface IEntity {
   size: number;
   storage: string;
   path: string;
+  uploader: string;
   uploadedAt: string;
 }
 
@@ -71,5 +72,14 @@ export interface IDeleteEntitiesPayload {
   storageid: string;
   body: {
     entities: string[];
+  };
+}
+
+export interface IPasteEntitiesPayload {
+  storageid: string;
+  body: {
+    entities: string[];
+    target: Nullable<string>;
+    type: "copy" | "cut";
   };
 }
