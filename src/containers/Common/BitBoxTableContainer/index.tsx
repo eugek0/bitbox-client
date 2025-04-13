@@ -34,6 +34,9 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
     foreignSelected ?? [],
   );
   const [isContextMenuOpen, setIsContextMenuOpen] = useState<boolean>(false);
+  const [lastSelectedIndex, setLastSelectedIndex] = useState<number | null>(
+    null,
+  );
   const [contextMenuType, setContextMenuType] =
     useState<Nullable<"table" | "border">>(null);
   const [contextMenuPosition, setContextMenuPosition] = useState<CSSProperties>(
@@ -59,14 +62,24 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
   const handleRowClick = (event: MouseEvent, record: BitBoxTableRecord) => {
     event.stopPropagation();
     setIsContextMenuOpen(false);
-    if (event.altKey) {
-      if (selected.some((s) => s._id === record._id)) {
-        handleChangeSelected(selected.filter((s) => s._id !== record._id));
-      } else {
-        handleChangeSelected([...selected, record]);
-      }
+
+    const currentIndex = records.findIndex((item) => item._id === record._id);
+
+    if (event.shiftKey && selected.length > 0 && lastSelectedIndex !== null) {
+      const start = Math.min(lastSelectedIndex, currentIndex);
+      const end = Math.max(lastSelectedIndex, currentIndex);
+      const range = records.slice(start, end + 1);
+      handleChangeSelected(range);
+    } else if (event.altKey) {
+      const isAlreadySelected = selected.some((s) => s._id === record._id);
+      const newSelected = isAlreadySelected
+        ? selected.filter((s) => s._id !== record._id)
+        : [...selected, record];
+      handleChangeSelected(newSelected);
+      setLastSelectedIndex(currentIndex);
     } else {
       handleChangeSelected([record]);
+      setLastSelectedIndex(currentIndex);
     }
   };
 

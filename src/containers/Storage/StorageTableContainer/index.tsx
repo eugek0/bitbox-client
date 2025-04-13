@@ -12,6 +12,8 @@ import {
   Button,
   Dropdown,
   Flex,
+  Form,
+  Input,
   MenuProps,
   Progress,
   Spin,
@@ -26,6 +28,7 @@ import {
   CopyOutlined,
   DeleteOutlined,
   DownloadOutlined,
+  EditOutlined,
   FolderAddOutlined,
   InfoCircleOutlined,
   LoadingOutlined,
@@ -40,7 +43,6 @@ import {
   useCreateDirectoryMutation,
   useDeleteEntitiesMutation,
   useGetStorageEntitiesQuery,
-  useLazyGetStorageFileQuery,
   usePasteEntitiesMutation,
 } from "../api";
 import { STORAGE_TABLE_COLUMNS } from "./constants";
@@ -53,17 +55,20 @@ import { useAppSelector } from "@/store";
 import { storageBufferSelector } from "../selectors";
 import { IEntity } from "../types";
 import { setStorageBuffer } from "../slice";
-import { downloadBlob, getNoun } from "@/core/utils";
+import { download, getNoun } from "@/core/utils";
 import { v4 } from "uuid";
 import { appAxios } from "@/core/axios";
 import { isAxiosError } from "axios";
 import styles from "./styles.module.scss";
 import StorageEntityInfoModalContainer from "./StorageEntityInfoModalContainer";
+import { useForm } from "antd/es/form/Form";
+import { SERVER_BASE_URL } from "@/core/constants";
 
 const StorageTableContainer: FC = () => {
   const [isCreateDirectoryModalOpen, setIsCreateDirectoryModalOpen] =
     useState<boolean>(false);
   const [selected, setSelected] = useState<IEntity[]>([]);
+  const [renameForm] = useForm();
 
   const { storageid } = useParams({ from: "/storage/$storageid/" });
   const { parent } = useSearch({ from: "/storage/$storageid/" });
@@ -81,7 +86,6 @@ const StorageTableContainer: FC = () => {
     });
   const [createDirectory] = useCreateDirectoryMutation();
   const [deleteEntities] = useDeleteEntitiesMutation();
-  const [downloadEntities] = useLazyGetStorageFileQuery();
   const [pasteEntities] = usePasteEntitiesMutation();
 
   const { notification, modal, message } = App.useApp();
@@ -94,15 +98,25 @@ const StorageTableContainer: FC = () => {
 
   const handlePasteEntities = useCallback(async () => {
     if (buffer.type) {
-      await pasteEntities({
-        storageid,
-        body: {
-          entities: buffer.items.map((entity) => entity._id),
-          target: parent ?? null,
-          type: buffer.type,
-        },
-      });
-      refetchEntities();
+      try {
+        message.open({
+          content: "Вставка сущностей",
+          key: "paste",
+          type: "loading",
+        });
+        await pasteEntities({
+          storageid,
+          body: {
+            entities: buffer.items.map((entity) => entity._id),
+            target: parent ?? null,
+            type: buffer.type,
+          },
+        });
+        refetchEntities();
+        message.open({ content: "Успешно", key: "paste", type: "success" });
+      } catch {
+        message.open({ content: "Ошибка", key: "paste", type: "error" });
+      }
     }
   }, [buffer, storageid, parent]);
 
@@ -119,13 +133,32 @@ const StorageTableContainer: FC = () => {
   };
 
   const handleDownloadEntities = async (selected: IEntity[]) => {
-    const blob = await downloadEntities({
-      storageid,
-      body: {
-        entities: selected.map((entity) => entity._id),
+    await appAxios.get("/auth/refresh");
+    const response = await fetch(
+      `${SERVER_BASE_URL}/entities/blob/${storageid}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          entities: selected.map((entity) => entity._id),
+        }),
+        credentials: "include",
       },
-    }).unwrap();
-    downloadBlob(blob);
+    );
+
+    const size = response.headers.get("Content-Length");
+    console.log(size);
+
+    download(
+      response,
+      selected.length > 1 ||
+        (selected.length === 1 && selected[0].type === "directory")
+        ? "entities.zip"
+        : selected[0].fullname,
+      +(size ?? 0) || undefined,
+    );
   };
 
   const handleUploadEntities = (directory: boolean) => {
@@ -168,6 +201,7 @@ const StorageTableContainer: FC = () => {
       };
 
       try {
+        await appAxios.get("auth/refresh");
         await appAxios.post(`/entities/${storageid}`, formdata, {
           signal: controller.signal,
           onUploadProgress: (event) => {
@@ -188,20 +222,24 @@ const StorageTableContainer: FC = () => {
                 ) : (
                   <Progress size="small" percent={progress} />
                 ),
-              actions: (
-                <Button
-                  onClick={handleCancelUpload}
-                  icon={<CloseOutlined />}
-                  type="text"
-                  danger
-                >
-                  Отменить
-                </Button>
-              ),
               placement: "bottomRight",
               closable: false,
               duration: 0,
-              message,
+              message: (
+                <Flex justify="space-between" align="center">
+                  <span>{message}</span>
+                  <Button
+                    onClick={handleCancelUpload}
+                    icon={<CloseOutlined />}
+                    iconPosition="end"
+                    type="text"
+                    size="small"
+                    danger
+                  >
+                    Отменить
+                  </Button>
+                </Flex>
+              ),
             });
           },
         });
@@ -219,7 +257,7 @@ const StorageTableContainer: FC = () => {
           message,
         });
       } catch (error) {
-        if (isAxiosError(error) && error.status === 400) {
+        if (isAxiosError(error) && [400, 500].includes(error.status ?? 0)) {
           notification.open({
             key: uploadKey,
             type: "error",
@@ -305,6 +343,23 @@ const StorageTableContainer: FC = () => {
     }
   };
 
+  const handleRenameEntity = async (entity: IEntity) => {
+    renameForm.setFieldValue("name", entity.fullname);
+
+    await modal.confirm({
+      title: "Переименовать сущность",
+      content: (
+        <Form form={renameForm}>
+          <Form.Item name="name" label="Название">
+            <Input />
+          </Form.Item>
+        </Form>
+      ),
+    });
+
+    // const values = await renameForm.validateFields();
+  };
+
   const onRow: TableProps["onRow"] = (record) => ({
     onDoubleClick: () => {
       if (record.type === "file") {
@@ -372,10 +427,20 @@ const StorageTableContainer: FC = () => {
           },
           {
             key: "3",
-            type: "divider",
+            label: "Переименовать",
+            icon: <EditOutlined />,
+            disabled: selected.length > 1,
+            onClick: () => {
+              handleRenameEntity(selected[0] as IEntity);
+              setContextMenuOpen(false);
+            },
           },
           {
             key: "4",
+            type: "divider",
+          },
+          {
+            key: "5",
             label: "Скопировать",
             icon: <CopyOutlined />,
             onClick: () => {
@@ -385,7 +450,7 @@ const StorageTableContainer: FC = () => {
             },
           },
           {
-            key: "5",
+            key: "6",
             label: "Вырезать",
             icon: <IoCutOutline />,
             onClick: () => {
@@ -395,11 +460,11 @@ const StorageTableContainer: FC = () => {
             },
           },
           {
-            key: "6",
+            key: "7",
             type: "divider",
           },
           {
-            key: "7",
+            key: "8",
             label: "Удалить",
             icon: <DeleteOutlined />,
             onClick: () => {
@@ -409,11 +474,11 @@ const StorageTableContainer: FC = () => {
             danger: true,
           },
           {
-            key: "8",
+            key: "9",
             type: "divider",
           },
           {
-            key: "9",
+            key: "10",
             label: "Информация",
             icon: <InfoCircleOutlined />,
             onClick: () => {
@@ -486,15 +551,14 @@ const StorageTableContainer: FC = () => {
   useEffect(() => {
     const handler = (event: KeyboardEvent) => {
       if (event.ctrlKey) {
-        switch (event.key) {
-          case "c":
-            console.log(selected);
+        switch (event.code) {
+          case "KeyC":
             handleCopyEntities(selected);
             break;
-          case "x":
+          case "KeyX":
             handleCutEntities(selected);
             break;
-          case "v":
+          case "KeyV":
             handlePasteEntities();
             break;
         }

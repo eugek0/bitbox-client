@@ -1,11 +1,21 @@
 import { DownloadBlob } from "./types";
+import streamsaver from "streamsaver";
 
-export const downloadBlob: DownloadBlob = (blob) => {
-  const url = URL.createObjectURL(blob);
+export const download: DownloadBlob = (response, fullname, size) => {
+  const readableStream = response.body;
 
-  const link = document.createElement("a");
-  link.download = "";
-  link.href = url;
-  link.click();
-  URL.revokeObjectURL(url);
+  const fileStream = streamsaver.createWriteStream(fullname, { size });
+  const writer = fileStream.getWriter();
+
+  const reader = readableStream?.getReader();
+  const pump = () =>
+    reader?.read().then(({ done, value }) => {
+      if (done) {
+        writer.close();
+        return;
+      }
+      writer.write(value).then(pump);
+    });
+
+  pump();
 };
