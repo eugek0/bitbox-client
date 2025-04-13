@@ -1,1 +1,1 @@
-export type DownloadBlob = (blob: Blob) => void;
+export type DownloadBlob = (blob: Blob, fullname: string) => void;

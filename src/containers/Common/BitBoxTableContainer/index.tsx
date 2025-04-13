@@ -152,14 +152,14 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
     menu: (contextMenuType === "table"
       ? contextMenu?.menu
       : borderContextMenu?.menu)?.({
-      selected,
-      modalConfig,
-      infoModalConfig,
-      setSelected: handleChangeSelected,
-      setContextMenuOpen: setIsContextMenuOpen,
-      setModalConfig,
-      setInfoModalConfig,
-    }) ?? { items: [] },
+        selected,
+        modalConfig,
+        infoModalConfig,
+        setSelected: handleChangeSelected,
+        setContextMenuOpen: setIsContextMenuOpen,
+        setModalConfig,
+        setInfoModalConfig,
+      }) ?? { items: [] },
     overlayStyle: contextMenuPosition,
     open: isContextMenuOpen,
   };
