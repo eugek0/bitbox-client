@@ -7,9 +7,10 @@ import { RENAME_ENTITY_MODAL_RULES } from "./constants";
 
 const RenameEntityModal: FC<RenameEntityModalProps> = ({
   form,
-  loading,
   selected,
   onOk,
+  handleKeyDown,
+  fullnameRef,
   ...props
 }) => {
   return (
@@ -20,19 +21,19 @@ const RenameEntityModal: FC<RenameEntityModalProps> = ({
       footer={(_, { CancelBtn }) => (
         <>
           <CancelBtn />
-          <Button onClick={onOk} loading={loading} type="primary">
+          <Button onClick={onOk} type="primary">
             OK
           </Button>
         </>
       )}
     >
-      <Form initialValues={selected} form={form}>
+      <Form onKeyDown={handleKeyDown} initialValues={selected} form={form}>
         <Form.Item<IRenameEntityModalFields>
           rules={RENAME_ENTITY_MODAL_RULES.default}
           name="fullname"
           label="Название"
         >
-          <Input />
+          <Input ref={fullnameRef} />
         </Form.Item>
       </Form>
     </AppModal>

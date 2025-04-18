@@ -567,6 +567,17 @@ const StorageTableContainer: FC = () => {
             break;
         }
       }
+
+      switch (event.code) {
+        case "F2":
+          if (selected.length === 1) {
+            handleOpenRenameEntityModal();
+          }
+          break;
+        case "Delete":
+          handleDeleteEntities(selected);
+          break;
+      }
     };
 
     document.addEventListener("keydown", handler);

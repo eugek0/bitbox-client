@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, KeyboardEventHandler, useEffect, useRef, useState } from "react";
 import { useForm } from "antd/es/form/Form";
 import RenameEntityModal from "@/components/Storage/StorageTable/RenameEntityModal";
 import {
@@ -6,6 +6,7 @@ import {
   RenameEntityModalContainerProps,
 } from "./types";
 import { Nullable } from "@/core/types";
+import { InputRef } from "antd";
 
 const RenameEntityModalContainer: FC<RenameEntityModalContainerProps> = ({
   open,
@@ -19,6 +20,8 @@ const RenameEntityModalContainer: FC<RenameEntityModalContainerProps> = ({
   >(selected as IRenameEntityModalFields);
   const [form] = useForm<IRenameEntityModalFields>();
 
+  const fullnameRef = useRef<InputRef>(null);
+
   const onOk = async () => {
     const values = await form.validateFields();
 
@@ -27,9 +30,25 @@ const RenameEntityModalContainer: FC<RenameEntityModalContainerProps> = ({
     form.resetFields();
   };
 
+  const handleKeyDown: KeyboardEventHandler<HTMLFormElement> = (event) => {
+    switch (event.code) {
+      case "Enter":
+        onOk();
+        break;
+    }
+  };
+
   useEffect(() => {
     if (open) {
+      form.resetFields();
       setInitialValues(selected as IRenameEntityModalFields);
+      requestAnimationFrame(() => {
+        fullnameRef.current?.focus();
+        fullnameRef.current?.setSelectionRange(
+          0,
+          selected.fullname.lastIndexOf("\."),
+        );
+      });
     }
   }, [open, selected]);
 
@@ -43,6 +62,8 @@ const RenameEntityModalContainer: FC<RenameEntityModalContainerProps> = ({
       form={form}
       open={open}
       selected={selected}
+      fullnameRef={fullnameRef}
+      handleKeyDown={handleKeyDown}
       onCancel={handleCloseModal}
       onOk={onOk}
     />
