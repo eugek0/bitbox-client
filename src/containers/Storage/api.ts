@@ -11,6 +11,7 @@ import {
   IUploadEntitiesPayload,
   IDeleteEntitiesPayload,
   IPasteEntitiesPayload,
+  IRenameEntityPayload,
 } from "./types";
 
 export const storageApi = createApi({
@@ -80,6 +81,14 @@ export const storageApi = createApi({
         body,
       }),
     }),
+
+    renameEntity: builder.mutation<void, IRenameEntityPayload>({
+      query: ({ storageid, body }) => ({
+        url: `/entities/rename/${storageid}`,
+        method: "PATCH",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -92,4 +101,5 @@ export const {
   useUploadEntitiesMutation,
   useDeleteEntitiesMutation,
   usePasteEntitiesMutation,
+  useRenameEntityMutation,
 } = storageApi;

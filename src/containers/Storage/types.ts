@@ -83,3 +83,11 @@ export interface IPasteEntitiesPayload {
     type: "copy" | "cut";
   };
 }
+
+export interface IRenameEntityPayload {
+  storageid: string;
+  body: {
+    entity: string;
+    fullname: string;
+  };
+}

@@ -12,8 +12,6 @@ import {
   Button,
   Dropdown,
   Flex,
-  Form,
-  Input,
   MenuProps,
   Progress,
   Spin,
@@ -44,6 +42,7 @@ import {
   useDeleteEntitiesMutation,
   useGetStorageEntitiesQuery,
   usePasteEntitiesMutation,
+  useRenameEntityMutation,
 } from "../api";
 import { STORAGE_TABLE_COLUMNS } from "./constants";
 import CreateDirectoryModalContainer from "./CreateDirectoryModalContainer";
@@ -61,14 +60,15 @@ import { appAxios } from "@/core/axios";
 import { isAxiosError } from "axios";
 import styles from "./styles.module.scss";
 import StorageEntityInfoModalContainer from "./StorageEntityInfoModalContainer";
-import { useForm } from "antd/es/form/Form";
 import { SERVER_BASE_URL } from "@/core/constants";
+import RenameEntityModalContainer from "./RenameEntityModalContainer";
 
 const StorageTableContainer: FC = () => {
   const [isCreateDirectoryModalOpen, setIsCreateDirectoryModalOpen] =
     useState<boolean>(false);
+  const [isRenameEntityModalOpen, setIsRenameEntityModalOpen] =
+    useState<boolean>(false);
   const [selected, setSelected] = useState<IEntity[]>([]);
-  const [renameForm] = useForm();
 
   const { storageid } = useParams({ from: "/storage/$storageid/" });
   const { parent } = useSearch({ from: "/storage/$storageid/" });
@@ -87,6 +87,7 @@ const StorageTableContainer: FC = () => {
   const [createDirectory] = useCreateDirectoryMutation();
   const [deleteEntities] = useDeleteEntitiesMutation();
   const [pasteEntities] = usePasteEntitiesMutation();
+  const [renameEntity] = useRenameEntityMutation();
 
   const { notification, modal, message } = App.useApp();
 
@@ -130,6 +131,14 @@ const StorageTableContainer: FC = () => {
 
   const handleCloseCreateDirectoryModal = () => {
     setIsCreateDirectoryModalOpen(false);
+  };
+
+  const handleOpenRenameEntityModal = () => {
+    setIsRenameEntityModalOpen(true);
+  };
+
+  const handleCloseRenameEntityModal = () => {
+    setIsRenameEntityModalOpen(false);
   };
 
   const handleDownloadEntities = async (selected: IEntity[]) => {
@@ -306,7 +315,19 @@ const StorageTableContainer: FC = () => {
       },
     });
     refetchEntities();
-    handleCloseCreateDirectoryModal();
+  };
+
+  const handleOkRenameEntityModal = async ({
+    fullname,
+  }: Record<string, any>) => {
+    await renameEntity({
+      storageid,
+      body: {
+        entity: selected[0]._id,
+        fullname,
+      },
+    });
+    refetchEntities();
   };
 
   const handleClickBack = () => {
@@ -341,23 +362,6 @@ const StorageTableContainer: FC = () => {
         }),
       );
     }
-  };
-
-  const handleRenameEntity = async (entity: IEntity) => {
-    renameForm.setFieldValue("name", entity.fullname);
-
-    await modal.confirm({
-      title: "Переименовать сущность",
-      content: (
-        <Form form={renameForm}>
-          <Form.Item name="name" label="Название">
-            <Input />
-          </Form.Item>
-        </Form>
-      ),
-    });
-
-    // const values = await renameForm.validateFields();
   };
 
   const onRow: TableProps["onRow"] = (record) => ({
@@ -431,7 +435,7 @@ const StorageTableContainer: FC = () => {
             icon: <EditOutlined />,
             disabled: selected.length > 1,
             onClick: () => {
-              handleRenameEntity(selected[0] as IEntity);
+              handleOpenRenameEntityModal();
               setContextMenuOpen(false);
             },
           },
@@ -638,6 +642,12 @@ const StorageTableContainer: FC = () => {
         open={isCreateDirectoryModalOpen}
         handleCloseModal={handleCloseCreateDirectoryModal}
         handleOkModal={handleOkCreateDirectoryModal}
+      />
+      <RenameEntityModalContainer
+        open={isRenameEntityModalOpen}
+        selected={selected[0]}
+        handleCloseModal={handleCloseRenameEntityModal}
+        handleOkModal={handleOkRenameEntityModal}
       />
     </>
   );
