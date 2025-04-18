@@ -46,7 +46,7 @@ const RenameEntityModalContainer: FC<RenameEntityModalContainerProps> = ({
         fullnameRef.current?.focus();
         fullnameRef.current?.setSelectionRange(
           0,
-          selected.fullname.lastIndexOf("\."),
+          selected.fullname.lastIndexOf("."),
         );
       });
     }
