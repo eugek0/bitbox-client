@@ -1,4 +1,4 @@
-# Хостится на http://185.125.101.249
+# Хостится на http://eugeko.ru
 
 # React + TypeScript + Vite
 
