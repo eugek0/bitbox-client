@@ -2,7 +2,7 @@ import { FC } from "react";
 import { StorageEntityInfoModalProps } from "./types";
 import { Descriptions, Flex } from "antd";
 import AppModal from "@/components/Common/AppModal";
-import { FileFilled, FolderFilled } from "@ant-design/icons";
+import { FileFilled } from "@ant-design/icons";
 import { convertBytes } from "@/core/utils";
 import moment from "moment";
 import ProfileBadgeContainer from "@/containers/Common/ProfileBadgeContainer";
