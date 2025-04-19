@@ -5,6 +5,26 @@
   flex-direction: column;
   height: 100%;
 
+  .dropzone {
+    padding: 4px;
+  }
+
+  .drop {
+    position: relative;
+    border: 1px dashed $primary-color;
+    padding: 3px;
+    text-align: center;
+    border-radius: 12px;
+    transition: background-color 0.3s ease;
+
+    &__message {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
   .breadcrumb {
     padding: 0 15px;
 

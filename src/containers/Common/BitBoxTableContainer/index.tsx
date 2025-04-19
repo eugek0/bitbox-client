@@ -1,5 +1,6 @@
 import {
   CSSProperties,
+  DragEventHandler,
   MouseEvent,
   MouseEventHandler,
   ReactNode,
@@ -24,6 +25,7 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
   handleAddRow,
   handleEditRow,
   contextMenu,
+  handleDrop: foreignHandleDrop,
   borderContextMenu,
   records,
   onRow: foreignOnRow,
@@ -53,6 +55,23 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
     useState<IBitBoxTableInfoModalConfig>({
       open: false,
     });
+  const [isDragOver, setIsDragOver] = useState<boolean>(false);
+
+  const handleDragEnter: DragEventHandler<HTMLDivElement> = (event) => {
+    event.preventDefault();
+    setIsDragOver(true);
+  };
+
+  const handleDragLeave: DragEventHandler<HTMLDivElement> = (event) => {
+    event.preventDefault();
+    setIsDragOver(false);
+  };
+
+  const handleDrop: DragEventHandler<HTMLDivElement> = (event) => {
+    event.preventDefault();
+    foreignHandleDrop?.(event);
+    setIsDragOver(false);
+  };
 
   const handleChangeSelected = (selected: BitBoxTableRecord[]) => {
     setSelected(selected);
@@ -190,7 +209,11 @@ const BitBoxTableContainer = <T extends BitBoxTableRecord>({
       handleBorderContextMenu={handleBorderContextMenu}
       handleBorderClick={handleClearSelected}
       contextMenuProps={contextMenuProps}
+      handleDragEnter={handleDragEnter}
+      handleDragLeave={handleDragLeave}
       infoModalProps={infoModalProps}
+      handleDrop={handleDrop}
+      isDragOver={isDragOver}
       modalProps={modalProps}
       records={records}
       onRow={onRow}

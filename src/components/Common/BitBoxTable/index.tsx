@@ -5,6 +5,7 @@ import BitBoxTableHeader from "./BitBoxTableHeader";
 import { BitBoxTableProps } from "./types";
 import { BitBoxTableRecord } from "@/containers/Common/BitBoxTableContainer/types";
 import styles from "./styles.module.scss";
+import { FaBoxOpen } from "react-icons/fa";
 
 const BitBoxTable = <T extends BitBoxTableRecord>({
   records,
@@ -15,10 +16,14 @@ const BitBoxTable = <T extends BitBoxTableRecord>({
   breadcrumbs,
   infoModal,
   modalProps,
+  isDragOver,
   infoModalProps,
   contextMenuProps,
   handleBorderClick,
   handleBorderContextMenu,
+  handleDragLeave,
+  handleDragEnter,
+  handleDrop,
   onRow,
 }: BitBoxTableProps<T>): ReactNode => {
   return (
@@ -41,16 +46,36 @@ const BitBoxTable = <T extends BitBoxTableRecord>({
             <Breadcrumb items={breadcrumbs} />
           </div>
         )}
-        <Table
-          onRow={onRow}
-          columns={columns}
-          dataSource={records}
-          loading={{ indicator: <LoadingOutlined />, spinning: loading }}
-          pagination={false}
-          rowKey="_id"
-          bordered
-          sticky
-        />
+        <Flex
+          className={`${styles["dropzone"]} ${isDragOver ? styles["drop"] : ""}`}
+          flex={1}
+          onDrop={handleDrop}
+          onDragOver={(event) => event.preventDefault()}
+          onDragEnter={handleDragEnter}
+          onDragLeave={handleDragLeave}
+        >
+          <Table
+            onRow={onRow}
+            columns={columns}
+            dataSource={records}
+            loading={{ indicator: <LoadingOutlined />, spinning: loading }}
+            pagination={false}
+            rowKey="_id"
+            bordered
+            sticky
+          />
+          {isDragOver && (
+            <Flex
+              gap={15}
+              align="center"
+              className={styles["drop__message"]}
+              vertical
+            >
+              <FaBoxOpen size={60} />
+              <span>Сбросьте сюда свои файлы</span>
+            </Flex>
+          )}
+        </Flex>
       </Flex>
       {modal?.(modalProps) as ReactNode}
       {infoModal?.(infoModalProps) as ReactNode}

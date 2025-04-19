@@ -131,7 +131,7 @@ export const STORAGE_TABLE_COLUMNS: TableColumnType<IEntity>[] = [
           {ENTITY_TYPE_ICON_DICTIONARY[
             record.type === "directory"
               ? record.type
-              : record.extension.toLowerCase()
+              : record?.extension?.toLowerCase()
           ] ?? <FileFilled />}
           <Typography.Text>{name}</Typography.Text>
         </Flex>
@@ -160,10 +160,10 @@ export const STORAGE_TABLE_COLUMNS: TableColumnType<IEntity>[] = [
     render: (type, record) => (
       <Flex gap={10} align="center">
         {ENTITY_TYPE_ICON_DICTIONARY[
-          type === "directory" ? type : record.extension.toLowerCase()
+          type === "directory" ? type : record?.extension?.toLowerCase()
         ] ?? <FileFilled />}
         {ENTITY_TYPE_DICTIONARY[
-          type === "directory" ? type : record.extension.toLowerCase()
+          type === "directory" ? type : record?.extension?.toLowerCase()
         ] ?? "Файл"}
       </Flex>
     ),

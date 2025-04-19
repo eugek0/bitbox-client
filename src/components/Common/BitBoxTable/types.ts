@@ -1,4 +1,4 @@
-import { MouseEventHandler } from "react";
+import { DragEventHandler, MouseEventHandler } from "react";
 import { DropDownProps } from "antd";
 import { TableProps } from "antd/lib";
 import {
@@ -11,11 +11,14 @@ import {
 
 export interface BitBoxTableProps<T extends BitBoxTableRecord>
   extends Omit<BitBoxTableContainerProps<T>, "contextMenu"> {
+  isDragOver: boolean;
   modalProps: BitBoxTableModalProps;
   infoModalProps: BitBoxTableInfoModalProps;
   contextMenuProps: BitBoxTableContextMenuProps;
   handleBorderClick: MouseEventHandler<HTMLDivElement>;
   handleBorderContextMenu: MouseEventHandler<HTMLDivElement>;
+  handleDragEnter: DragEventHandler<HTMLDivElement>;
+  handleDragLeave: DragEventHandler<HTMLDivElement>;
   onRow: TableProps["onRow"];
 }
 
