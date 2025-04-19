@@ -18,6 +18,7 @@ export interface BitBoxTableContainerProps<T extends BitBoxTableRecord>
   selected?: BitBoxTableRecord[];
   breadcrumbs?: BreadcrumbProps["items"];
   handleDrop?: DragEventHandler<HTMLDivElement>;
+  withDrop?: boolean;
   handleSelect?: (selected: BitBoxTableRecord[]) => void;
   handleAddRow?: (values: Record<string, any>) => Promise<void> | void;
   handleEditRow?: (

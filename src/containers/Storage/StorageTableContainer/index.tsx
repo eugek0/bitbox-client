@@ -727,6 +727,7 @@ const StorageTableContainer: FC = () => {
         }}
         infoModal={StorageEntityInfoModalContainer}
         handleSelect={handleSelect}
+        withDrop
       />
       <CreateDirectoryModalContainer
         open={isCreateDirectoryModalOpen}

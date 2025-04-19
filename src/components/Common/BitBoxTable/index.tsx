@@ -13,6 +13,7 @@ const BitBoxTable = <T extends BitBoxTableRecord>({
   loading,
   header,
   modal,
+  withDrop,
   breadcrumbs,
   infoModal,
   modalProps,
@@ -47,7 +48,7 @@ const BitBoxTable = <T extends BitBoxTableRecord>({
           </div>
         )}
         <Flex
-          className={`${styles["dropzone"]} ${isDragOver ? styles["drop"] : ""}`}
+          className={`${styles["dropzone"]} ${isDragOver && withDrop ? styles["drop"] : ""}`}
           flex={1}
           onDrop={handleDrop}
           onDragOver={(event) => event.preventDefault()}
