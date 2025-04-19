@@ -49,6 +49,7 @@ import CreateDirectoryModalContainer from "./CreateDirectoryModalContainer";
 import {
   BitBoxTableContextMenuDropdownProps,
   BitBoxTableRecord,
+  IBitBoxTableInfoModalConfig,
 } from "@/containers/Common/BitBoxTableContainer/types";
 import { useAppSelector } from "@/store";
 import { storageBufferSelector } from "../selectors";
@@ -63,6 +64,7 @@ import StorageEntityInfoModalContainer from "./StorageEntityInfoModalContainer";
 import { SERVER_BASE_URL } from "@/core/constants";
 import RenameEntityModalContainer from "./RenameEntityModalContainer";
 import { useStorageRole } from "./hooks/useStorageRole";
+import StorageInfoModalContainer from "@/containers/Storages/StoragesTableContainer/StorageInfoModalContainer";
 
 const StorageTableContainer: FC = () => {
   const [isCreateDirectoryModalOpen, setIsCreateDirectoryModalOpen] =
@@ -70,6 +72,10 @@ const StorageTableContainer: FC = () => {
   const [isRenameEntityModalOpen, setIsRenameEntityModalOpen] =
     useState<boolean>(false);
   const [selected, setSelected] = useState<IEntity[]>([]);
+  const [infoModalConfig, setInfoModalConfig] =
+    useState<IBitBoxTableInfoModalConfig>({
+      open: false,
+    });
 
   const { storageid } = useParams({ from: "/storage/$storageid/" });
   const { parent } = useSearch({ from: "/storage/$storageid/" });
@@ -79,7 +85,7 @@ const StorageTableContainer: FC = () => {
 
   const context = useContext(StorageContext);
   const buffer = useAppSelector(storageBufferSelector);
-  const role = useStorageRole(context?.members ?? []);
+  const role = useStorageRole(context?.members ?? [], context?.defaultRole);
 
   const { data: entities, refetch: refetchEntities } =
     useGetStorageEntitiesQuery({
@@ -559,6 +565,19 @@ const StorageTableContainer: FC = () => {
               setSelected([]);
             },
           },
+          {
+            key: "8",
+            type: "divider",
+          },
+          {
+            key: "9",
+            label: "Информация",
+            icon: <InfoCircleOutlined />,
+            onClick: async () => {
+              setInfoModalConfig({ open: true });
+              setContextMenuOpen(false);
+            },
+          },
         ],
       },
     ],
@@ -675,6 +694,11 @@ const StorageTableContainer: FC = () => {
         selected={selected[0]}
         handleCloseModal={handleCloseRenameEntityModal}
         handleOkModal={handleOkRenameEntityModal}
+      />
+      <StorageInfoModalContainer
+        config={infoModalConfig}
+        setConfig={setInfoModalConfig}
+        selected={context}
       />
     </>
   );

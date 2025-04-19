@@ -35,9 +35,9 @@ export const STORAGES_TABLE_COLUMNS: TableColumnType<IStoragesTableRecord>[] = [
     showSorterTooltip: false,
   },
   {
-    title: "Загружено",
+    title: "Создано",
     dataIndex: "createdAt",
-    width: "12%",
+    width: "10%",
     sorter: {
       compare: (a, b) =>
         moment(a.createdAt).isAfter(moment(b.createdAt)) ? 1 : -1,

@@ -4,20 +4,17 @@ import {
   TStorageMemberRole,
 } from "@/containers/Storages/types";
 import { useAppSelector } from "@/store";
-import { useMemo } from "react";
 
 export const useStorageRole = (
   members: IStorageMember[],
+  defaultRole?: TStorageMemberRole,
 ): TStorageMemberRole => {
   const profile = useAppSelector(profileSelector);
 
-  const role = useMemo(
-    () =>
-      profile?.role === "admin"
-        ? "administrator"
-        : members.find((member) => member._id === profile?._id)?.role,
-    [profile, members],
-  );
+  const role =
+    defaultRole !== "watcher" || profile?.role === "admin"
+      ? "administrator"
+      : members.find((member) => member._id === profile?._id)?.role;
 
   return role ?? "watcher";
 };

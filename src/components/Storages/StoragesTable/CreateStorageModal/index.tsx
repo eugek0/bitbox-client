@@ -2,10 +2,7 @@ import { FC } from "react";
 import { Button, Checkbox, Flex, Form, Input, InputNumber, Select } from "antd";
 import { TCreateStorageModalFields } from "@/containers/Storages/StoragesTableContainer/CreateStorageModalContainer/types";
 import AppModal from "@/components/Common/AppModal";
-import {
-  CREATE_STORAGE_MODAL_OPTIONS,
-  CREATE_STORAGE_MODAL_RULES,
-} from "./constants";
+import { CREATE_STORAGE_MODAL_OPTIONS } from "./constants";
 import { CreateStorageModalProps } from "./types";
 import styles from "./styles.module.scss";
 import { REQUIRED_FIELD_MESSAGE } from "@/core/constants";
@@ -16,11 +13,12 @@ import StorageMemberRoles from "@/containers/Storages/StoragesTableContainer/Cre
 const CreateStorageModal: FC<CreateStorageModalProps> = ({
   initialValues,
   form,
+  rules,
+  config,
   loading,
   disabled,
   required,
   onCancel,
-  config,
   onOk,
   ...props
 }) => {
@@ -44,14 +42,14 @@ const CreateStorageModal: FC<CreateStorageModalProps> = ({
         <Flex align="center" gap={15}>
           <Form.Item<TCreateStorageModalFields>
             className={styles["name"]}
-            rules={CREATE_STORAGE_MODAL_RULES.default}
+            rules={rules.default}
             label="Название"
             name="name"
           >
             <Input maxLength={32} />
           </Form.Item>
           <Form.Item<TCreateStorageModalFields>
-            rules={CREATE_STORAGE_MODAL_RULES.size}
+            rules={rules.size}
             label="Размер"
             name="size"
           >
@@ -118,7 +116,7 @@ const CreateStorageModal: FC<CreateStorageModalProps> = ({
         <Flex align="center" justify="space-between">
           <Form.Item<TCreateStorageModalFields>
             className={styles["access"]}
-            rules={CREATE_STORAGE_MODAL_RULES.default}
+            rules={rules.default}
             label="Доступ"
             name="access"
           >
@@ -131,7 +129,7 @@ const CreateStorageModal: FC<CreateStorageModalProps> = ({
           </Form.Item>
           <Form.Item<TCreateStorageModalFields>
             className={styles["role"]}
-            rules={CREATE_STORAGE_MODAL_RULES.default}
+            rules={rules.default}
             label="Стандартная роль"
             name="defaultRole"
             tooltip={{

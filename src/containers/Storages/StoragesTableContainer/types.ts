@@ -1,4 +1,4 @@
-import { IStorageMember } from "../types";
+import { IStorageMember, TStorageMemberRole } from "../types";
 
 export interface IStoragesTableRecord {
   name: string;
@@ -8,4 +8,5 @@ export interface IStoragesTableRecord {
   used: number;
   size: number;
   members: IStorageMember[];
+  defaultRole: TStorageMemberRole;
 }

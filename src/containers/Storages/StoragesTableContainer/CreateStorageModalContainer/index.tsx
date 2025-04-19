@@ -7,7 +7,10 @@ import {
   CreateStorageModalContainerProps,
   TCreateStorageModalFields,
 } from "./types";
-import { CREATE_STORAGE_MODAL_INITIAL_VALUES } from "./constants";
+import {
+  CREATE_STORAGE_MODAL_INITIAL_VALUES,
+  CREATE_STORAGE_MODAL_RULES,
+} from "./constants";
 import { BitBoxTableRecord } from "@/containers/Common/BitBoxTableContainer/types";
 
 const CreateStorageModalContainer: FC<CreateStorageModalContainerProps> = ({
@@ -40,6 +43,8 @@ const CreateStorageModalContainer: FC<CreateStorageModalContainerProps> = ({
   const access = useWatch("access", form);
   const restrictFileSize = useWatch("restrictFileSize", form);
   const restrictFilesCount = useWatch("restrictFilesCount", form);
+
+  const rules = CREATE_STORAGE_MODAL_RULES(selected?.[0]?.used);
 
   const handleCloseModal = () => {
     setConfig({ open: false, mode: null });
@@ -119,6 +124,7 @@ const CreateStorageModalContainer: FC<CreateStorageModalContainerProps> = ({
       config={config}
       loading={isModalLoading}
       form={form}
+      rules={rules}
       onOk={handleSubmit}
       onCancel={handleCloseModal}
       disabled={disabled}
