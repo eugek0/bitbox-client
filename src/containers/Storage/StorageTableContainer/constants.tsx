@@ -17,7 +17,6 @@ import {
   FaFileWord,
   FaHtml5,
   FaLess,
-  FaLock,
   FaMarkdown,
   FaPython,
   FaReact,
