@@ -62,6 +62,7 @@ import styles from "./styles.module.scss";
 import StorageEntityInfoModalContainer from "./StorageEntityInfoModalContainer";
 import { SERVER_BASE_URL } from "@/core/constants";
 import RenameEntityModalContainer from "./RenameEntityModalContainer";
+import { useStorageRole } from "./hooks/useStorageRole";
 
 const StorageTableContainer: FC = () => {
   const [isCreateDirectoryModalOpen, setIsCreateDirectoryModalOpen] =
@@ -78,6 +79,7 @@ const StorageTableContainer: FC = () => {
 
   const context = useContext(StorageContext);
   const buffer = useAppSelector(storageBufferSelector);
+  const role = useStorageRole(context?.members ?? []);
 
   const { data: entities, refetch: refetchEntities } =
     useGetStorageEntitiesQuery({
@@ -433,7 +435,7 @@ const StorageTableContainer: FC = () => {
             key: "3",
             label: "Переименовать",
             icon: <EditOutlined />,
-            disabled: selected.length > 1,
+            disabled: role === "watcher" || selected.length > 1,
             onClick: () => {
               handleOpenRenameEntityModal();
               setContextMenuOpen(false);
@@ -446,6 +448,7 @@ const StorageTableContainer: FC = () => {
           {
             key: "5",
             label: "Скопировать",
+            disabled: role === "watcher",
             icon: <CopyOutlined />,
             onClick: () => {
               handleCopyEntities(selected as IEntity[]);
@@ -456,6 +459,7 @@ const StorageTableContainer: FC = () => {
           {
             key: "6",
             label: "Вырезать",
+            disabled: role === "watcher",
             icon: <IoCutOutline />,
             onClick: () => {
               handleCutEntities(selected as IEntity[]);
@@ -470,6 +474,7 @@ const StorageTableContainer: FC = () => {
           {
             key: "8",
             label: "Удалить",
+            disabled: role === "watcher",
             icon: <DeleteOutlined />,
             onClick: () => {
               handleDeleteEntities(selected as IEntity[]);
@@ -508,6 +513,7 @@ const StorageTableContainer: FC = () => {
           {
             key: "2",
             label: "Создать директорию",
+            disabled: role === "watcher",
             icon: <FolderAddOutlined />,
             onClick: () => {
               handleOpenCreateDirectoryModal();
@@ -521,6 +527,7 @@ const StorageTableContainer: FC = () => {
           {
             key: "4",
             label: "Загрузить файлы",
+            disabled: role === "watcher",
             icon: <LuFileUp />,
             onClick: () => {
               handleUploadEntities(false);
@@ -530,6 +537,7 @@ const StorageTableContainer: FC = () => {
           {
             key: "5",
             label: "Загрузить директорию",
+            disabled: role === "watcher",
             icon: <LuFolderUp />,
             onClick: () => {
               handleUploadEntities(true);
@@ -544,7 +552,7 @@ const StorageTableContainer: FC = () => {
             key: "7",
             label: "Вставить",
             icon: <PlusOutlined />,
-            disabled: !buffer.items.length,
+            disabled: role === "watcher" || !buffer.items.length,
             onClick: async () => {
               handlePasteEntities();
               setContextMenuOpen(false);

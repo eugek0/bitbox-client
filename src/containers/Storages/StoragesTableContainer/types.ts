@@ -1,3 +1,5 @@
+import { IStorageMember } from "../types";
+
 export interface IStoragesTableRecord {
   name: string;
   description: string;
@@ -5,4 +7,5 @@ export interface IStoragesTableRecord {
   createdAt: string;
   used: number;
   size: number;
+  members: IStorageMember[];
 }

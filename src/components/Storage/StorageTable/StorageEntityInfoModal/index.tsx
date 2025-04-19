@@ -6,6 +6,10 @@ import { FileFilled, FolderFilled } from "@ant-design/icons";
 import { convertBytes } from "@/core/utils";
 import moment from "moment";
 import ProfileBadgeContainer from "@/containers/Common/ProfileBadgeContainer";
+import {
+  ENTITY_TYPE_DICTIONARY,
+  ENTITY_TYPE_ICON_DICTIONARY,
+} from "@/containers/Storage/StorageTableContainer/constants";
 
 const StorageEntityInfoModal: FC<StorageEntityInfoModalProps> = ({
   config,
@@ -39,12 +43,16 @@ const StorageEntityInfoModal: FC<StorageEntityInfoModalProps> = ({
               label: "Тип",
               children: (
                 <Flex gap={10} align="center">
-                  {selected?.type === "file" ? (
-                    <FileFilled />
-                  ) : (
-                    <FolderFilled />
-                  )}
-                  {selected?.type === "file" ? "Файл" : "Директория"}
+                  {ENTITY_TYPE_ICON_DICTIONARY[
+                    selected?.type === "directory"
+                      ? selected?.type
+                      : selected?.extension?.toLowerCase()
+                  ] ?? <FileFilled />}
+                  {ENTITY_TYPE_DICTIONARY[
+                    selected?.type === "directory"
+                      ? selected?.type
+                      : selected?.extension?.toLowerCase()
+                  ] ?? "Файл"}
                 </Flex>
               ),
             },
