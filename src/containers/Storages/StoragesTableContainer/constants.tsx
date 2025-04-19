@@ -3,6 +3,7 @@ import { ProductFilled } from "@ant-design/icons";
 import { IStoragesTableRecord } from "@/containers/Storages/StoragesTableContainer/types";
 import ProfileBadgeContainer from "@/containers/Common/ProfileBadgeContainer";
 import { convertBytes } from "@/core/utils";
+import moment from "moment";
 
 export const STORAGES_TABLE_COLUMNS: TableColumnType<IStoragesTableRecord>[] = [
   {
@@ -32,6 +33,17 @@ export const STORAGES_TABLE_COLUMNS: TableColumnType<IStoragesTableRecord>[] = [
         (b.description ?? "").localeCompare(a.description ?? ""),
     },
     showSorterTooltip: false,
+  },
+  {
+    title: "Загружено",
+    dataIndex: "createdAt",
+    width: "12%",
+    sorter: {
+      compare: (a, b) =>
+        moment(a.createdAt).isAfter(moment(b.createdAt)) ? 1 : -1,
+    },
+    showSorterTooltip: false,
+    render: (createdAt) => moment(createdAt).format("DD.MM.YYYY HH:mm:ss"),
   },
   {
     title: "Владелец",

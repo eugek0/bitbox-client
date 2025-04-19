@@ -28,6 +28,7 @@ import { ImSvg } from "react-icons/im";
 import { SiJavascript, SiJson, SiTypescript, SiUtorrent } from "react-icons/si";
 import { LuCodeXml } from "react-icons/lu";
 import { IoTerminal } from "react-icons/io5";
+import moment from "moment";
 
 export const STORAGE_TABLE_ENTITY_TYPE_ICONS: Record<EntityType, ReactNode> = {
   file: <FileFilled />,
@@ -139,6 +140,17 @@ export const STORAGE_TABLE_COLUMNS: TableColumnType<IEntity>[] = [
         </Flex>
       );
     },
+  },
+  {
+    title: "Загружено",
+    dataIndex: "uploadedAt",
+    width: "4%",
+    sorter: {
+      compare: (a, b) =>
+        moment(a.uploadedAt).isAfter(moment(b.uploadedAt)) ? 1 : -1,
+    },
+    showSorterTooltip: false,
+    render: (uploadedAt) => moment(uploadedAt).format("DD.MM.YYYY HH:mm:ss"),
   },
   {
     title: "Тип",
