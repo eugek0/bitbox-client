@@ -516,6 +516,10 @@ const StorageTableContainer: FC = () => {
           },
           {
             key: "3",
+            type: "divider",
+          },
+          {
+            key: "4",
             label: "Загрузить файлы",
             icon: <LuFileUp />,
             onClick: () => {
@@ -524,7 +528,7 @@ const StorageTableContainer: FC = () => {
             },
           },
           {
-            key: "4",
+            key: "5",
             label: "Загрузить директорию",
             icon: <LuFolderUp />,
             onClick: () => {
@@ -533,11 +537,11 @@ const StorageTableContainer: FC = () => {
             },
           },
           {
-            key: "5",
+            key: "6",
             type: "divider",
           },
           {
-            key: "6",
+            key: "7",
             label: "Вставить",
             icon: <PlusOutlined />,
             disabled: !buffer.items.length,
@@ -618,12 +622,16 @@ const StorageTableContainer: FC = () => {
                   },
                   {
                     key: "2",
+                    type: "divider",
+                  },
+                  {
+                    key: "3",
                     label: "Загрузить файлы",
                     onClick: () => handleUploadEntities(false),
                     icon: <LuFileUp />,
                   },
                   {
-                    key: "3",
+                    key: "4",
                     label: "Загрузить директорию",
                     onClick: () => handleUploadEntities(true),
                     icon: <LuFolderUp />,

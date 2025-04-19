@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { TableProps } from "antd";
 import {
   DeleteOutlined,
@@ -32,6 +32,8 @@ import StorageInfoModalContainer from "./StorageInfoModalContainer";
 import useApp from "antd/es/app/useApp";
 
 const StoragesTableContainer: FC = () => {
+  const [selected, setSelected] = useState<IStoragesTableRecord[]>([]);
+
   const profile = useAppSelector(profileSelector);
 
   const { modal } = useApp();
@@ -59,6 +61,10 @@ const StoragesTableContainer: FC = () => {
     });
   };
 
+  const handleSelect = (selected: BitBoxTableRecord[]) => {
+    setSelected(selected as IStoragesTableRecord[]);
+  };
+
   const handleCreateRow = async (values: BitBoxTableRecord) => {
     await createStorage(values as TCreateStorageModalFields).unwrap();
     refetchStorages();
@@ -76,8 +82,14 @@ const StoragesTableContainer: FC = () => {
   };
 
   const handleDeleteRow = async (selected: BitBoxTableRecord[]) => {
-    await deleteStorage({ storages: selected.map((storage) => storage._id) });
-    refetchStorages();
+    const result = await modal.confirm({
+      title: `Удаление ${selected.length > 1 ? "хранилищ" : "хранилища"}`,
+      content: `Вы действительно хотите удалить ${selected.length > 1 ? "эти хранилища" : "это хранилище"}?`,
+    });
+    if (result) {
+      await deleteStorage({ storages: selected.map((storage) => storage._id) });
+      refetchStorages();
+    }
   };
 
   const onRow: TableProps["onRow"] = (record) => ({
@@ -121,14 +133,7 @@ const StoragesTableContainer: FC = () => {
               disabled: !accessed,
               onClick: async () => {
                 setContextMenuOpen(false);
-                const result = await modal.confirm({
-                  title: `Удаление ${selected.length > 1 ? "хранилищ" : "хранилища"}`,
-                  content: `Вы действительно хотите удалить ${selected.length > 1 ? "эти хранилища" : "это хранилище"}?`,
-                });
-
-                if (result) {
-                  handleDeleteRow(selected);
-                }
+                handleDeleteRow(selected);
               },
               danger: true,
             },
@@ -174,6 +179,22 @@ const StoragesTableContainer: FC = () => {
     ],
   });
 
+  useEffect(() => {
+    const handler = (event: KeyboardEvent) => {
+      switch (event.code) {
+        case "Delete":
+          handleDeleteRow(selected);
+          break;
+      }
+    };
+
+    document.addEventListener("keydown", handler);
+
+    return () => {
+      document.removeEventListener("keydown", handler);
+    };
+  }, [selected]);
+
   return (
     <BitBoxTableContainer<IStoragesTableRecord>
       records={storages ?? []}
@@ -196,6 +217,7 @@ const StoragesTableContainer: FC = () => {
       handleAddRow={handleCreateRow}
       handleEditRow={handleEditRow}
       loading={isStoragesFetching}
+      handleSelect={handleSelect}
       onRow={onRow}
       borderContextMenu={{
         show: true,
