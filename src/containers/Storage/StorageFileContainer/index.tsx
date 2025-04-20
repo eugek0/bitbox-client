@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import StorageFile from "@/components/Storage/StorageFile";
 import { useGetStorageEntityQuery } from "../api";
-import { useNavigate, useParams, useRouter } from "@tanstack/react-router";
+import { useNavigate, useParams } from "@tanstack/react-router";
 import { download } from "@/core/utils";
 import { SERVER_BASE_URL } from "@/core/constants";
 
