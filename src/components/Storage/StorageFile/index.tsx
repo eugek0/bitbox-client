@@ -21,7 +21,7 @@ const StorageFile: FC<StorageFileProps> = ({
   return (
     <Flex className={styles["body"]} align="center" justify="center" gap={100}>
       <Flex className={styles["card"]} gap={25} vertical>
-        <Flex align="center" justify="space-between">
+        <Flex align="center" justify="space-between" gap={15}>
           <Flex className={styles["header"]} align="center" gap={15}>
             {ENTITY_TYPE_ICON_DICTIONARY[
               entity?.type === "directory"
