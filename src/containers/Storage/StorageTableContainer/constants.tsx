@@ -5,6 +5,7 @@ import { ReactNode } from "react";
 import { FileFilled, FolderFilled, SettingFilled } from "@ant-design/icons";
 import ProfileBadgeContainer from "@/containers/Common/ProfileBadgeContainer";
 import {
+  FaCompactDisc,
   FaCss3,
   FaDatabase,
   FaFileAlt,
@@ -77,6 +78,7 @@ export const ENTITY_TYPE_DICTIONARY: Record<string, string> = {
   jpg: "JPG",
   jpeg: "JPEG",
   gif: "GIF",
+  iso: "ISO",
 };
 
 export const ENTITY_TYPE_ICON_DICTIONARY: Record<string, ReactNode> = {
@@ -121,6 +123,7 @@ export const ENTITY_TYPE_ICON_DICTIONARY: Record<string, ReactNode> = {
   jpg: <FaFileImage />,
   jpeg: <FaFileImage />,
   gif: <FaFileImage />,
+  iso: <FaCompactDisc />,
 };
 
 export const STORAGE_TABLE_COLUMNS: TableColumnType<IEntity>[] = [
