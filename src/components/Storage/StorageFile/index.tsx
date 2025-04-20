@@ -28,7 +28,10 @@ const StorageFile: FC<StorageFileProps> = ({
                 ? (entity?.type ?? "")
                 : (entity?.extension?.toLowerCase() ?? "")
             ] ?? <FileFilled />}
-            <Typography.Text className={styles["fullname"]}>
+            <Typography.Text
+              className={styles["fullname"]}
+              title={entity?.fullname}
+            >
               {entity?.fullname}
             </Typography.Text>
           </Flex>
