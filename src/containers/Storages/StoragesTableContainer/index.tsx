@@ -180,11 +180,18 @@ const StoragesTableContainer: FC = () => {
   });
 
   useEffect(() => {
+    const accessed = checkStorageAccess(
+      selected as IStorage[],
+      profile ?? undefined,
+    );
+
     const handler = (event: KeyboardEvent) => {
-      switch (event.code) {
-        case "Delete":
-          handleDeleteRow(selected);
-          break;
+      if (selected.length && accessed) {
+        switch (event.code) {
+          case "Delete":
+            handleDeleteRow(selected);
+            break;
+        }
       }
     };
 

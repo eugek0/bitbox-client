@@ -109,23 +109,21 @@ const StorageTableContainer: FC = () => {
   const handleDrop: DragEventHandler<HTMLDivElement> = async (event) => {
     event.preventDefault();
     const items = event.dataTransfer.items;
-
-    const allFiles = new DataTransfer();
+    const formdata = new FormData();
 
     const traverseFileTree = async (item: any, path = ""): Promise<void> => {
       return new Promise((resolve) => {
         if (item.isFile) {
           item.file((file: File) => {
-            const fileWithPath = new File([file], path + file.name, {
-              type: file.type,
-            });
-            allFiles.items.add(fileWithPath);
+            formdata.append("entities", file, file.name);
+            formdata.append("metadata", file.name);
             resolve();
           });
         } else if (item.isDirectory) {
           const dirReader = item.createReader();
           dirReader.readEntries(async (entries: any[]) => {
             for (const entry of entries) {
+              console.log(entry);
               await traverseFileTree(entry, path + item.name + "/");
             }
             resolve();
@@ -142,7 +140,7 @@ const StorageTableContainer: FC = () => {
       await traverseFileTree(entry);
     }
 
-    await handleUploadFiles(allFiles.files, true);
+    await handleUploadFiles(formdata, event.dataTransfer.files.length);
     refetchEntities();
   };
 
@@ -218,33 +216,18 @@ const StorageTableContainer: FC = () => {
     );
   };
 
-  const handleUploadFiles = async (
-    files: FileList | null,
-    directory: boolean,
-  ) => {
-    const formdata = new FormData();
-
+  const handleUploadFiles = async (formdata: FormData, count: number) => {
     formdata.append("parent", parent);
-    for (const file of files ?? []) {
-      formdata.append(
-        "entities",
-        file,
-        directory ? file.webkitRelativePath || file.name : undefined,
-      );
-      if (directory) {
-        formdata.append("metadata", file.webkitRelativePath || file.name);
-      }
-    }
     const uploadKey = v4();
 
-    const message = `Загрузка ${files?.length ?? 0} ${getNoun(files?.length ?? 0, "файла", "файлов", "файлов")}`;
+    const message = `Загрузка ${count} ${getNoun(count, "файла", "файлов", "файлов")}`;
 
     const controller = new AbortController();
 
     const handleCancelUpload = async () => {
       const result = await modal.confirm({
         title: "Отменить загрузку?",
-        content: `${(files?.length ?? 0) > 1 ? "Файлы" : "Файл"} еще не ${(files?.length ?? 0) > 1 ? "загружены" : "загружен"}. Отменить?`,
+        content: `${count > 1 ? "Файлы" : "Файл"} еще не ${count > 1 ? "загружены" : "загружен"}. Отменить?`,
       });
 
       if (result) {
@@ -338,7 +321,14 @@ const StorageTableContainer: FC = () => {
     }
 
     const changeEventHandler = async () => {
-      await handleUploadFiles(upload?.files, directory);
+      const formdata = new FormData();
+
+      for (const file of upload?.files ?? []) {
+        formdata.append("entities", file, file.name);
+        formdata.append("metadata", file.webkitRelativePath);
+      }
+
+      await handleUploadFiles(formdata, upload?.files?.length ?? 0);
       upload.removeEventListener("change", changeEventHandler);
       refetchEntities();
     };
@@ -348,11 +338,21 @@ const StorageTableContainer: FC = () => {
   };
 
   const handleDeleteEntities = async (selected: IEntity[]) => {
+    message.open({
+      key: "delete",
+      type: "loading",
+      content: `Удаление ${selected.length} ${selected.length > 1 ? "сущностей" : "сущности"}`,
+    });
     await deleteEntities({
       storageid,
       body: {
         entities: selected.map((entity) => entity._id),
       },
+    });
+    message.open({
+      key: "delete",
+      type: "success",
+      content: `${selected.length} ${selected.length > 1 ? "сущностей" : "сущности"} успешно ${selected.length > 1 ? "удалены" : "удалена"}`,
     });
     refetchEntities();
   };
@@ -497,7 +497,6 @@ const StorageTableContainer: FC = () => {
           {
             key: "5",
             label: "Скопировать",
-            disabled: role === "watcher",
             icon: <CopyOutlined />,
             onClick: () => {
               handleCopyEntities(selected as IEntity[]);
@@ -633,24 +632,31 @@ const StorageTableContainer: FC = () => {
           case "KeyC":
             handleCopyEntities(selected);
             break;
-          case "KeyX":
-            handleCutEntities(selected);
-            break;
-          case "KeyV":
-            handlePasteEntities();
-            break;
         }
       }
 
-      switch (event.code) {
-        case "F2":
-          if (selected.length === 1) {
-            handleOpenRenameEntityModal();
+      if (role !== "watcher") {
+        if (event.ctrlKey) {
+          switch (event.code) {
+            case "KeyX":
+              handleCutEntities(selected);
+              break;
+            case "KeyV":
+              handlePasteEntities();
+              break;
           }
-          break;
-        case "Delete":
-          handleDeleteEntities(selected);
-          break;
+        }
+
+        switch (event.code) {
+          case "F2":
+            if (selected.length === 1) {
+              handleOpenRenameEntityModal();
+            }
+            break;
+          case "Delete":
+            handleDeleteEntities(selected);
+            break;
+        }
       }
     };
 
