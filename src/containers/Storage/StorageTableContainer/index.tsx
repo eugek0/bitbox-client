@@ -86,7 +86,7 @@ const StorageTableContainer: FC = () => {
 
   const context = useContext(StorageContext);
   const buffer = useAppSelector(storageBufferSelector);
-  const role = useStorageRole(context?.members ?? [], context?.defaultRole);
+  const role = useStorageRole(context);
 
   const { data: entities, refetch: refetchEntities } =
     useGetStorageEntitiesQuery({
