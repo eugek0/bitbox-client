@@ -37,7 +37,7 @@ export const STORAGES_TABLE_COLUMNS: TableColumnType<IStoragesTableRecord>[] = [
   {
     title: "Создано",
     dataIndex: "createdAt",
-    width: "10%",
+    width: 165,
     sorter: {
       compare: (a, b) =>
         moment(a.createdAt).isAfter(moment(b.createdAt)) ? 1 : -1,
@@ -48,7 +48,7 @@ export const STORAGES_TABLE_COLUMNS: TableColumnType<IStoragesTableRecord>[] = [
   {
     title: "Владелец",
     dataIndex: "owner",
-    width: "12.5%",
+    width: 200,
     sorter: {
       compare: (a, b) => b.owner.localeCompare(a.owner),
     },
@@ -58,7 +58,7 @@ export const STORAGES_TABLE_COLUMNS: TableColumnType<IStoragesTableRecord>[] = [
   {
     title: "Занято",
     dataIndex: "used",
-    width: "6.25%",
+    width: 115,
     sorter: {
       compare: (a, b) => a.used - b.used,
     },
@@ -68,7 +68,7 @@ export const STORAGES_TABLE_COLUMNS: TableColumnType<IStoragesTableRecord>[] = [
   {
     title: "Размер",
     dataIndex: "size",
-    width: "6.25%",
+    width: 115,
     sorter: {
       compare: (a, b) => a.size - b.size,
     },

@@ -1,8 +1,8 @@
+import { IEntity } from "@/containers/Storage/types";
 import { MouseEventHandler } from "react";
 
 export interface StorageFileProps {
-  fullname: string;
-  size: number;
+  entity: IEntity | undefined;
   isFetching: boolean;
   handleDownload: MouseEventHandler<HTMLButtonElement>;
   handleClickBack: MouseEventHandler<HTMLButtonElement>;

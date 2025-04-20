@@ -156,7 +156,7 @@ const StorageTableContainer: FC = () => {
           storageid,
           body: {
             entities: buffer.items.map((entity) => entity._id),
-            target: parent ?? null,
+            parent: parent ?? null,
             type: buffer.type,
           },
         });

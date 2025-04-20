@@ -24,6 +24,7 @@ export interface IEntity {
   path: string;
   uploader: string;
   uploadedAt: string;
+  parent: string;
 }
 
 export interface IEntityBreadcrumb {
@@ -79,7 +80,7 @@ export interface IPasteEntitiesPayload {
   storageid: string;
   body: {
     entities: string[];
-    target: Nullable<string>;
+    parent: Nullable<string>;
     type: "copy" | "cut";
   };
 }

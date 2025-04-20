@@ -16,6 +16,7 @@ import {
   FaFilePowerpoint,
   FaFileVideo,
   FaFileWord,
+  FaGitAlt,
   FaHtml5,
   FaLess,
   FaMarkdown,
@@ -23,9 +24,19 @@ import {
   FaReact,
   FaSass,
 } from "react-icons/fa";
-import { FaFileZipper } from "react-icons/fa6";
+import { FaFileZipper, FaGolang } from "react-icons/fa6";
 import { ImSvg } from "react-icons/im";
-import { SiJavascript, SiJson, SiTypescript, SiUtorrent } from "react-icons/si";
+import {
+  SiCplusplus,
+  SiEslint,
+  SiJavascript,
+  SiJson,
+  SiPrettier,
+  SiRuby,
+  SiTypescript,
+  SiUtorrent,
+  SiYaml,
+} from "react-icons/si";
 import { LuCodeXml } from "react-icons/lu";
 import { IoTerminal } from "react-icons/io5";
 import moment from "moment";
@@ -79,6 +90,15 @@ export const ENTITY_TYPE_DICTIONARY: Record<string, string> = {
   jpeg: "JPEG",
   gif: "GIF",
   iso: "ISO",
+  yml: "YML",
+  yaml: "YAML",
+  prettierrc: "Prettier",
+  gitignore: "Git",
+  eslintrc: "Eslint",
+  eslintignore: "Eslint",
+  go: "Golang",
+  rb: "Ruby",
+  cpp: "C++",
 };
 
 export const ENTITY_TYPE_ICON_DICTIONARY: Record<string, ReactNode> = {
@@ -124,13 +144,22 @@ export const ENTITY_TYPE_ICON_DICTIONARY: Record<string, ReactNode> = {
   jpeg: <FaFileImage />,
   gif: <FaFileImage />,
   iso: <FaCompactDisc />,
+  yml: <SiYaml />,
+  yaml: <SiYaml />,
+  prettierrc: <SiPrettier />,
+  gitignore: <FaGitAlt />,
+  eslintrc: <SiEslint />,
+  eslintignore: <SiEslint />,
+  go: <FaGolang />,
+  rb: <SiRuby />,
+  cpp: <SiCplusplus />,
 };
 
 export const STORAGE_TABLE_COLUMNS: TableColumnType<IEntity>[] = [
   {
     title: "Название",
     dataIndex: "fullname",
-    width: "25%",
+    width: "max-content",
     ellipsis: true,
     sorter: {
       compare: (a, b) => b.name.localeCompare(a.name),
@@ -152,7 +181,7 @@ export const STORAGE_TABLE_COLUMNS: TableColumnType<IEntity>[] = [
   {
     title: "Загружено",
     dataIndex: "uploadedAt",
-    width: "4%",
+    width: 165,
     sorter: {
       compare: (a, b) =>
         moment(a.uploadedAt).isAfter(moment(b.uploadedAt)) ? 1 : -1,
@@ -163,7 +192,7 @@ export const STORAGE_TABLE_COLUMNS: TableColumnType<IEntity>[] = [
   {
     title: "Тип",
     dataIndex: "type",
-    width: "4%",
+    width: 150,
     sorter: {
       compare: (a, b) => b.type.localeCompare(a.type),
     },
@@ -182,7 +211,7 @@ export const STORAGE_TABLE_COLUMNS: TableColumnType<IEntity>[] = [
   {
     title: "Загрузил",
     dataIndex: "uploader",
-    width: "4%",
+    width: 200,
     sorter: {
       compare: (a, b) => b.uploader.localeCompare(a.uploader),
     },
@@ -192,7 +221,7 @@ export const STORAGE_TABLE_COLUMNS: TableColumnType<IEntity>[] = [
   {
     title: "Размер",
     dataIndex: "size",
-    width: "6.25%",
+    width: 115,
     sorter: {
       compare: (a, b) => a.size - b.size,
     },

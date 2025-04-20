@@ -5,27 +5,31 @@ import {
   FileFilled,
   RollbackOutlined,
 } from "@ant-design/icons";
-import Logotype from "@/components/Common/Logotype";
 import { convertBytes } from "@/core/utils";
-import { APP_NAME } from "@/core/constants";
 import { StorageFileProps } from "./types";
 import styles from "./styles.module.scss";
+import { ENTITY_TYPE_ICON_DICTIONARY } from "@/containers/Storage/StorageTableContainer/constants";
+import ProfileBadgeContainer from "@/containers/Common/ProfileBadgeContainer";
+import moment from "moment";
 
 const StorageFile: FC<StorageFileProps> = ({
-  fullname,
-  size,
+  entity,
   isFetching,
   handleDownload,
   handleClickBack,
 }) => {
   return (
     <Flex className={styles["body"]} align="center" justify="center" gap={100}>
-      <Flex className={styles["card"]} gap={20} vertical>
+      <Flex className={styles["card"]} gap={25} vertical>
         <Flex align="center" justify="space-between">
-          <Flex align="center" gap={15}>
-            <Logotype />
-            <Typography.Text className={styles["app-name"]}>
-              {APP_NAME}
+          <Flex className={styles["header"]} align="center" gap={15}>
+            {ENTITY_TYPE_ICON_DICTIONARY[
+              entity?.type === "directory"
+                ? (entity?.type ?? "")
+                : (entity?.extension?.toLowerCase() ?? "")
+            ] ?? <FileFilled />}
+            <Typography.Text className={styles["fullname"]}>
+              {entity?.fullname}
             </Typography.Text>
           </Flex>
           <Button
@@ -33,18 +37,13 @@ const StorageFile: FC<StorageFileProps> = ({
             type="text"
             icon={<RollbackOutlined />}
           >
-            Обратно
+            К хранилищу
           </Button>
         </Flex>
         <Flex align="center" justify="space-between">
-          <Flex align="center" gap={15}>
-            <FileFilled className={styles["icon"]} />
-            <Typography.Text className={styles["fullname"]}>
-              {fullname}
-            </Typography.Text>
-          </Flex>
-          <Typography.Text className={styles["size"]}>
-            {convertBytes(size ?? 0)}
+          <ProfileBadgeContainer _id={entity?.uploader} />
+          <Typography.Text className={styles["upload-time"]}>
+            {moment(entity?.uploadedAt).format("DD.MM.YYYY HH:mm:ss")}
           </Typography.Text>
         </Flex>
         <Button
@@ -53,7 +52,7 @@ const StorageFile: FC<StorageFileProps> = ({
           icon={<DownloadOutlined />}
           type="primary"
         >
-          Скачать
+          Скачать {convertBytes(entity?.size ?? 0)}
         </Button>
       </Flex>
     </Flex>

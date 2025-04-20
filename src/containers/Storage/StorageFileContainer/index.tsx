@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import StorageFile from "@/components/Storage/StorageFile";
 import { useGetStorageEntityQuery } from "../api";
-import { useParams, useRouter } from "@tanstack/react-router";
+import { useNavigate, useParams, useRouter } from "@tanstack/react-router";
 import { download } from "@/core/utils";
 import { SERVER_BASE_URL } from "@/core/constants";
 
@@ -11,7 +11,7 @@ const StorageFileContainer: FC = () => {
   const { storageid, entityid } = useParams({
     from: "/storage/$storageid/entity/$entityid",
   });
-  const router = useRouter();
+  const navigate = useNavigate();
 
   const { data: file } = useGetStorageEntityQuery({
     storageid,
@@ -43,7 +43,10 @@ const StorageFileContainer: FC = () => {
   };
 
   const handleClickBack = () => {
-    router.history.back();
+    navigate({
+      to: `/storage/${file?.storage}`,
+      search: file?.parent ? { parent: file?.parent } : undefined,
+    });
   };
 
   return (
@@ -51,8 +54,7 @@ const StorageFileContainer: FC = () => {
       handleDownload={handleDownload}
       handleClickBack={handleClickBack}
       isFetching={isFileBufferFetching}
-      fullname={file?.fullname ?? ""}
-      size={file?.size ?? 0}
+      entity={file}
     />
   );
 };
