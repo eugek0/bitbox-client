@@ -35,6 +35,11 @@ const BitBoxTable = <T extends BitBoxTableRecord>({
         trigger={["contextMenu"]}
         {...contextMenuProps}
       />
+      {breadcrumbs && (
+        <div className={styles["breadcrumb"]}>
+          <Breadcrumb items={breadcrumbs} />
+        </div>
+      )}
       <Flex
         className={styles["table"]}
         onClick={handleBorderClick}
@@ -42,11 +47,6 @@ const BitBoxTable = <T extends BitBoxTableRecord>({
         gap={6}
         vertical
       >
-        {breadcrumbs && (
-          <div className={styles["breadcrumb"]}>
-            <Breadcrumb items={breadcrumbs} />
-          </div>
-        )}
         <Flex
           className={`${styles["dropzone"]} ${isDragOver && withDrop ? styles["drop"] : ""}`}
           flex={1}
