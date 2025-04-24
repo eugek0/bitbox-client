@@ -1,12 +1,16 @@
 import { FC, useState } from "react";
 import { AutoComplete, Flex, Typography } from "antd";
-import { ProductFilled } from "@ant-design/icons";
 import { AutoCompleteProps } from "antd/lib";
 import { debounce } from "lodash";
 import { useLazySearchStoragesOptionsQuery } from "@/containers/Storages/api";
-import { StorageSearcherProps } from "./types";
-import styles from "./styles.module.scss";
+import {
+  StorageSearcherProps,
+  StorageSearcherType,
+  StorageSearcherVariants,
+} from "./types";
 import { useNavigate } from "@tanstack/react-router";
+import { STORAGE_SEARCHER_TYPE_ICONS } from "./constants";
+import { FileAddFilled } from "@ant-design/icons";
 
 const StorageSearcher: FC<StorageSearcherProps> = (props) => {
   const [value, setValue] = useState<string>("");
@@ -24,7 +28,16 @@ const StorageSearcher: FC<StorageSearcherProps> = (props) => {
   }, 500);
 
   const handleSelect: AutoCompleteProps["onSelect"] = (_: string, option) => {
-    navigate({ to: `/storage/${option._id}` });
+    const variants: StorageSearcherVariants = {
+      storage: [`/storage/${option.value}`],
+      directory: [`/storage/${option.storage}`, option.value as string],
+      file: [`/storage/${option.storage}/entity/${option.value}`],
+    };
+
+    navigate({
+      to: variants[option.type as StorageSearcherType][0],
+      search: { parent: variants[option.type as StorageSearcherType][1] },
+    });
     setValue("");
   };
 
@@ -37,8 +50,10 @@ const StorageSearcher: FC<StorageSearcherProps> = (props) => {
       options={options ?? []}
       optionRender={(option) => (
         <Flex align="center" gap={10}>
-          <ProductFilled className={styles["icon"]} />
-          <Typography.Text>{option.data.value}</Typography.Text>
+          {STORAGE_SEARCHER_TYPE_ICONS[
+            option.data.extension ?? (option.data.type as StorageSearcherType)
+          ] ?? <FileAddFilled />}
+          <Typography.Text>{option.data.label}</Typography.Text>
         </Flex>
       )}
       allowClear
