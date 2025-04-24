@@ -352,7 +352,7 @@ const StorageTableContainer: FC = () => {
     message.open({
       key: "delete",
       type: "success",
-      content: `${selected.length} ${selected.length > 1 ? "сущностей" : "сущности"} успешно ${selected.length > 1 ? "удалены" : "удалена"}`,
+      content: `${selected.length} ${getNoun(selected.length, "сущность", "сущности", "сущностей")} успешно ${selected.length > 1 ? "удалены" : "удалена"}`,
     });
     refetchEntities();
   };
