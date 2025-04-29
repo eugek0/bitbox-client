@@ -1,3 +1,3 @@
-export interface HeaderProps {
-  showLogotype?: boolean;
-}
+import { PropsWithChildren } from "react";
+
+export type HeaderProps = PropsWithChildren;

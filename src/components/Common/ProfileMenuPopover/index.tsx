@@ -13,6 +13,7 @@ import styles from "./styles.module.scss";
 const ProfileMenuPopover: FC<ProfileMenuPopoverProps> = ({
   profile,
   handleLogout,
+  handleClickSettings,
 }) => {
   return (
     <Flex className={styles["body"]} gap={20} vertical>
@@ -38,6 +39,7 @@ const ProfileMenuPopover: FC<ProfileMenuPopoverProps> = ({
         <Tooltip title="Настройки" placement="bottom">
           <Button
             className={styles["nav-button"]}
+            onClick={handleClickSettings}
             type="text"
             shape="circle"
             icon={<SettingOutlined />}

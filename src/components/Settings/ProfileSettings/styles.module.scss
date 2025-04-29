@@ -1,0 +1,8 @@
+@use "@/core/styles" as *;
+
+.title {
+  width: 100%;
+  margin: 0 !important;
+  padding: 0 0 10px 0;
+  border-bottom: 1px solid $bg-service-border-color;
+}

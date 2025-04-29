@@ -13,6 +13,8 @@ $bg-service-color: #241b24;
 $bg-service-color_lighten: color.adjust($bg-service-color, $lightness: 5%);
 $bg-service-border-color: #5c445c;
 
+$shadow-text-color: color.adjust(#fff, $lightness: -50%);
+
 // INFO: Величины
 
 $base-transition: 0.3s;

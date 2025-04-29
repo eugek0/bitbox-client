@@ -1,14 +1,63 @@
 @use "@/core/styles" as *;
 
-.login-skeleton {
-  height: 10px;
+.small {
+  .login-skeleton {
+    height: 10px;
 
-  > :global(.ant-skeleton-input) {
-    height: 10px !important;
+    > :global(.ant-skeleton-input) {
+      height: 10px !important;
+    }
+  }
+
+  .avatar {
+    width: 22px;
+    height: 22px;
+  }
+
+  .nickname {
+    font-size: 14px;
+  }
+
+  .subtitle {
+    font-size: 8px;
   }
 }
 
+.large {
+  .login-skeleton {
+    height: 20px;
+
+    > :global(.ant-skeleton-input) {
+      height: 20px !important;
+    }
+  }
+
+  .avatar {
+    width: 48px;
+    height: 48px;
+  }
+
+  .nickname {
+    font-size: 20px;
+    line-height: 1.25;
+    font-weight: 600;
+  }
+
+  .subtitle {
+    line-height: 1.25;
+    font-size: 14px;
+  }
+}
+
+.login {
+  color: $shadow-text-color;
+}
+
+.subtitle {
+  color: $shadow-text-color;
+}
+
 .role-icon {
-  font-size: 10px;
   color: $admin-color;
+  font-size: 10px;
 }

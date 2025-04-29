@@ -1,6 +1,6 @@
 import fetchMainBaseQuery from "@/core/rtkquery";
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { IGetUserPayload } from "./types";
+import { IEditUserPayload, IGetUserPayload } from "./types";
 import { IProfile } from "@/containers/Auth/types";
 import { DefaultOptionType } from "antd/es/select";
 
@@ -26,6 +26,14 @@ export const usersApi = createApi({
         url: "/record",
       }),
     }),
+
+    editUser: builder.mutation<void, IEditUserPayload>({
+      query: ({ userid, body }) => ({
+        url: `/${userid}`,
+        method: "PATCH",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -33,4 +41,5 @@ export const {
   useGetUserQuery,
   useGetUsersOptionsQuery,
   useGetUsersRecordQuery,
+  useEditUserMutation,
 } = usersApi;

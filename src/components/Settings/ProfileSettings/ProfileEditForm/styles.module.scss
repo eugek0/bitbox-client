@@ -1,0 +1,28 @@
+.body {
+  display: flex;
+  flex-direction: column;
+
+  .disabled {
+    background-color: #3c2c3c;
+  }
+
+  .avatar-title {
+    font-weight: 600;
+  }
+
+  .avatar-container {
+    position: relative;
+    cursor: pointer;
+  }
+
+  .avatar-edit-button {
+    position: absolute;
+    bottom: 5%;
+    left: 0;
+  }
+
+  .avatar {
+    height: 200px;
+    width: 200px;
+  }
+}

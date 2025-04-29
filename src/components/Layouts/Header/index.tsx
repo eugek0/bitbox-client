@@ -1,28 +1,14 @@
 import { FC } from "react";
-import { Flex, Typography } from "antd";
-import { Link } from "@tanstack/react-router";
-import Logotype from "@/components/Common/Logotype";
-import ProfileAvatarContainer from "@/containers/Common/ProfileAvatarContainer";
-import { APP_NAME } from "@/core/constants";
 import styles from "./styles.module.scss";
 import { HeaderProps } from "./types";
+import { Typography } from "antd";
 
-const Header: FC<HeaderProps> = ({ showLogotype }) => {
+const Header: FC<HeaderProps> = ({ children }) => {
   return (
     <header className={styles["body"]}>
-      <Flex justify="space-between" align="center">
-        {showLogotype ? (
-          <Link className={styles["logotype-container"]} to="/">
-            <Logotype />
-            <Typography.Text className={styles["app-name"]}>
-              {APP_NAME}
-            </Typography.Text>
-          </Link>
-        ) : (
-          <div />
-        )}
-        <ProfileAvatarContainer />
-      </Flex>
+      <Typography.Title className={styles["title"]} level={4}>
+        {children}
+      </Typography.Title>
     </header>
   );
 };

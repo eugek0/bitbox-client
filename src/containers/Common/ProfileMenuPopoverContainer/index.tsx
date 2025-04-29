@@ -3,9 +3,12 @@ import ProfileMenuPopover from "@/components/Common/ProfileMenuPopover";
 import { useLogoutMutation } from "@/containers/Auth/api";
 import { profileSelector } from "@/containers/Auth/selectors";
 import { useAppSelector } from "@/store";
+import { useNavigate } from "@tanstack/react-router";
 
 const ProfileMenuPopoverContainer: FC = () => {
   const profile = useAppSelector(profileSelector);
+
+  const navigate = useNavigate();
 
   const [logout] = useLogoutMutation();
 
@@ -13,7 +16,18 @@ const ProfileMenuPopoverContainer: FC = () => {
     await logout();
   };
 
-  return <ProfileMenuPopover profile={profile!} handleLogout={handleLogout} />;
+  const handleClickSettings: MouseEventHandler<HTMLButtonElement> = () => {
+    console.log("aboba");
+    navigate({ to: "/settings" });
+  };
+
+  return (
+    <ProfileMenuPopover
+      profile={profile!}
+      handleLogout={handleLogout}
+      handleClickSettings={handleClickSettings}
+    />
+  );
 };
 
 export default ProfileMenuPopoverContainer;

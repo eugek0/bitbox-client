@@ -17,5 +17,9 @@ export const appTheme: ThemeConfig = {
     Table: {
       borderRadiusLG: 0,
     },
+    Menu: {
+      colorBgContainer: "#241B24",
+      activeBarBorderWidth: 0
+    },
   },
 };

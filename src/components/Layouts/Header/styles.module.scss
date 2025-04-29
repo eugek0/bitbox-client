@@ -1,20 +1,14 @@
 @use "@/core/styles" as *;
 
 .body {
-  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  height: 36px;
+  box-sizing: content-box;
+  padding: 14px 23.5px;
+  background-color: $bg-service-color_lighten;
 
-  .logotype-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .app-name {
-    font-size: 16px;
-    font-weight: 500;
-  }
-
-  .auth-button:hover {
-    color: $primary-color !important;
+  .title {
+    margin: 0 !important;
   }
 }

@@ -7,6 +7,7 @@ import { useLocation, useNavigate } from "@tanstack/react-router";
 import { getKeyFromPath } from "@/core/router";
 import { useLogoutMutation } from "@/containers/Auth/api";
 import { SERVER_BASE_URL } from "@/core/constants";
+import { AsideLayoutButtons } from "@/components/Layouts/AsideLayout/types";
 
 const AsideLayoutContainer: FC<PropsWithChildren> = (props) => {
   const [collapsed, setCollapsed] = useState<boolean>(true);
@@ -19,10 +20,14 @@ const AsideLayoutContainer: FC<PropsWithChildren> = (props) => {
 
   const [logout] = useLogoutMutation();
 
-  const clickHandlers: Record<string, () => void> = {
+  const clickHandlers: Record<AsideLayoutButtons, () => void> = {
     storages: () => {
       navigate({ to: "/" });
     },
+    settings: () => {
+      navigate({ to: "/settings/profile" });
+    },
+    profile: () => {},
     api: () => {
       window.open(`${SERVER_BASE_URL}/api`, "_blank");
     },

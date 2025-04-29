@@ -72,6 +72,7 @@ const AsideLayout: FC<AsideLayoutProps> = ({
                 key: "settings",
                 label: "Настройки",
                 icon: <SettingOutlined />,
+                onClick: clickHandlers["settings"],
               },
               {
                 key: "profile",
@@ -97,9 +98,10 @@ const AsideLayout: FC<AsideLayoutProps> = ({
                     type: "divider",
                   },
                   {
-                    key: "profile-settings",
+                    key: "profile-page",
                     label: "Настройки",
                     icon: <SettingOutlined />,
+                    onClick: clickHandlers["profile"],
                   },
                   {
                     key: "logout",

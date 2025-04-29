@@ -5,4 +5,5 @@ import { MouseEventHandler } from "react";
 export interface ProfileMenuPopoverProps {
   profile: Nullable<IProfile>;
   handleLogout: MouseEventHandler<HTMLButtonElement>;
+  handleClickSettings: MouseEventHandler<HTMLButtonElement>;
 }
