@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import SettingsMenu from "@/components/Layouts/SettingsLayout/SettingsMenu";
-import { useLocation } from "@tanstack/react-router";
+import { useLocation, useNavigate } from "@tanstack/react-router";
 import { useAppSelector } from "@/store";
 import { profileSelector } from "@/containers/Auth/selectors";
 
@@ -10,6 +10,14 @@ const SettingsMenuContainer: FC = () => {
   const profile = useAppSelector(profileSelector);
 
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handlers = {
+    profile: () => navigate({ to: "/settings/profile" }),
+    security: () => navigate({ to: "/settings/security" }),
+    development: () => navigate({ to: "/settings/development" }),
+    administration: () => navigate({ to: "/settings/administration" }),
+  };
 
   useEffect(() => {
     const pathname = location.pathname.slice(
@@ -19,7 +27,13 @@ const SettingsMenuContainer: FC = () => {
     setActiveItem(pathname);
   }, [location]);
 
-  return <SettingsMenu role={profile?.role} activeItem={activeItem} />;
+  return (
+    <SettingsMenu
+      role={profile?.role}
+      activeItem={activeItem}
+      handlers={handlers}
+    />
+  );
 };
 
 export default SettingsMenuContainer;

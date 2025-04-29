@@ -12,7 +12,10 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
+import { Route as SettingsSecurityImport } from './routes/settings/security'
 import { Route as SettingsProfileImport } from './routes/settings/profile'
+import { Route as SettingsDevelopmentImport } from './routes/settings/development'
+import { Route as SettingsAdministrationImport } from './routes/settings/administration'
 import { Route as AuthRegisterImport } from './routes/auth/register'
 import { Route as AuthLoginImport } from './routes/auth/login'
 import { Route as StorageStorageidIndexImport } from './routes/storage/$storageid/index'
@@ -26,9 +29,27 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const SettingsSecurityRoute = SettingsSecurityImport.update({
+  id: '/settings/security',
+  path: '/settings/security',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const SettingsProfileRoute = SettingsProfileImport.update({
   id: '/settings/profile',
   path: '/settings/profile',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const SettingsDevelopmentRoute = SettingsDevelopmentImport.update({
+  id: '/settings/development',
+  path: '/settings/development',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const SettingsAdministrationRoute = SettingsAdministrationImport.update({
+  id: '/settings/administration',
+  path: '/settings/administration',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -82,11 +103,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRegisterImport
       parentRoute: typeof rootRoute
     }
+    '/settings/administration': {
+      id: '/settings/administration'
+      path: '/settings/administration'
+      fullPath: '/settings/administration'
+      preLoaderRoute: typeof SettingsAdministrationImport
+      parentRoute: typeof rootRoute
+    }
+    '/settings/development': {
+      id: '/settings/development'
+      path: '/settings/development'
+      fullPath: '/settings/development'
+      preLoaderRoute: typeof SettingsDevelopmentImport
+      parentRoute: typeof rootRoute
+    }
     '/settings/profile': {
       id: '/settings/profile'
       path: '/settings/profile'
       fullPath: '/settings/profile'
       preLoaderRoute: typeof SettingsProfileImport
+      parentRoute: typeof rootRoute
+    }
+    '/settings/security': {
+      id: '/settings/security'
+      path: '/settings/security'
+      fullPath: '/settings/security'
+      preLoaderRoute: typeof SettingsSecurityImport
       parentRoute: typeof rootRoute
     }
     '/storage/$storageid/': {
@@ -112,7 +154,10 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
+  '/settings/administration': typeof SettingsAdministrationRoute
+  '/settings/development': typeof SettingsDevelopmentRoute
   '/settings/profile': typeof SettingsProfileRoute
+  '/settings/security': typeof SettingsSecurityRoute
   '/storage/$storageid': typeof StorageStorageidIndexRoute
   '/storage/$storageid/entity/$entityid': typeof StorageStorageidEntityEntityidRoute
 }
@@ -121,7 +166,10 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
+  '/settings/administration': typeof SettingsAdministrationRoute
+  '/settings/development': typeof SettingsDevelopmentRoute
   '/settings/profile': typeof SettingsProfileRoute
+  '/settings/security': typeof SettingsSecurityRoute
   '/storage/$storageid': typeof StorageStorageidIndexRoute
   '/storage/$storageid/entity/$entityid': typeof StorageStorageidEntityEntityidRoute
 }
@@ -131,7 +179,10 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
+  '/settings/administration': typeof SettingsAdministrationRoute
+  '/settings/development': typeof SettingsDevelopmentRoute
   '/settings/profile': typeof SettingsProfileRoute
+  '/settings/security': typeof SettingsSecurityRoute
   '/storage/$storageid/': typeof StorageStorageidIndexRoute
   '/storage/$storageid/entity/$entityid': typeof StorageStorageidEntityEntityidRoute
 }
@@ -142,7 +193,10 @@ export interface FileRouteTypes {
     | '/'
     | '/auth/login'
     | '/auth/register'
+    | '/settings/administration'
+    | '/settings/development'
     | '/settings/profile'
+    | '/settings/security'
     | '/storage/$storageid'
     | '/storage/$storageid/entity/$entityid'
   fileRoutesByTo: FileRoutesByTo
@@ -150,7 +204,10 @@ export interface FileRouteTypes {
     | '/'
     | '/auth/login'
     | '/auth/register'
+    | '/settings/administration'
+    | '/settings/development'
     | '/settings/profile'
+    | '/settings/security'
     | '/storage/$storageid'
     | '/storage/$storageid/entity/$entityid'
   id:
@@ -158,7 +215,10 @@ export interface FileRouteTypes {
     | '/'
     | '/auth/login'
     | '/auth/register'
+    | '/settings/administration'
+    | '/settings/development'
     | '/settings/profile'
+    | '/settings/security'
     | '/storage/$storageid/'
     | '/storage/$storageid/entity/$entityid'
   fileRoutesById: FileRoutesById
@@ -168,7 +228,10 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthLoginRoute: typeof AuthLoginRoute
   AuthRegisterRoute: typeof AuthRegisterRoute
+  SettingsAdministrationRoute: typeof SettingsAdministrationRoute
+  SettingsDevelopmentRoute: typeof SettingsDevelopmentRoute
   SettingsProfileRoute: typeof SettingsProfileRoute
+  SettingsSecurityRoute: typeof SettingsSecurityRoute
   StorageStorageidIndexRoute: typeof StorageStorageidIndexRoute
   StorageStorageidEntityEntityidRoute: typeof StorageStorageidEntityEntityidRoute
 }
@@ -177,7 +240,10 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthLoginRoute: AuthLoginRoute,
   AuthRegisterRoute: AuthRegisterRoute,
+  SettingsAdministrationRoute: SettingsAdministrationRoute,
+  SettingsDevelopmentRoute: SettingsDevelopmentRoute,
   SettingsProfileRoute: SettingsProfileRoute,
+  SettingsSecurityRoute: SettingsSecurityRoute,
   StorageStorageidIndexRoute: StorageStorageidIndexRoute,
   StorageStorageidEntityEntityidRoute: StorageStorageidEntityEntityidRoute,
 }
@@ -195,7 +261,10 @@ export const routeTree = rootRoute
         "/",
         "/auth/login",
         "/auth/register",
+        "/settings/administration",
+        "/settings/development",
         "/settings/profile",
+        "/settings/security",
         "/storage/$storageid/",
         "/storage/$storageid/entity/$entityid"
       ]
@@ -209,8 +278,17 @@ export const routeTree = rootRoute
     "/auth/register": {
       "filePath": "auth/register.tsx"
     },
+    "/settings/administration": {
+      "filePath": "settings/administration.tsx"
+    },
+    "/settings/development": {
+      "filePath": "settings/development.tsx"
+    },
     "/settings/profile": {
       "filePath": "settings/profile.tsx"
+    },
+    "/settings/security": {
+      "filePath": "settings/security.tsx"
     },
     "/storage/$storageid/": {
       "filePath": "storage/$storageid/index.tsx"
