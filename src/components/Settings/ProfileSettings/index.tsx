@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Flex, Typography } from "antd";
 import { ProfileSettingsProps } from "./types";
-import styles from "./styles.module.scss";
+import styles from "../styles.module.scss";
 import ProfileEditForm from "./ProfileEditForm";
 
 const ProfileSettings: FC<ProfileSettingsProps> = ({

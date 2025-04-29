@@ -5,6 +5,7 @@ import ProfileSettingsBadge from "@/containers/Settings/ProfileSettingsBadge";
 import SettingsMenuContainer from "@/containers/Layouts/SettingsLayoutContainer/SettingsMenuContainer";
 import styles from "./styles.module.scss";
 import { UserOutlined } from "@ant-design/icons";
+import { Link } from "@tanstack/react-router";
 
 const SettingsLayout: FC<PropsWithChildren> = ({ children }) => {
   return (
@@ -14,7 +15,9 @@ const SettingsLayout: FC<PropsWithChildren> = ({ children }) => {
         <Flex className={styles["wrapper"]} gap={15} vertical>
           <Flex justify="space-between" align="center">
             <ProfileSettingsBadge />
-            <Button icon={<UserOutlined />}>Перейти в профиль</Button>
+            <Link to={`/profile/$userid`} params={{ userid: "" }}>
+              <Button icon={<UserOutlined />}>Перейти в профиль</Button>
+            </Link>
           </Flex>
           <Flex gap={40}>
             <SettingsMenuContainer />

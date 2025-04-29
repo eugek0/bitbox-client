@@ -1,6 +1,10 @@
 import fetchMainBaseQuery from "@/core/rtkquery";
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { IEditUserPayload, IGetUserPayload } from "./types";
+import {
+  IChangePasswordPayload,
+  IEditUserPayload,
+  IGetUserPayload,
+} from "./types";
 import { IProfile } from "@/containers/Auth/types";
 import { DefaultOptionType } from "antd/es/select";
 
@@ -34,6 +38,14 @@ export const usersApi = createApi({
         body,
       }),
     }),
+
+    changePassword: builder.mutation<void, IChangePasswordPayload>({
+      query: ({ userid, body }) => ({
+        url: `/password/${userid}`,
+        method: "PATCH",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -42,4 +54,5 @@ export const {
   useGetUsersOptionsQuery,
   useGetUsersRecordQuery,
   useEditUserMutation,
+  useChangePasswordMutation,
 } = usersApi;

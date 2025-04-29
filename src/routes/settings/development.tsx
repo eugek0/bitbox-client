@@ -8,6 +8,7 @@ export const Route = createFileRoute("/settings/development")({
   component: () => (
     <AsideLayoutContainer>
       <SettingsLayout>
+        <title>Разработка</title>
         <></>
       </SettingsLayout>
     </AsideLayoutContainer>

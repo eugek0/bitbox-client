@@ -16,6 +16,7 @@ import { Route as SettingsSecurityImport } from './routes/settings/security'
 import { Route as SettingsProfileImport } from './routes/settings/profile'
 import { Route as SettingsDevelopmentImport } from './routes/settings/development'
 import { Route as SettingsAdministrationImport } from './routes/settings/administration'
+import { Route as ProfileUseridImport } from './routes/profile/$userid'
 import { Route as AuthRegisterImport } from './routes/auth/register'
 import { Route as AuthLoginImport } from './routes/auth/login'
 import { Route as StorageStorageidIndexImport } from './routes/storage/$storageid/index'
@@ -50,6 +51,12 @@ const SettingsDevelopmentRoute = SettingsDevelopmentImport.update({
 const SettingsAdministrationRoute = SettingsAdministrationImport.update({
   id: '/settings/administration',
   path: '/settings/administration',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ProfileUseridRoute = ProfileUseridImport.update({
+  id: '/profile/$userid',
+  path: '/profile/$userid',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -103,6 +110,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRegisterImport
       parentRoute: typeof rootRoute
     }
+    '/profile/$userid': {
+      id: '/profile/$userid'
+      path: '/profile/$userid'
+      fullPath: '/profile/$userid'
+      preLoaderRoute: typeof ProfileUseridImport
+      parentRoute: typeof rootRoute
+    }
     '/settings/administration': {
       id: '/settings/administration'
       path: '/settings/administration'
@@ -154,6 +168,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
+  '/profile/$userid': typeof ProfileUseridRoute
   '/settings/administration': typeof SettingsAdministrationRoute
   '/settings/development': typeof SettingsDevelopmentRoute
   '/settings/profile': typeof SettingsProfileRoute
@@ -166,6 +181,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
+  '/profile/$userid': typeof ProfileUseridRoute
   '/settings/administration': typeof SettingsAdministrationRoute
   '/settings/development': typeof SettingsDevelopmentRoute
   '/settings/profile': typeof SettingsProfileRoute
@@ -179,6 +195,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
+  '/profile/$userid': typeof ProfileUseridRoute
   '/settings/administration': typeof SettingsAdministrationRoute
   '/settings/development': typeof SettingsDevelopmentRoute
   '/settings/profile': typeof SettingsProfileRoute
@@ -193,6 +210,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth/login'
     | '/auth/register'
+    | '/profile/$userid'
     | '/settings/administration'
     | '/settings/development'
     | '/settings/profile'
@@ -204,6 +222,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth/login'
     | '/auth/register'
+    | '/profile/$userid'
     | '/settings/administration'
     | '/settings/development'
     | '/settings/profile'
@@ -215,6 +234,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth/login'
     | '/auth/register'
+    | '/profile/$userid'
     | '/settings/administration'
     | '/settings/development'
     | '/settings/profile'
@@ -228,6 +248,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthLoginRoute: typeof AuthLoginRoute
   AuthRegisterRoute: typeof AuthRegisterRoute
+  ProfileUseridRoute: typeof ProfileUseridRoute
   SettingsAdministrationRoute: typeof SettingsAdministrationRoute
   SettingsDevelopmentRoute: typeof SettingsDevelopmentRoute
   SettingsProfileRoute: typeof SettingsProfileRoute
@@ -240,6 +261,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthLoginRoute: AuthLoginRoute,
   AuthRegisterRoute: AuthRegisterRoute,
+  ProfileUseridRoute: ProfileUseridRoute,
   SettingsAdministrationRoute: SettingsAdministrationRoute,
   SettingsDevelopmentRoute: SettingsDevelopmentRoute,
   SettingsProfileRoute: SettingsProfileRoute,
@@ -261,6 +283,7 @@ export const routeTree = rootRoute
         "/",
         "/auth/login",
         "/auth/register",
+        "/profile/$userid",
         "/settings/administration",
         "/settings/development",
         "/settings/profile",
@@ -277,6 +300,9 @@ export const routeTree = rootRoute
     },
     "/auth/register": {
       "filePath": "auth/register.tsx"
+    },
+    "/profile/$userid": {
+      "filePath": "profile/$userid.tsx"
     },
     "/settings/administration": {
       "filePath": "settings/administration.tsx"

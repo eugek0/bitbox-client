@@ -10,3 +10,11 @@ export interface IEditUserPayload {
   userid: string;
   body: Partial<IProfile>;
 }
+
+export interface IChangePasswordPayload {
+  userid: string;
+  body: {
+    oldPassword: string;
+    newPassword: string;
+  };
+}
