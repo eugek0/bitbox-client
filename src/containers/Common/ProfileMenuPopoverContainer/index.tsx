@@ -17,8 +17,7 @@ const ProfileMenuPopoverContainer: FC = () => {
   };
 
   const handleClickSettings: MouseEventHandler<HTMLButtonElement> = () => {
-    console.log("aboba");
-    navigate({ to: "/settings" });
+    navigate({ to: "/settings/profile" });
   };
 
   return (
