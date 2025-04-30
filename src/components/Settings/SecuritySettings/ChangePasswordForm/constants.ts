@@ -14,4 +14,19 @@ export const CHANGE_PASSWORD_FORM_RULES: Partial<
       validateTrigger: ["onSubmit"],
     },
   ],
+  repeatNewPassword: [
+    { required: true, message: REQUIRED_FIELD_MESSAGE },
+    ({ getFieldValue }) => ({
+      message: "Пароли не совпадают",
+      validator: (_, value) => {
+        const newPassword = getFieldValue("newPassword");
+
+        if (value && value !== newPassword) {
+          return Promise.reject();
+        }
+
+        return Promise.resolve();
+      },
+    }),
+  ],
 };

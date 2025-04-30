@@ -7,6 +7,8 @@ import { useAppSelector } from "@/store";
 import { profileSelector } from "@/containers/Auth/selectors";
 import { useEditUserMutation } from "@/core/api";
 import { useLazyGetProfileQuery } from "@/containers/Auth/api";
+import { isFormException } from "@/core/typeguards";
+import { setErrorsToField } from "@/core/utils";
 
 const ProfileSettingsContainer: FC = () => {
   const [form] = useForm<ProfileEditFormFields>();
@@ -19,8 +21,14 @@ const ProfileSettingsContainer: FC = () => {
   const [getProfile] = useLazyGetProfileQuery();
 
   const handleEdit = async (body: ProfileEditFormFields) => {
-    await edit({ userid: profile?._id ?? "", body });
-    getProfile();
+    try {
+      await edit({ userid: profile?._id ?? "", body }).unwrap();
+      getProfile();
+    } catch (error) {
+      if (isFormException(error)) {
+        setErrorsToField(form, error);
+      }
+    }
   };
 
   return (

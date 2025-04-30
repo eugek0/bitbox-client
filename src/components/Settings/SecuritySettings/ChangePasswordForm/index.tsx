@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Button, Flex, Form, Input } from "antd";
-import { EditOutlined } from "@ant-design/icons";
+import { EditOutlined, KeyOutlined } from "@ant-design/icons";
 import { ChangePasswordFormFields, ChangePasswordFormProps } from "./types";
 import { CHANGE_PASSWORD_FORM_RULES } from "./constants";
 
@@ -19,14 +19,22 @@ const ChangePasswordForm: FC<ChangePasswordFormProps> = ({
               name="oldPassword"
               label="Старый пароль"
             >
-              <Input.Password />
+              <Input.Password suffix={<KeyOutlined />} />
             </Form.Item>
             <Form.Item<ChangePasswordFormFields>
               rules={CHANGE_PASSWORD_FORM_RULES.newPassword}
               name="newPassword"
               label="Новый пароль"
             >
-              <Input.Password />
+              <Input.Password suffix={<KeyOutlined />} />
+            </Form.Item>
+            <Form.Item<ChangePasswordFormFields>
+              rules={CHANGE_PASSWORD_FORM_RULES.repeatNewPassword}
+              name="repeatNewPassword"
+              label="Повторите новый пароль"
+              dependencies={["newPassword"]}
+            >
+              <Input.Password suffix={<KeyOutlined />} />
             </Form.Item>
           </Flex>
           <Form.Item>

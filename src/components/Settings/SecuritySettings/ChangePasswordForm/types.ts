@@ -9,4 +9,5 @@ export interface ChangePasswordFormProps {
 export interface ChangePasswordFormFields {
   oldPassword: string;
   newPassword: string;
+  repeatNewPassword: string;
 }

@@ -34,12 +34,14 @@ export const AUTH_FORM_RULES: IAuthFormRules = {
     },
   ],
   repeatPassword: [
-    ({ getFieldsValue }) => ({
+    { required: true, message: REQUIRED_FIELD_MESSAGE },
+    ({ getFieldValue }) => ({
+      message: "Пароли не совпадают",
       validator: (_, value) => {
-        const password = getFieldsValue()?.password;
+        const password = getFieldValue("password");
 
         if (value && value !== password) {
-          return Promise.reject(new Error("Пароли не совпадают"));
+          return Promise.reject();
         }
         return Promise.resolve();
       },

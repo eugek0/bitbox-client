@@ -16,8 +16,9 @@ const SecuritySettingsContainer: FC = () => {
   const [changePassword, { isLoading: isChanging }] =
     useChangePasswordMutation();
 
-  const handleChangePassword = async (body: ChangePasswordFormFields) => {
+  const handleChangePassword = async (values: ChangePasswordFormFields) => {
     try {
+      const { repeatNewPassword, ...body } = values;
       await changePassword({ userid: profile?._id ?? "", body }).unwrap();
     } catch (error) {
       if (isFormException(error)) {

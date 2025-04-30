@@ -31,7 +31,6 @@ const ProfileEditForm: FC<ProfileEditFormProps> = ({
               rules={PROFILE_EDIT_FORM_RULES.default}
               name="login"
               label="Логин"
-              help="Ваш уникальный никнейм"
             >
               <Input />
             </Form.Item>
