@@ -1,6 +1,7 @@
 import fetchMainBaseQuery from "@/core/rtkquery";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import {
+  ICheckRecoveryTokenPayload,
   ILoginPayload,
   IProfile,
   IRecoverPasswordPayload,
@@ -43,6 +44,13 @@ export const authApi = createApi({
       }),
     }),
 
+    checkRecoveryToken: builder.query<void, ICheckRecoveryTokenPayload>({
+      query: ({ userid, params }) => ({
+        url: `/check_recovery_token/${userid}`,
+        params,
+      }),
+    }),
+
     recoverPassword: builder.mutation<void, IRecoverPasswordPayload>({
       query: ({ userid, body, params }) => ({
         url: `/recover/${userid}`,
@@ -62,4 +70,5 @@ export const {
   useLazyGetProfileQuery,
   useSendRecoverLetterMutation,
   useRecoverPasswordMutation,
+  useCheckRecoveryTokenQuery,
 } = authApi;

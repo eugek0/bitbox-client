@@ -47,3 +47,10 @@ export interface IRecoverPasswordPayload {
     password: string;
   };
 }
+
+export interface ICheckRecoveryTokenPayload {
+  userid: string;
+  params: {
+    token: string;
+  };
+}

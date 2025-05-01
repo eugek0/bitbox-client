@@ -1,11 +1,11 @@
 import { FC } from "react";
 import { Flex } from "antd";
-import RecoverPassword from "@/components/Auth/RecoverPassword";
+import RecoverPasswordContainer from "@/containers/Auth/RecoverPasswordContainer";
 
 const RecoverPasswordPage: FC = () => {
   return (
     <Flex className="page100vh" vertical>
-      <RecoverPassword />
+      <RecoverPasswordContainer />
     </Flex>
   );
 };
