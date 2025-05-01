@@ -4,7 +4,7 @@ import RegisterFormContainer from "@/containers/Auth/RegisterFormContainer";
 
 const Register: FC = () => {
   return (
-    <Flex justify="center" gap={100}>
+    <Flex justify="center">
       <RegisterFormContainer />
     </Flex>
   );

@@ -1,5 +1,5 @@
 import { ILoginFormValues } from "@/containers/Auth/LoginFormContainer/types";
-import { KeyOutlined, MailOutlined } from "@ant-design/icons";
+import { MailOutlined } from "@ant-design/icons";
 import { Button, Flex, Form, Input, Typography } from "antd";
 import { FC } from "react";
 import AuthForm from "..";
@@ -44,7 +44,14 @@ const LoginForm: FC<AuthFormInstanceProps> = ({
           >
             <Input.Password
               placeholder="Пароль"
-              suffix={<KeyOutlined />}
+              iconRender={() => (
+                <Link
+                  style={{ color: "rgb(127.5, 127.5, 127.5)" }}
+                  to="/auth/recover/email"
+                >
+                  Забыли пароль?
+                </Link>
+              )}
               size="middle"
             />
           </Form.Item>

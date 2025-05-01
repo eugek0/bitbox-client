@@ -4,7 +4,7 @@ import LoginFormContainer from "@/containers/Auth/LoginFormContainer";
 
 const Login: FC = () => {
   return (
-    <Flex justify="center" gap={100}>
+    <Flex justify="center">
       <LoginFormContainer />
     </Flex>
   );

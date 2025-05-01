@@ -20,6 +20,8 @@ import { Route as ProfileUseridImport } from './routes/profile/$userid'
 import { Route as AuthRegisterImport } from './routes/auth/register'
 import { Route as AuthLoginImport } from './routes/auth/login'
 import { Route as StorageStorageidIndexImport } from './routes/storage/$storageid/index'
+import { Route as AuthRecoverEmailImport } from './routes/auth/recover/email'
+import { Route as AuthRecoverUseridImport } from './routes/auth/recover/$userid'
 import { Route as StorageStorageidEntityEntityidImport } from './routes/storage/$storageid/entity/$entityid'
 
 // Create/Update Routes
@@ -75,6 +77,18 @@ const AuthLoginRoute = AuthLoginImport.update({
 const StorageStorageidIndexRoute = StorageStorageidIndexImport.update({
   id: '/storage/$storageid/',
   path: '/storage/$storageid/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthRecoverEmailRoute = AuthRecoverEmailImport.update({
+  id: '/auth/recover/email',
+  path: '/auth/recover/email',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthRecoverUseridRoute = AuthRecoverUseridImport.update({
+  id: '/auth/recover/$userid',
+  path: '/auth/recover/$userid',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -145,6 +159,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsSecurityImport
       parentRoute: typeof rootRoute
     }
+    '/auth/recover/$userid': {
+      id: '/auth/recover/$userid'
+      path: '/auth/recover/$userid'
+      fullPath: '/auth/recover/$userid'
+      preLoaderRoute: typeof AuthRecoverUseridImport
+      parentRoute: typeof rootRoute
+    }
+    '/auth/recover/email': {
+      id: '/auth/recover/email'
+      path: '/auth/recover/email'
+      fullPath: '/auth/recover/email'
+      preLoaderRoute: typeof AuthRecoverEmailImport
+      parentRoute: typeof rootRoute
+    }
     '/storage/$storageid/': {
       id: '/storage/$storageid/'
       path: '/storage/$storageid'
@@ -173,6 +201,8 @@ export interface FileRoutesByFullPath {
   '/settings/development': typeof SettingsDevelopmentRoute
   '/settings/profile': typeof SettingsProfileRoute
   '/settings/security': typeof SettingsSecurityRoute
+  '/auth/recover/$userid': typeof AuthRecoverUseridRoute
+  '/auth/recover/email': typeof AuthRecoverEmailRoute
   '/storage/$storageid': typeof StorageStorageidIndexRoute
   '/storage/$storageid/entity/$entityid': typeof StorageStorageidEntityEntityidRoute
 }
@@ -186,6 +216,8 @@ export interface FileRoutesByTo {
   '/settings/development': typeof SettingsDevelopmentRoute
   '/settings/profile': typeof SettingsProfileRoute
   '/settings/security': typeof SettingsSecurityRoute
+  '/auth/recover/$userid': typeof AuthRecoverUseridRoute
+  '/auth/recover/email': typeof AuthRecoverEmailRoute
   '/storage/$storageid': typeof StorageStorageidIndexRoute
   '/storage/$storageid/entity/$entityid': typeof StorageStorageidEntityEntityidRoute
 }
@@ -200,6 +232,8 @@ export interface FileRoutesById {
   '/settings/development': typeof SettingsDevelopmentRoute
   '/settings/profile': typeof SettingsProfileRoute
   '/settings/security': typeof SettingsSecurityRoute
+  '/auth/recover/$userid': typeof AuthRecoverUseridRoute
+  '/auth/recover/email': typeof AuthRecoverEmailRoute
   '/storage/$storageid/': typeof StorageStorageidIndexRoute
   '/storage/$storageid/entity/$entityid': typeof StorageStorageidEntityEntityidRoute
 }
@@ -215,6 +249,8 @@ export interface FileRouteTypes {
     | '/settings/development'
     | '/settings/profile'
     | '/settings/security'
+    | '/auth/recover/$userid'
+    | '/auth/recover/email'
     | '/storage/$storageid'
     | '/storage/$storageid/entity/$entityid'
   fileRoutesByTo: FileRoutesByTo
@@ -227,6 +263,8 @@ export interface FileRouteTypes {
     | '/settings/development'
     | '/settings/profile'
     | '/settings/security'
+    | '/auth/recover/$userid'
+    | '/auth/recover/email'
     | '/storage/$storageid'
     | '/storage/$storageid/entity/$entityid'
   id:
@@ -239,6 +277,8 @@ export interface FileRouteTypes {
     | '/settings/development'
     | '/settings/profile'
     | '/settings/security'
+    | '/auth/recover/$userid'
+    | '/auth/recover/email'
     | '/storage/$storageid/'
     | '/storage/$storageid/entity/$entityid'
   fileRoutesById: FileRoutesById
@@ -253,6 +293,8 @@ export interface RootRouteChildren {
   SettingsDevelopmentRoute: typeof SettingsDevelopmentRoute
   SettingsProfileRoute: typeof SettingsProfileRoute
   SettingsSecurityRoute: typeof SettingsSecurityRoute
+  AuthRecoverUseridRoute: typeof AuthRecoverUseridRoute
+  AuthRecoverEmailRoute: typeof AuthRecoverEmailRoute
   StorageStorageidIndexRoute: typeof StorageStorageidIndexRoute
   StorageStorageidEntityEntityidRoute: typeof StorageStorageidEntityEntityidRoute
 }
@@ -266,6 +308,8 @@ const rootRouteChildren: RootRouteChildren = {
   SettingsDevelopmentRoute: SettingsDevelopmentRoute,
   SettingsProfileRoute: SettingsProfileRoute,
   SettingsSecurityRoute: SettingsSecurityRoute,
+  AuthRecoverUseridRoute: AuthRecoverUseridRoute,
+  AuthRecoverEmailRoute: AuthRecoverEmailRoute,
   StorageStorageidIndexRoute: StorageStorageidIndexRoute,
   StorageStorageidEntityEntityidRoute: StorageStorageidEntityEntityidRoute,
 }
@@ -288,6 +332,8 @@ export const routeTree = rootRoute
         "/settings/development",
         "/settings/profile",
         "/settings/security",
+        "/auth/recover/$userid",
+        "/auth/recover/email",
         "/storage/$storageid/",
         "/storage/$storageid/entity/$entityid"
       ]
@@ -315,6 +361,12 @@ export const routeTree = rootRoute
     },
     "/settings/security": {
       "filePath": "settings/security.tsx"
+    },
+    "/auth/recover/$userid": {
+      "filePath": "auth/recover/$userid.tsx"
+    },
+    "/auth/recover/email": {
+      "filePath": "auth/recover/email.tsx"
     },
     "/storage/$storageid/": {
       "filePath": "storage/$storageid/index.tsx"

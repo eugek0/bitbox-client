@@ -33,3 +33,17 @@ export interface ILoginPayload {
   email: string;
   password: string;
 }
+
+export interface ISendRecoverLetterPayload {
+  email: string;
+}
+
+export interface IRecoverPasswordPayload {
+  userid: string;
+  params: {
+    token: string;
+  };
+  body: {
+    password: string;
+  };
+}
