@@ -3,9 +3,8 @@
 .body {
   display: flex;
   align-items: center;
-  height: 36px;
-  box-sizing: content-box;
-  padding: 14px 23.5px;
+  min-height: 64px;
+  padding: 15.5px 23.5px;
   background-color: $bg-service-color_lighten;
 
   .title {
