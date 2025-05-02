@@ -11,6 +11,11 @@ export const profileSelector = createSelector(
   (state) => state.profile,
 );
 
+export const isProfileLoadingSelector = createSelector(
+  authBaseSelector,
+  (state) => state.isProfileLoading,
+);
+
 export const profileIdSelector = createSelector(
   profileSelector,
   (state) => state?._id,

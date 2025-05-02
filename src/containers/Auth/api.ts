@@ -59,6 +59,28 @@ export const authApi = createApi({
         body,
       }),
     }),
+
+    generateDeveloperToken: builder.query<string, void>({
+      query: () => ({
+        url: "/dev_token",
+        method: "POST",
+        responseHandler: (response) => response.text(),
+      }),
+    }),
+
+    deleteDeveloperToken: builder.mutation<void, void>({
+      query: () => ({
+        url: "/dev_token",
+        method: "DELETE",
+      }),
+    }),
+
+    checkDeveloperToken: builder.query<boolean, void>({
+      query: () => ({
+        url: "/dev_token",
+      }),
+      keepUnusedDataFor: 0,
+    }),
   }),
 });
 
@@ -71,4 +93,7 @@ export const {
   useSendRecoverLetterMutation,
   useRecoverPasswordMutation,
   useCheckRecoveryTokenQuery,
+  useLazyGenerateDeveloperTokenQuery,
+  useCheckDeveloperTokenQuery,
+  useDeleteDeveloperTokenMutation,
 } = authApi;

@@ -23,13 +23,19 @@ export const SETTINGS_MENU_ITEMS = (
     icon: <LockOutlined />,
     onClick: handlers?.security,
   },
-  {
-    key: "development",
-    label: "Разработка",
-    icon: <CodeOutlined />,
-    onClick: handlers?.development,
-  },
-  ...(role === "admin"
+  ...((["administrator", "owner", "developer"] as TRole[]).includes(
+    role ?? "user",
+  )
+    ? [
+        {
+          key: "development",
+          label: "Разработка",
+          icon: <CodeOutlined />,
+          onClick: handlers?.development,
+        },
+      ]
+    : []),
+  ...((["administrator", "owner"] as TRole[]).includes(role ?? "user")
     ? [
         {
           key: "administration",

@@ -15,10 +15,11 @@ export interface IProfile {
 
 export type ContactType = "telegram" | "email" | "none";
 
-export type TRole = "user" | "admin";
+export type TRole = "owner" | "administrator" | "user" | "developer";
 
 export interface IAuthState {
   profile: Nullable<IProfile>;
+  isProfileLoading: boolean;
 }
 
 // INFO: Интерфейсы и типы для API

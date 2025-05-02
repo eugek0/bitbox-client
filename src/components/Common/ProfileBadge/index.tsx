@@ -3,6 +3,7 @@ import { FC } from "react";
 import { ProfileBadgeProps } from "./types";
 import styles from "./styles.module.scss";
 import { CrownFilled } from "@ant-design/icons";
+import { TRole } from "@/containers/Auth/types";
 
 const ProfileBadge: FC<ProfileBadgeProps> = ({
   avatar,
@@ -35,7 +36,9 @@ const ProfileBadge: FC<ProfileBadgeProps> = ({
               >
                 ({login})
               </Typography.Text>
-              {role === "admin" && (
+              {(["administrator", "owner"] as TRole[]).includes(
+                role ?? "user",
+              ) && (
                 <CrownFilled
                   className={styles["role-icon"]}
                   title="Администратор"
@@ -47,7 +50,9 @@ const ProfileBadge: FC<ProfileBadgeProps> = ({
               <Typography.Text className={styles["nickname"]}>
                 {login}
               </Typography.Text>
-              {role === "admin" && (
+              {(["administrator", "owner"] as TRole[]).includes(
+                role ?? "user",
+              ) && (
                 <CrownFilled
                   className={styles["role-icon"]}
                   title="Администратор"

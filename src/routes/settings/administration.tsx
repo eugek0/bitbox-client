@@ -1,5 +1,5 @@
-import SettingsLayout from "@/components/Layouts/SettingsLayout";
 import AsideLayoutContainer from "@/containers/Layouts/AsideLayoutContainer";
+import SettingsLayoutContainer from "@/containers/Layouts/SettingsLayoutContainer";
 import { protectedRoute } from "@/core/router";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -7,10 +7,10 @@ export const Route = createFileRoute("/settings/administration")({
   beforeLoad: protectedRoute(),
   component: () => (
     <AsideLayoutContainer>
-      <SettingsLayout>
+      <SettingsLayoutContainer>
         <title>Администрирование</title>
         <></>
-      </SettingsLayout>
+      </SettingsLayoutContainer>
     </AsideLayoutContainer>
   ),
 });

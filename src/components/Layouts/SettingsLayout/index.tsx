@@ -11,7 +11,7 @@ const SettingsLayout: FC<PropsWithChildren> = ({ children }) => {
   return (
     <Flex className={styles["body"]} gap={10} vertical>
       <Header>Настройки</Header>
-      <Flex justify="center">
+      <Flex className={styles["wrapper-container"]} justify="center">
         <Flex className={styles["wrapper"]} gap={15} vertical>
           <Flex justify="space-between" align="center">
             <ProfileSettingsBadge />
@@ -19,7 +19,7 @@ const SettingsLayout: FC<PropsWithChildren> = ({ children }) => {
               <Button icon={<UserOutlined />}>Перейти в профиль</Button>
             </Link>
           </Flex>
-          <Flex gap={40}>
+          <Flex className={styles["content"]} gap={40}>
             <SettingsMenuContainer />
             {children}
           </Flex>

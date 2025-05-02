@@ -1,0 +1,48 @@
+@use "@/core/styles" as *;
+
+.quote {
+  color: $primary-color;
+  font-weight: 100;
+  padding: 2px 5px;
+  border: 1px solid $bg-color_lighten;
+  background-color: $bg-color_darken;
+  border-radius: 5px;
+}
+
+.token-input {
+  width: 35% !important;
+}
+
+.highlight {
+  color: $primary-color;
+}
+
+.label {
+  font-size: 15px;
+}
+
+.skeleton-input {
+  width: 35% !important;
+  :global(.ant-skeleton-title) {
+    height: 32px !important;
+    margin: 0 !important;
+  }
+}
+
+.skeleton-button {
+  width: 183px !important;
+}
+
+.skeleton-node {
+  width: 121px !important;
+  :global(.ant-skeleton-title) {
+    margin: 0 !important;
+  }
+}
+
+.badge-error {
+  :global(.ant-badge-status-dot) {
+    background-color: $error-color !important;
+    color: $error-color !important;
+  }
+}

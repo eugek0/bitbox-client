@@ -1,4 +1,4 @@
-import { IProfile } from "@/containers/Auth/types";
+import { IProfile, TRole } from "@/containers/Auth/types";
 import { IStorage } from "../types";
 
 export const checkStorageAccess = (
@@ -11,7 +11,9 @@ export const checkStorageAccess = (
     );
 
     return (
-      profile?.role === "admin" ||
+      (["administrator", "owner"] as TRole[]).includes(
+        profile?.role ?? "user",
+      ) ||
       member?.role === "administrator" ||
       record?.owner === profile?._id ||
       (record?.defaultRole === "administrator" &&

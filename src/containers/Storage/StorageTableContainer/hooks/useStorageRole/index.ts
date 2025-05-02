@@ -1,4 +1,5 @@
 import { profileSelector } from "@/containers/Auth/selectors";
+import { TRole } from "@/containers/Auth/types";
 import { IStoragesTableRecord } from "@/containers/Storages/StoragesTableContainer/types";
 import { TStorageMemberRole } from "@/containers/Storages/types";
 import { Nullable } from "@/core/types";
@@ -11,7 +12,7 @@ export const useStorageRole = (
 
   const role =
     storage?.defaultRole !== "watcher" ||
-    profile?.role === "admin" ||
+    (["administrator", "owner"] as TRole[]).includes(profile?.role ?? "user") ||
     profile?._id === storage?.owner
       ? "administrator"
       : storage?.members?.find((member) => member._id === profile?._id)?.role;
