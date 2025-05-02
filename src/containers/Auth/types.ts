@@ -15,7 +15,7 @@ export interface IProfile {
 
 export type ContactType = "telegram" | "email" | "none";
 
-export type TRole = "owner" | "administrator" | "user" | "developer";
+export type TRole = "owner" | "administrator" | "user";
 
 export interface IAuthState {
   profile: Nullable<IProfile>;

@@ -5,7 +5,7 @@ export interface ProfileBadgeProps
   extends Partial<
     Pick<IProfile, "avatar" | "login" | "role" | "name" | "lastname">
   > {
-  size?: Exclude<SizeType, "middle">;
+  size?: SizeType;
   showFullname?: boolean;
   subtitle?: string;
   loading?: boolean;

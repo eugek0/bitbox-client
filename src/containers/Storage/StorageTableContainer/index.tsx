@@ -66,6 +66,8 @@ import { SERVER_BASE_URL } from "@/core/constants";
 import RenameEntityModalContainer from "./RenameEntityModalContainer";
 import { useStorageRole } from "./hooks/useStorageRole";
 import StorageInfoModalContainer from "@/containers/Storages/StoragesTableContainer/StorageInfoModalContainer";
+import { createPortal } from "react-dom";
+import EntityDownloadContainer from "../EntityDownloadContainer";
 
 const StorageTableContainer: FC = () => {
   const [isCreateDirectoryModalOpen, setIsCreateDirectoryModalOpen] =
@@ -78,8 +80,12 @@ const StorageTableContainer: FC = () => {
       open: false,
     });
 
-  const { storageid } = useParams({ from: "/storage/$storageid/" });
-  const { parent } = useSearch({ from: "/storage/$storageid/" });
+  const { storageid } = useParams({
+    from: "/_layout/storage/_layout/$storageid",
+  });
+  const { parent, entityid } = useSearch({
+    from: "/_layout/storage/_layout/$storageid",
+  });
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -418,7 +424,10 @@ const StorageTableContainer: FC = () => {
   const onRow: TableProps["onRow"] = (record) => ({
     onDoubleClick: () => {
       if (record.type === "file") {
-        navigate({ to: `/storage/${storageid}/entity/${record._id}` });
+        navigate({
+          to: `/storage/${storageid}`,
+          search: { parent, entityid: record._id },
+        });
       } else if (record.type === "directory") {
         navigate({
           to: `/storage/${storageid}`,
@@ -751,6 +760,7 @@ const StorageTableContainer: FC = () => {
         setConfig={setInfoModalConfig}
         selected={context}
       />
+      {entityid && createPortal(<EntityDownloadContainer />, document.body)}
     </>
   );
 };

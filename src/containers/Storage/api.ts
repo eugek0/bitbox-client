@@ -40,6 +40,7 @@ export const storageApi = createApi({
       query: ({ storageid, entityid }) => ({
         url: `/entities/${storageid}/${entityid}`,
       }),
+      keepUnusedDataFor: 0,
     }),
 
     getStorageFile: builder.query<Blob, IGetStorageFilePayload>({

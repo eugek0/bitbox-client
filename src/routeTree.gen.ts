@@ -8,58 +8,55 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
+import { createFileRoute } from '@tanstack/react-router'
+
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as IndexImport } from './routes/index'
-import { Route as SettingsSecurityImport } from './routes/settings/security'
-import { Route as SettingsProfileImport } from './routes/settings/profile'
-import { Route as SettingsDevelopmentImport } from './routes/settings/development'
-import { Route as SettingsAdministrationImport } from './routes/settings/administration'
-import { Route as ProfileUseridImport } from './routes/profile/$userid'
+import { Route as LayoutImport } from './routes/_layout'
+import { Route as LayoutIndexImport } from './routes/_layout/index'
 import { Route as AuthRegisterImport } from './routes/auth/register'
 import { Route as AuthLoginImport } from './routes/auth/login'
-import { Route as StorageStorageidIndexImport } from './routes/storage/$storageid/index'
 import { Route as AuthRecoverEmailImport } from './routes/auth/recover/email'
 import { Route as AuthRecoverUseridImport } from './routes/auth/recover/$userid'
-import { Route as StorageStorageidEntityEntityidImport } from './routes/storage/$storageid/entity/$entityid'
+import { Route as LayoutStorageLayoutImport } from './routes/_layout/storage/_layout'
+import { Route as LayoutSettingsLayoutImport } from './routes/_layout/settings/_layout'
+import { Route as LayoutProfileUseridImport } from './routes/_layout/profile/$userid'
+import { Route as LayoutStorageLayoutStorageidImport } from './routes/_layout/storage/_layout/$storageid'
+import { Route as LayoutSettingsLayoutSecurityImport } from './routes/_layout/settings/_layout/security'
+import { Route as LayoutSettingsLayoutRolesImport } from './routes/_layout/settings/_layout/roles'
+import { Route as LayoutSettingsLayoutProfileImport } from './routes/_layout/settings/_layout/profile'
+import { Route as LayoutSettingsLayoutDevelopmentImport } from './routes/_layout/settings/_layout/development'
+import { Route as LayoutSettingsLayoutAdministrationImport } from './routes/_layout/settings/_layout/administration'
+
+// Create Virtual Routes
+
+const LayoutStorageImport = createFileRoute('/_layout/storage')()
+const LayoutSettingsImport = createFileRoute('/_layout/settings')()
 
 // Create/Update Routes
 
-const IndexRoute = IndexImport.update({
+const LayoutRoute = LayoutImport.update({
+  id: '/_layout',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const LayoutStorageRoute = LayoutStorageImport.update({
+  id: '/storage',
+  path: '/storage',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutSettingsRoute = LayoutSettingsImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutIndexRoute = LayoutIndexImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const SettingsSecurityRoute = SettingsSecurityImport.update({
-  id: '/settings/security',
-  path: '/settings/security',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const SettingsProfileRoute = SettingsProfileImport.update({
-  id: '/settings/profile',
-  path: '/settings/profile',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const SettingsDevelopmentRoute = SettingsDevelopmentImport.update({
-  id: '/settings/development',
-  path: '/settings/development',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const SettingsAdministrationRoute = SettingsAdministrationImport.update({
-  id: '/settings/administration',
-  path: '/settings/administration',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const ProfileUseridRoute = ProfileUseridImport.update({
-  id: '/profile/$userid',
-  path: '/profile/$userid',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => LayoutRoute,
 } as any)
 
 const AuthRegisterRoute = AuthRegisterImport.update({
@@ -71,12 +68,6 @@ const AuthRegisterRoute = AuthRegisterImport.update({
 const AuthLoginRoute = AuthLoginImport.update({
   id: '/auth/login',
   path: '/auth/login',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const StorageStorageidIndexRoute = StorageStorageidIndexImport.update({
-  id: '/storage/$storageid/',
-  path: '/storage/$storageid/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -92,22 +83,72 @@ const AuthRecoverUseridRoute = AuthRecoverUseridImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const StorageStorageidEntityEntityidRoute =
-  StorageStorageidEntityEntityidImport.update({
-    id: '/storage/$storageid/entity/$entityid',
-    path: '/storage/$storageid/entity/$entityid',
-    getParentRoute: () => rootRoute,
+const LayoutStorageLayoutRoute = LayoutStorageLayoutImport.update({
+  id: '/_layout',
+  getParentRoute: () => LayoutStorageRoute,
+} as any)
+
+const LayoutSettingsLayoutRoute = LayoutSettingsLayoutImport.update({
+  id: '/_layout',
+  getParentRoute: () => LayoutSettingsRoute,
+} as any)
+
+const LayoutProfileUseridRoute = LayoutProfileUseridImport.update({
+  id: '/profile/$userid',
+  path: '/profile/$userid',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutStorageLayoutStorageidRoute =
+  LayoutStorageLayoutStorageidImport.update({
+    id: '/$storageid',
+    path: '/$storageid',
+    getParentRoute: () => LayoutStorageLayoutRoute,
+  } as any)
+
+const LayoutSettingsLayoutSecurityRoute =
+  LayoutSettingsLayoutSecurityImport.update({
+    id: '/security',
+    path: '/security',
+    getParentRoute: () => LayoutSettingsLayoutRoute,
+  } as any)
+
+const LayoutSettingsLayoutRolesRoute = LayoutSettingsLayoutRolesImport.update({
+  id: '/roles',
+  path: '/roles',
+  getParentRoute: () => LayoutSettingsLayoutRoute,
+} as any)
+
+const LayoutSettingsLayoutProfileRoute =
+  LayoutSettingsLayoutProfileImport.update({
+    id: '/profile',
+    path: '/profile',
+    getParentRoute: () => LayoutSettingsLayoutRoute,
+  } as any)
+
+const LayoutSettingsLayoutDevelopmentRoute =
+  LayoutSettingsLayoutDevelopmentImport.update({
+    id: '/development',
+    path: '/development',
+    getParentRoute: () => LayoutSettingsLayoutRoute,
+  } as any)
+
+const LayoutSettingsLayoutAdministrationRoute =
+  LayoutSettingsLayoutAdministrationImport.update({
+    id: '/administration',
+    path: '/administration',
+    getParentRoute: () => LayoutSettingsLayoutRoute,
   } as any)
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
+    '/_layout': {
+      id: '/_layout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof LayoutImport
       parentRoute: typeof rootRoute
     }
     '/auth/login': {
@@ -124,40 +165,47 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRegisterImport
       parentRoute: typeof rootRoute
     }
-    '/profile/$userid': {
-      id: '/profile/$userid'
+    '/_layout/': {
+      id: '/_layout/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof LayoutIndexImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/profile/$userid': {
+      id: '/_layout/profile/$userid'
       path: '/profile/$userid'
       fullPath: '/profile/$userid'
-      preLoaderRoute: typeof ProfileUseridImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof LayoutProfileUseridImport
+      parentRoute: typeof LayoutImport
     }
-    '/settings/administration': {
-      id: '/settings/administration'
-      path: '/settings/administration'
-      fullPath: '/settings/administration'
-      preLoaderRoute: typeof SettingsAdministrationImport
-      parentRoute: typeof rootRoute
+    '/_layout/settings': {
+      id: '/_layout/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof LayoutSettingsImport
+      parentRoute: typeof LayoutImport
     }
-    '/settings/development': {
-      id: '/settings/development'
-      path: '/settings/development'
-      fullPath: '/settings/development'
-      preLoaderRoute: typeof SettingsDevelopmentImport
-      parentRoute: typeof rootRoute
+    '/_layout/settings/_layout': {
+      id: '/_layout/settings/_layout'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof LayoutSettingsLayoutImport
+      parentRoute: typeof LayoutSettingsRoute
     }
-    '/settings/profile': {
-      id: '/settings/profile'
-      path: '/settings/profile'
-      fullPath: '/settings/profile'
-      preLoaderRoute: typeof SettingsProfileImport
-      parentRoute: typeof rootRoute
+    '/_layout/storage': {
+      id: '/_layout/storage'
+      path: '/storage'
+      fullPath: '/storage'
+      preLoaderRoute: typeof LayoutStorageImport
+      parentRoute: typeof LayoutImport
     }
-    '/settings/security': {
-      id: '/settings/security'
-      path: '/settings/security'
-      fullPath: '/settings/security'
-      preLoaderRoute: typeof SettingsSecurityImport
-      parentRoute: typeof rootRoute
+    '/_layout/storage/_layout': {
+      id: '/_layout/storage/_layout'
+      path: '/storage'
+      fullPath: '/storage'
+      preLoaderRoute: typeof LayoutStorageLayoutImport
+      parentRoute: typeof LayoutStorageRoute
     }
     '/auth/recover/$userid': {
       id: '/auth/recover/$userid'
@@ -173,145 +221,251 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRecoverEmailImport
       parentRoute: typeof rootRoute
     }
-    '/storage/$storageid/': {
-      id: '/storage/$storageid/'
-      path: '/storage/$storageid'
-      fullPath: '/storage/$storageid'
-      preLoaderRoute: typeof StorageStorageidIndexImport
-      parentRoute: typeof rootRoute
+    '/_layout/settings/_layout/administration': {
+      id: '/_layout/settings/_layout/administration'
+      path: '/administration'
+      fullPath: '/settings/administration'
+      preLoaderRoute: typeof LayoutSettingsLayoutAdministrationImport
+      parentRoute: typeof LayoutSettingsLayoutImport
     }
-    '/storage/$storageid/entity/$entityid': {
-      id: '/storage/$storageid/entity/$entityid'
-      path: '/storage/$storageid/entity/$entityid'
-      fullPath: '/storage/$storageid/entity/$entityid'
-      preLoaderRoute: typeof StorageStorageidEntityEntityidImport
-      parentRoute: typeof rootRoute
+    '/_layout/settings/_layout/development': {
+      id: '/_layout/settings/_layout/development'
+      path: '/development'
+      fullPath: '/settings/development'
+      preLoaderRoute: typeof LayoutSettingsLayoutDevelopmentImport
+      parentRoute: typeof LayoutSettingsLayoutImport
+    }
+    '/_layout/settings/_layout/profile': {
+      id: '/_layout/settings/_layout/profile'
+      path: '/profile'
+      fullPath: '/settings/profile'
+      preLoaderRoute: typeof LayoutSettingsLayoutProfileImport
+      parentRoute: typeof LayoutSettingsLayoutImport
+    }
+    '/_layout/settings/_layout/roles': {
+      id: '/_layout/settings/_layout/roles'
+      path: '/roles'
+      fullPath: '/settings/roles'
+      preLoaderRoute: typeof LayoutSettingsLayoutRolesImport
+      parentRoute: typeof LayoutSettingsLayoutImport
+    }
+    '/_layout/settings/_layout/security': {
+      id: '/_layout/settings/_layout/security'
+      path: '/security'
+      fullPath: '/settings/security'
+      preLoaderRoute: typeof LayoutSettingsLayoutSecurityImport
+      parentRoute: typeof LayoutSettingsLayoutImport
+    }
+    '/_layout/storage/_layout/$storageid': {
+      id: '/_layout/storage/_layout/$storageid'
+      path: '/$storageid'
+      fullPath: '/storage/$storageid'
+      preLoaderRoute: typeof LayoutStorageLayoutStorageidImport
+      parentRoute: typeof LayoutStorageLayoutImport
     }
   }
 }
 
 // Create and export the route tree
 
+interface LayoutSettingsLayoutRouteChildren {
+  LayoutSettingsLayoutAdministrationRoute: typeof LayoutSettingsLayoutAdministrationRoute
+  LayoutSettingsLayoutDevelopmentRoute: typeof LayoutSettingsLayoutDevelopmentRoute
+  LayoutSettingsLayoutProfileRoute: typeof LayoutSettingsLayoutProfileRoute
+  LayoutSettingsLayoutRolesRoute: typeof LayoutSettingsLayoutRolesRoute
+  LayoutSettingsLayoutSecurityRoute: typeof LayoutSettingsLayoutSecurityRoute
+}
+
+const LayoutSettingsLayoutRouteChildren: LayoutSettingsLayoutRouteChildren = {
+  LayoutSettingsLayoutAdministrationRoute:
+    LayoutSettingsLayoutAdministrationRoute,
+  LayoutSettingsLayoutDevelopmentRoute: LayoutSettingsLayoutDevelopmentRoute,
+  LayoutSettingsLayoutProfileRoute: LayoutSettingsLayoutProfileRoute,
+  LayoutSettingsLayoutRolesRoute: LayoutSettingsLayoutRolesRoute,
+  LayoutSettingsLayoutSecurityRoute: LayoutSettingsLayoutSecurityRoute,
+}
+
+const LayoutSettingsLayoutRouteWithChildren =
+  LayoutSettingsLayoutRoute._addFileChildren(LayoutSettingsLayoutRouteChildren)
+
+interface LayoutSettingsRouteChildren {
+  LayoutSettingsLayoutRoute: typeof LayoutSettingsLayoutRouteWithChildren
+}
+
+const LayoutSettingsRouteChildren: LayoutSettingsRouteChildren = {
+  LayoutSettingsLayoutRoute: LayoutSettingsLayoutRouteWithChildren,
+}
+
+const LayoutSettingsRouteWithChildren = LayoutSettingsRoute._addFileChildren(
+  LayoutSettingsRouteChildren,
+)
+
+interface LayoutStorageLayoutRouteChildren {
+  LayoutStorageLayoutStorageidRoute: typeof LayoutStorageLayoutStorageidRoute
+}
+
+const LayoutStorageLayoutRouteChildren: LayoutStorageLayoutRouteChildren = {
+  LayoutStorageLayoutStorageidRoute: LayoutStorageLayoutStorageidRoute,
+}
+
+const LayoutStorageLayoutRouteWithChildren =
+  LayoutStorageLayoutRoute._addFileChildren(LayoutStorageLayoutRouteChildren)
+
+interface LayoutStorageRouteChildren {
+  LayoutStorageLayoutRoute: typeof LayoutStorageLayoutRouteWithChildren
+}
+
+const LayoutStorageRouteChildren: LayoutStorageRouteChildren = {
+  LayoutStorageLayoutRoute: LayoutStorageLayoutRouteWithChildren,
+}
+
+const LayoutStorageRouteWithChildren = LayoutStorageRoute._addFileChildren(
+  LayoutStorageRouteChildren,
+)
+
+interface LayoutRouteChildren {
+  LayoutIndexRoute: typeof LayoutIndexRoute
+  LayoutProfileUseridRoute: typeof LayoutProfileUseridRoute
+  LayoutSettingsRoute: typeof LayoutSettingsRouteWithChildren
+  LayoutStorageRoute: typeof LayoutStorageRouteWithChildren
+}
+
+const LayoutRouteChildren: LayoutRouteChildren = {
+  LayoutIndexRoute: LayoutIndexRoute,
+  LayoutProfileUseridRoute: LayoutProfileUseridRoute,
+  LayoutSettingsRoute: LayoutSettingsRouteWithChildren,
+  LayoutStorageRoute: LayoutStorageRouteWithChildren,
+}
+
+const LayoutRouteWithChildren =
+  LayoutRoute._addFileChildren(LayoutRouteChildren)
+
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '': typeof LayoutRouteWithChildren
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
-  '/profile/$userid': typeof ProfileUseridRoute
-  '/settings/administration': typeof SettingsAdministrationRoute
-  '/settings/development': typeof SettingsDevelopmentRoute
-  '/settings/profile': typeof SettingsProfileRoute
-  '/settings/security': typeof SettingsSecurityRoute
+  '/': typeof LayoutIndexRoute
+  '/profile/$userid': typeof LayoutProfileUseridRoute
+  '/settings': typeof LayoutSettingsLayoutRouteWithChildren
+  '/storage': typeof LayoutStorageLayoutRouteWithChildren
   '/auth/recover/$userid': typeof AuthRecoverUseridRoute
   '/auth/recover/email': typeof AuthRecoverEmailRoute
-  '/storage/$storageid': typeof StorageStorageidIndexRoute
-  '/storage/$storageid/entity/$entityid': typeof StorageStorageidEntityEntityidRoute
+  '/settings/administration': typeof LayoutSettingsLayoutAdministrationRoute
+  '/settings/development': typeof LayoutSettingsLayoutDevelopmentRoute
+  '/settings/profile': typeof LayoutSettingsLayoutProfileRoute
+  '/settings/roles': typeof LayoutSettingsLayoutRolesRoute
+  '/settings/security': typeof LayoutSettingsLayoutSecurityRoute
+  '/storage/$storageid': typeof LayoutStorageLayoutStorageidRoute
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
-  '/profile/$userid': typeof ProfileUseridRoute
-  '/settings/administration': typeof SettingsAdministrationRoute
-  '/settings/development': typeof SettingsDevelopmentRoute
-  '/settings/profile': typeof SettingsProfileRoute
-  '/settings/security': typeof SettingsSecurityRoute
+  '/': typeof LayoutIndexRoute
+  '/profile/$userid': typeof LayoutProfileUseridRoute
+  '/settings': typeof LayoutSettingsLayoutRouteWithChildren
+  '/storage': typeof LayoutStorageLayoutRouteWithChildren
   '/auth/recover/$userid': typeof AuthRecoverUseridRoute
   '/auth/recover/email': typeof AuthRecoverEmailRoute
-  '/storage/$storageid': typeof StorageStorageidIndexRoute
-  '/storage/$storageid/entity/$entityid': typeof StorageStorageidEntityEntityidRoute
+  '/settings/administration': typeof LayoutSettingsLayoutAdministrationRoute
+  '/settings/development': typeof LayoutSettingsLayoutDevelopmentRoute
+  '/settings/profile': typeof LayoutSettingsLayoutProfileRoute
+  '/settings/roles': typeof LayoutSettingsLayoutRolesRoute
+  '/settings/security': typeof LayoutSettingsLayoutSecurityRoute
+  '/storage/$storageid': typeof LayoutStorageLayoutStorageidRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
-  '/': typeof IndexRoute
+  '/_layout': typeof LayoutRouteWithChildren
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
-  '/profile/$userid': typeof ProfileUseridRoute
-  '/settings/administration': typeof SettingsAdministrationRoute
-  '/settings/development': typeof SettingsDevelopmentRoute
-  '/settings/profile': typeof SettingsProfileRoute
-  '/settings/security': typeof SettingsSecurityRoute
+  '/_layout/': typeof LayoutIndexRoute
+  '/_layout/profile/$userid': typeof LayoutProfileUseridRoute
+  '/_layout/settings': typeof LayoutSettingsRouteWithChildren
+  '/_layout/settings/_layout': typeof LayoutSettingsLayoutRouteWithChildren
+  '/_layout/storage': typeof LayoutStorageRouteWithChildren
+  '/_layout/storage/_layout': typeof LayoutStorageLayoutRouteWithChildren
   '/auth/recover/$userid': typeof AuthRecoverUseridRoute
   '/auth/recover/email': typeof AuthRecoverEmailRoute
-  '/storage/$storageid/': typeof StorageStorageidIndexRoute
-  '/storage/$storageid/entity/$entityid': typeof StorageStorageidEntityEntityidRoute
+  '/_layout/settings/_layout/administration': typeof LayoutSettingsLayoutAdministrationRoute
+  '/_layout/settings/_layout/development': typeof LayoutSettingsLayoutDevelopmentRoute
+  '/_layout/settings/_layout/profile': typeof LayoutSettingsLayoutProfileRoute
+  '/_layout/settings/_layout/roles': typeof LayoutSettingsLayoutRolesRoute
+  '/_layout/settings/_layout/security': typeof LayoutSettingsLayoutSecurityRoute
+  '/_layout/storage/_layout/$storageid': typeof LayoutStorageLayoutStorageidRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
+    | ''
     | '/auth/login'
     | '/auth/register'
+    | '/'
     | '/profile/$userid'
+    | '/settings'
+    | '/storage'
+    | '/auth/recover/$userid'
+    | '/auth/recover/email'
     | '/settings/administration'
     | '/settings/development'
     | '/settings/profile'
+    | '/settings/roles'
     | '/settings/security'
-    | '/auth/recover/$userid'
-    | '/auth/recover/email'
     | '/storage/$storageid'
-    | '/storage/$storageid/entity/$entityid'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
     | '/auth/login'
     | '/auth/register'
+    | '/'
     | '/profile/$userid'
+    | '/settings'
+    | '/storage'
+    | '/auth/recover/$userid'
+    | '/auth/recover/email'
     | '/settings/administration'
     | '/settings/development'
     | '/settings/profile'
+    | '/settings/roles'
     | '/settings/security'
-    | '/auth/recover/$userid'
-    | '/auth/recover/email'
     | '/storage/$storageid'
-    | '/storage/$storageid/entity/$entityid'
   id:
     | '__root__'
-    | '/'
+    | '/_layout'
     | '/auth/login'
     | '/auth/register'
-    | '/profile/$userid'
-    | '/settings/administration'
-    | '/settings/development'
-    | '/settings/profile'
-    | '/settings/security'
+    | '/_layout/'
+    | '/_layout/profile/$userid'
+    | '/_layout/settings'
+    | '/_layout/settings/_layout'
+    | '/_layout/storage'
+    | '/_layout/storage/_layout'
     | '/auth/recover/$userid'
     | '/auth/recover/email'
-    | '/storage/$storageid/'
-    | '/storage/$storageid/entity/$entityid'
+    | '/_layout/settings/_layout/administration'
+    | '/_layout/settings/_layout/development'
+    | '/_layout/settings/_layout/profile'
+    | '/_layout/settings/_layout/roles'
+    | '/_layout/settings/_layout/security'
+    | '/_layout/storage/_layout/$storageid'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  LayoutRoute: typeof LayoutRouteWithChildren
   AuthLoginRoute: typeof AuthLoginRoute
   AuthRegisterRoute: typeof AuthRegisterRoute
-  ProfileUseridRoute: typeof ProfileUseridRoute
-  SettingsAdministrationRoute: typeof SettingsAdministrationRoute
-  SettingsDevelopmentRoute: typeof SettingsDevelopmentRoute
-  SettingsProfileRoute: typeof SettingsProfileRoute
-  SettingsSecurityRoute: typeof SettingsSecurityRoute
   AuthRecoverUseridRoute: typeof AuthRecoverUseridRoute
   AuthRecoverEmailRoute: typeof AuthRecoverEmailRoute
-  StorageStorageidIndexRoute: typeof StorageStorageidIndexRoute
-  StorageStorageidEntityEntityidRoute: typeof StorageStorageidEntityEntityidRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  LayoutRoute: LayoutRouteWithChildren,
   AuthLoginRoute: AuthLoginRoute,
   AuthRegisterRoute: AuthRegisterRoute,
-  ProfileUseridRoute: ProfileUseridRoute,
-  SettingsAdministrationRoute: SettingsAdministrationRoute,
-  SettingsDevelopmentRoute: SettingsDevelopmentRoute,
-  SettingsProfileRoute: SettingsProfileRoute,
-  SettingsSecurityRoute: SettingsSecurityRoute,
   AuthRecoverUseridRoute: AuthRecoverUseridRoute,
   AuthRecoverEmailRoute: AuthRecoverEmailRoute,
-  StorageStorageidIndexRoute: StorageStorageidIndexRoute,
-  StorageStorageidEntityEntityidRoute: StorageStorageidEntityEntityidRoute,
 }
 
 export const routeTree = rootRoute
@@ -324,22 +478,21 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/",
+        "/_layout",
         "/auth/login",
         "/auth/register",
-        "/profile/$userid",
-        "/settings/administration",
-        "/settings/development",
-        "/settings/profile",
-        "/settings/security",
         "/auth/recover/$userid",
-        "/auth/recover/email",
-        "/storage/$storageid/",
-        "/storage/$storageid/entity/$entityid"
+        "/auth/recover/email"
       ]
     },
-    "/": {
-      "filePath": "index.tsx"
+    "/_layout": {
+      "filePath": "_layout.tsx",
+      "children": [
+        "/_layout/",
+        "/_layout/profile/$userid",
+        "/_layout/settings",
+        "/_layout/storage"
+      ]
     },
     "/auth/login": {
       "filePath": "auth/login.tsx"
@@ -347,20 +500,45 @@ export const routeTree = rootRoute
     "/auth/register": {
       "filePath": "auth/register.tsx"
     },
-    "/profile/$userid": {
-      "filePath": "profile/$userid.tsx"
+    "/_layout/": {
+      "filePath": "_layout/index.tsx",
+      "parent": "/_layout"
     },
-    "/settings/administration": {
-      "filePath": "settings/administration.tsx"
+    "/_layout/profile/$userid": {
+      "filePath": "_layout/profile/$userid.tsx",
+      "parent": "/_layout"
     },
-    "/settings/development": {
-      "filePath": "settings/development.tsx"
+    "/_layout/settings": {
+      "filePath": "_layout/settings",
+      "parent": "/_layout",
+      "children": [
+        "/_layout/settings/_layout"
+      ]
     },
-    "/settings/profile": {
-      "filePath": "settings/profile.tsx"
+    "/_layout/settings/_layout": {
+      "filePath": "_layout/settings/_layout.tsx",
+      "parent": "/_layout/settings",
+      "children": [
+        "/_layout/settings/_layout/administration",
+        "/_layout/settings/_layout/development",
+        "/_layout/settings/_layout/profile",
+        "/_layout/settings/_layout/roles",
+        "/_layout/settings/_layout/security"
+      ]
     },
-    "/settings/security": {
-      "filePath": "settings/security.tsx"
+    "/_layout/storage": {
+      "filePath": "_layout/storage",
+      "parent": "/_layout",
+      "children": [
+        "/_layout/storage/_layout"
+      ]
+    },
+    "/_layout/storage/_layout": {
+      "filePath": "_layout/storage/_layout.tsx",
+      "parent": "/_layout/storage",
+      "children": [
+        "/_layout/storage/_layout/$storageid"
+      ]
     },
     "/auth/recover/$userid": {
       "filePath": "auth/recover/$userid.tsx"
@@ -368,11 +546,29 @@ export const routeTree = rootRoute
     "/auth/recover/email": {
       "filePath": "auth/recover/email.tsx"
     },
-    "/storage/$storageid/": {
-      "filePath": "storage/$storageid/index.tsx"
+    "/_layout/settings/_layout/administration": {
+      "filePath": "_layout/settings/_layout/administration.tsx",
+      "parent": "/_layout/settings/_layout"
     },
-    "/storage/$storageid/entity/$entityid": {
-      "filePath": "storage/$storageid/entity/$entityid.tsx"
+    "/_layout/settings/_layout/development": {
+      "filePath": "_layout/settings/_layout/development.tsx",
+      "parent": "/_layout/settings/_layout"
+    },
+    "/_layout/settings/_layout/profile": {
+      "filePath": "_layout/settings/_layout/profile.tsx",
+      "parent": "/_layout/settings/_layout"
+    },
+    "/_layout/settings/_layout/roles": {
+      "filePath": "_layout/settings/_layout/roles.tsx",
+      "parent": "/_layout/settings/_layout"
+    },
+    "/_layout/settings/_layout/security": {
+      "filePath": "_layout/settings/_layout/security.tsx",
+      "parent": "/_layout/settings/_layout"
+    },
+    "/_layout/storage/_layout/$storageid": {
+      "filePath": "_layout/storage/_layout/$storageid.tsx",
+      "parent": "/_layout/storage/_layout"
     }
   }
 }

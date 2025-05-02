@@ -9,7 +9,10 @@ const ProfileBadgeContainer: FC<ProfileBadgeContainerProps> = ({
   login,
   ...props
 }) => {
-  const { data: profile, isFetching } = useGetUserQuery({ _id, email, login });
+  const { data: profile, isFetching } = useGetUserQuery(
+    { _id, email, login },
+    { skip: !_id && !email && !login },
+  );
 
   return <ProfileBadge {...props} loading={isFetching} {...profile} />;
 };

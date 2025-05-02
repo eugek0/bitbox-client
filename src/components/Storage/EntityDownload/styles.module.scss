@@ -1,15 +1,30 @@
 @use "@/core/styles" as *;
 
 .body {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
   height: 100vh;
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  left: 0;
+
+  .head {
+    width: 97%;
+    position: absolute;
+    top: 20px;
+  }
 
   .header {
+    width: 100%;
+
     svg {
-      font-size: 20px;
+      font-size: 28px;
+      color: #fff;
     }
   }
 
-  .card {
+  .modal {
     min-width: 400px;
     max-width: 600px;
     padding: 30px;
@@ -27,6 +42,10 @@
       font-size: 20px;
     }
 
+    .fullname-skeleton {
+      height: 16px;
+    }
+
     .fullname {
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -36,8 +55,12 @@
     }
 
     .upload-time {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 300;
     }
+  }
+
+  .upload-time-skeleton {
+    height: 10px !important;
   }
 }

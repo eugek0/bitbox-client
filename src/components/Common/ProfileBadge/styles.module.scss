@@ -23,6 +23,34 @@
   }
 }
 
+.middle {
+  .login-skeleton {
+    height: 10px;
+
+    > :global(.ant-skeleton-input) {
+      height: 10px !important;
+    }
+  }
+
+  .avatar {
+    width: 32px !important;
+    height: 32px !important;
+
+    :global(.ant-skeleton-avatar) {
+      width: 32px !important;
+      height: 32px !important;
+    }
+  }
+
+  .nickname {
+    font-size: 18px;
+  }
+
+  .subtitle {
+    font-size: 8px;
+  }
+}
+
 .large {
   .login-skeleton {
     height: 20px;

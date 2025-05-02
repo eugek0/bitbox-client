@@ -11,6 +11,8 @@ const SettingsMenu: FC<SettingsMenuProps> = ({
 }) => {
   return (
     <Menu
+      mode="inline"
+      defaultOpenKeys={["administration"]}
       className={styles["body"]}
       selectedKeys={activeItem ? [activeItem] : []}
       items={SETTINGS_MENU_ITEMS(role, handlers)}
