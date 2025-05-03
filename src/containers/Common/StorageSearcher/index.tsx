@@ -30,13 +30,22 @@ const StorageSearcher: FC<StorageSearcherProps> = (props) => {
   const handleSelect: AutoCompleteProps["onSelect"] = (_: string, option) => {
     const variants: StorageSearcherVariants = {
       storage: [`/storage/${option.value}`],
-      directory: [`/storage/${option.storage}`, option.value as string],
-      file: [`/storage/${option.storage}/entity/${option.value}`],
+      directory: [
+        `/storage/${option.storage}`,
+        { parent: option.value as string },
+      ],
+      file: [
+        `/storage/${option.storage}`,
+        {
+          parent: option.parent ?? undefined,
+          entityid: option.value as string,
+        },
+      ],
     };
 
     navigate({
       to: variants[option.type as StorageSearcherType][0],
-      search: { parent: variants[option.type as StorageSearcherType][1] },
+      search: variants[option.type as StorageSearcherType][1],
     });
     setValue("");
   };

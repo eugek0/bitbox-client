@@ -7,5 +7,5 @@ export type StorageSearcherType = EntityType | "storage";
 
 export type StorageSearcherVariants = Record<
   StorageSearcherType,
-  [string, string] | [string]
+  [string, Record<string, string | number>] | [string]
 >;
