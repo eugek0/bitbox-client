@@ -48,6 +48,7 @@ const ProfileAvatarEditorContainer: FC<ProfileAvatarEditorContainerProps> = ({
         userid: profile._id,
         body: formdata,
       });
+      handleClose();
       getProfile();
     }
   };
