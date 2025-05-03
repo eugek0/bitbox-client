@@ -1,7 +1,6 @@
 import { FormInstance } from "antd";
 import { ProfileEditFormFields } from "./ProfileEditForm/types";
 import { Nullable } from "@/core/types";
-import { MouseEventHandler } from "react";
 
 export interface ProfileSettingsProps {
   form: FormInstance<ProfileEditFormFields>;
@@ -13,5 +12,5 @@ export interface ProfileSettingsProps {
   handleEdit?: (values: ProfileEditFormFields) => void;
   handleChangeAvatar?: () => void;
   handleResetAvatar?: () => void;
-  handleClosechangeAvatar: MouseEventHandler<HTMLButtonElement>;
+  handleClosechangeAvatar: () => void;
 }
