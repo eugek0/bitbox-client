@@ -10,7 +10,7 @@ const UsersSettingsContainer: FC = () => {
 
   const {
     data: users,
-    // isFetching: isUsersFetching,
+    isFetching: isUsersFetching,
     refetch: refetchUsers,
   } = useGetAllUsersQuery(undefined, {
     selectFromResult: (response) => ({
@@ -28,7 +28,11 @@ const UsersSettingsContainer: FC = () => {
   };
 
   return (
-    <UsersSettings handleChangeRole={handleChangeRole} users={users ?? []} />
+    <UsersSettings
+      handleChangeRole={handleChangeRole}
+      loading={isUsersFetching}
+      users={users ?? []}
+    />
   );
 };
 

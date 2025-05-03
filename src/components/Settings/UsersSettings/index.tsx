@@ -4,8 +4,13 @@ import { UsersSettingsProps } from "./types";
 import styles from "./styles.module.scss";
 import parentStyles from "../styles.module.scss";
 import { USERS_SETTINGS_OPTIONS } from "./constants";
+import { LoadingOutlined } from "@ant-design/icons";
 
-const UsersSettings: FC<UsersSettingsProps> = ({ users, handleChangeRole }) => {
+const UsersSettings: FC<UsersSettingsProps> = ({
+  users,
+  loading,
+  handleChangeRole,
+}) => {
   return (
     <div className={styles["body"]}>
       <Typography.Title className={parentStyles["title"]} level={3}>
@@ -13,6 +18,7 @@ const UsersSettings: FC<UsersSettingsProps> = ({ users, handleChangeRole }) => {
       </Typography.Title>
       <List
         size="small"
+        loading={{ spinning: loading, indicator: <LoadingOutlined /> }}
         dataSource={users}
         renderItem={(user) => (
           <List.Item>

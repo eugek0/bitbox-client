@@ -25,6 +25,7 @@ export const usersApi = createApi({
       query: () => ({
         url: "/all",
       }),
+      keepUnusedDataFor: 0,
     }),
 
     getUsersOptions: builder.query<DefaultOptionType[], void>({
