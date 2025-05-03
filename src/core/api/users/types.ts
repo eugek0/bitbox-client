@@ -1,4 +1,4 @@
-import { IProfile } from "@/containers/Auth/types";
+import { IProfile, TRole } from "@/containers/Auth/types";
 
 export interface IGetUserPayload {
   _id?: string;
@@ -16,5 +16,12 @@ export interface IChangePasswordPayload {
   body: {
     oldPassword: string;
     newPassword: string;
+  };
+}
+
+export interface IChangeRolePayload {
+  userid: string;
+  body: {
+    role: TRole;
   };
 }

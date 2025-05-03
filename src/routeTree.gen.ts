@@ -27,7 +27,6 @@ import { Route as LayoutSettingsLayoutSecurityImport } from './routes/_layout/se
 import { Route as LayoutSettingsLayoutRolesImport } from './routes/_layout/settings/_layout/roles'
 import { Route as LayoutSettingsLayoutProfileImport } from './routes/_layout/settings/_layout/profile'
 import { Route as LayoutSettingsLayoutDevelopmentImport } from './routes/_layout/settings/_layout/development'
-import { Route as LayoutSettingsLayoutAdministrationImport } from './routes/_layout/settings/_layout/administration'
 
 // Create Virtual Routes
 
@@ -133,13 +132,6 @@ const LayoutSettingsLayoutDevelopmentRoute =
     getParentRoute: () => LayoutSettingsLayoutRoute,
   } as any)
 
-const LayoutSettingsLayoutAdministrationRoute =
-  LayoutSettingsLayoutAdministrationImport.update({
-    id: '/administration',
-    path: '/administration',
-    getParentRoute: () => LayoutSettingsLayoutRoute,
-  } as any)
-
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -221,13 +213,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRecoverEmailImport
       parentRoute: typeof rootRoute
     }
-    '/_layout/settings/_layout/administration': {
-      id: '/_layout/settings/_layout/administration'
-      path: '/administration'
-      fullPath: '/settings/administration'
-      preLoaderRoute: typeof LayoutSettingsLayoutAdministrationImport
-      parentRoute: typeof LayoutSettingsLayoutImport
-    }
     '/_layout/settings/_layout/development': {
       id: '/_layout/settings/_layout/development'
       path: '/development'
@@ -269,7 +254,6 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface LayoutSettingsLayoutRouteChildren {
-  LayoutSettingsLayoutAdministrationRoute: typeof LayoutSettingsLayoutAdministrationRoute
   LayoutSettingsLayoutDevelopmentRoute: typeof LayoutSettingsLayoutDevelopmentRoute
   LayoutSettingsLayoutProfileRoute: typeof LayoutSettingsLayoutProfileRoute
   LayoutSettingsLayoutRolesRoute: typeof LayoutSettingsLayoutRolesRoute
@@ -277,8 +261,6 @@ interface LayoutSettingsLayoutRouteChildren {
 }
 
 const LayoutSettingsLayoutRouteChildren: LayoutSettingsLayoutRouteChildren = {
-  LayoutSettingsLayoutAdministrationRoute:
-    LayoutSettingsLayoutAdministrationRoute,
   LayoutSettingsLayoutDevelopmentRoute: LayoutSettingsLayoutDevelopmentRoute,
   LayoutSettingsLayoutProfileRoute: LayoutSettingsLayoutProfileRoute,
   LayoutSettingsLayoutRolesRoute: LayoutSettingsLayoutRolesRoute,
@@ -350,7 +332,6 @@ export interface FileRoutesByFullPath {
   '/storage': typeof LayoutStorageLayoutRouteWithChildren
   '/auth/recover/$userid': typeof AuthRecoverUseridRoute
   '/auth/recover/email': typeof AuthRecoverEmailRoute
-  '/settings/administration': typeof LayoutSettingsLayoutAdministrationRoute
   '/settings/development': typeof LayoutSettingsLayoutDevelopmentRoute
   '/settings/profile': typeof LayoutSettingsLayoutProfileRoute
   '/settings/roles': typeof LayoutSettingsLayoutRolesRoute
@@ -367,7 +348,6 @@ export interface FileRoutesByTo {
   '/storage': typeof LayoutStorageLayoutRouteWithChildren
   '/auth/recover/$userid': typeof AuthRecoverUseridRoute
   '/auth/recover/email': typeof AuthRecoverEmailRoute
-  '/settings/administration': typeof LayoutSettingsLayoutAdministrationRoute
   '/settings/development': typeof LayoutSettingsLayoutDevelopmentRoute
   '/settings/profile': typeof LayoutSettingsLayoutProfileRoute
   '/settings/roles': typeof LayoutSettingsLayoutRolesRoute
@@ -388,7 +368,6 @@ export interface FileRoutesById {
   '/_layout/storage/_layout': typeof LayoutStorageLayoutRouteWithChildren
   '/auth/recover/$userid': typeof AuthRecoverUseridRoute
   '/auth/recover/email': typeof AuthRecoverEmailRoute
-  '/_layout/settings/_layout/administration': typeof LayoutSettingsLayoutAdministrationRoute
   '/_layout/settings/_layout/development': typeof LayoutSettingsLayoutDevelopmentRoute
   '/_layout/settings/_layout/profile': typeof LayoutSettingsLayoutProfileRoute
   '/_layout/settings/_layout/roles': typeof LayoutSettingsLayoutRolesRoute
@@ -408,7 +387,6 @@ export interface FileRouteTypes {
     | '/storage'
     | '/auth/recover/$userid'
     | '/auth/recover/email'
-    | '/settings/administration'
     | '/settings/development'
     | '/settings/profile'
     | '/settings/roles'
@@ -424,7 +402,6 @@ export interface FileRouteTypes {
     | '/storage'
     | '/auth/recover/$userid'
     | '/auth/recover/email'
-    | '/settings/administration'
     | '/settings/development'
     | '/settings/profile'
     | '/settings/roles'
@@ -443,7 +420,6 @@ export interface FileRouteTypes {
     | '/_layout/storage/_layout'
     | '/auth/recover/$userid'
     | '/auth/recover/email'
-    | '/_layout/settings/_layout/administration'
     | '/_layout/settings/_layout/development'
     | '/_layout/settings/_layout/profile'
     | '/_layout/settings/_layout/roles'
@@ -519,7 +495,6 @@ export const routeTree = rootRoute
       "filePath": "_layout/settings/_layout.tsx",
       "parent": "/_layout/settings",
       "children": [
-        "/_layout/settings/_layout/administration",
         "/_layout/settings/_layout/development",
         "/_layout/settings/_layout/profile",
         "/_layout/settings/_layout/roles",
@@ -545,10 +520,6 @@ export const routeTree = rootRoute
     },
     "/auth/recover/email": {
       "filePath": "auth/recover/email.tsx"
-    },
-    "/_layout/settings/_layout/administration": {
-      "filePath": "_layout/settings/_layout/administration.tsx",
-      "parent": "/_layout/settings/_layout"
     },
     "/_layout/settings/_layout/development": {
       "filePath": "_layout/settings/_layout/development.tsx",

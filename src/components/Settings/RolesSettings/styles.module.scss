@@ -1,0 +1,16 @@
+@use "@/core/styles" as *;
+
+.body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  :global(.ant-list-item-meta) {
+    display: flex;
+    align-items: center !important;
+  }
+
+  .login {
+    color: $shadow-text-color;
+  }
+}

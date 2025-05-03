@@ -2,6 +2,7 @@ import fetchMainBaseQuery from "@/core/rtkquery";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import {
   IChangePasswordPayload,
+  IChangeRolePayload,
   IEditUserPayload,
   IGetUserPayload,
 } from "./types";
@@ -16,6 +17,12 @@ export const usersApi = createApi({
       query: (params) => ({
         url: "/",
         params,
+      }),
+    }),
+
+    getAllUsers: builder.query<IProfile[], void>({
+      query: () => ({
+        url: "/all",
       }),
     }),
 
@@ -46,6 +53,14 @@ export const usersApi = createApi({
         body,
       }),
     }),
+
+    changeRole: builder.mutation<void, IChangeRolePayload>({
+      query: ({ userid, body }) => ({
+        url: `/role/${userid}`,
+        method: "PATCH",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -55,4 +70,6 @@ export const {
   useGetUsersRecordQuery,
   useEditUserMutation,
   useChangePasswordMutation,
+  useGetAllUsersQuery,
+  useChangeRoleMutation,
 } = usersApi;

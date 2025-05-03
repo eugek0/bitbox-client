@@ -11,6 +11,7 @@ export interface IProfile {
   role: TRole;
   prefered_contacts: ContactType;
   telegram: string;
+  isCreator?: boolean;
 }
 
 export type ContactType = "telegram" | "email" | "none";

@@ -29,7 +29,7 @@ export const SETTINGS_MENU_ITEMS = (
     icon: <CodeOutlined />,
     onClick: handlers?.development,
   },
-  ...((["administrator", "owner"] as TRole[]).includes(role ?? "user")
+  ...((["owner"] as TRole[]).includes(role ?? "user")
     ? [
         {
           key: "administration",
