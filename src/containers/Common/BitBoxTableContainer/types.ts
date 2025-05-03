@@ -1,5 +1,11 @@
 import { FC, Dispatch, MouseEvent, ReactNode, DragEventHandler } from "react";
-import { BreadcrumbProps, MenuProps, TableColumnType, TableProps } from "antd";
+import {
+  BreadcrumbProps,
+  MenuProps,
+  TableColumnType,
+  TablePaginationConfig,
+  TableProps,
+} from "antd";
 import { Nullable } from "@/core/types";
 import { ButtonProps } from "antd/lib";
 
@@ -16,8 +22,10 @@ export interface BitBoxTableContainerProps<T extends BitBoxTableRecord>
   contextMenu?: IBitBoxTableContextMenu;
   borderContextMenu?: IBitBoxTableContextMenu;
   selected?: BitBoxTableRecord[];
+  pagination?: TablePaginationConfig;
   breadcrumbs?: BreadcrumbProps["items"];
   handleDrop?: DragEventHandler<HTMLDivElement>;
+  hideHeader?: boolean;
   withDrop?: boolean;
   handleSelect?: (selected: BitBoxTableRecord[]) => void;
   handleAddRow?: (values: Record<string, any>) => Promise<void> | void;

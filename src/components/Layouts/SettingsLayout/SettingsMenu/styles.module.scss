@@ -1,3 +1,7 @@
 .body {
   width: 250px;
+
+  :global(.ant-menu) {
+    background-color: transparent !important;
+  }
 }

@@ -1,5 +1,6 @@
 import { TRole } from "@/containers/Auth/types";
 import {
+  AuditOutlined,
   CodeOutlined,
   CrownOutlined,
   LockOutlined,
@@ -41,6 +42,12 @@ export const SETTINGS_MENU_ITEMS = (
               label: "Пользователи",
               icon: <UserOutlined />,
               onClick: handlers?.users,
+            },
+            {
+              key: "logs",
+              label: "Журнал действий",
+              icon: <AuditOutlined />,
+              onClick: handlers?.logs,
             },
           ],
         },

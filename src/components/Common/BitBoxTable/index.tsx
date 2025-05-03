@@ -15,7 +15,9 @@ const BitBoxTable = <T extends BitBoxTableRecord>({
   modal,
   withDrop,
   breadcrumbs,
+  pagination,
   infoModal,
+  hideHeader,
   modalProps,
   isDragOver,
   infoModalProps,
@@ -29,7 +31,9 @@ const BitBoxTable = <T extends BitBoxTableRecord>({
 }: BitBoxTableProps<T>): ReactNode => {
   return (
     <div className={styles["body"]}>
-      <BitBoxTableHeader modalProps={modalProps} header={header} />
+      {!hideHeader && (
+        <BitBoxTableHeader modalProps={modalProps} header={header} />
+      )}
       <Dropdown
         className={`${contextMenuProps?.className ?? ""} ${styles["dropdown"]}`}
         trigger={["contextMenu"]}
@@ -60,7 +64,7 @@ const BitBoxTable = <T extends BitBoxTableRecord>({
             columns={columns}
             dataSource={records}
             loading={{ indicator: <LoadingOutlined />, spinning: loading }}
-            pagination={false}
+            pagination={pagination ?? false}
             rowKey="_id"
             bordered
             sticky

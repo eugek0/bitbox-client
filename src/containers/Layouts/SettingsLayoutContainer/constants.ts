@@ -5,4 +5,5 @@ export const SETTINGS_LAYOUT_PERMISSIONS: Record<string, TRole[]> = {
   "/settings/security": ["owner", "administrator", "user"],
   "/settings/development": ["owner", "administrator", "user"],
   "/settings/users": ["owner"],
+  "/settings/logs": ["owner", "administrator"],
 };

@@ -1,5 +1,5 @@
 import { DragEventHandler, MouseEventHandler } from "react";
-import { DropDownProps } from "antd";
+import { DropDownProps, TablePaginationConfig } from "antd";
 import { TableProps } from "antd/lib";
 import {
   BitBoxTableContainerProps,
@@ -12,6 +12,8 @@ import {
 export interface BitBoxTableProps<T extends BitBoxTableRecord>
   extends Omit<BitBoxTableContainerProps<T>, "contextMenu"> {
   isDragOver: boolean;
+  hideHeader?: boolean;
+  pagination?: TablePaginationConfig;
   modalProps: BitBoxTableModalProps;
   infoModalProps: BitBoxTableInfoModalProps;
   contextMenuProps: BitBoxTableContextMenuProps;

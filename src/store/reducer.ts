@@ -5,6 +5,7 @@ import { authSlice } from "@/containers/Auth/slice";
 import { storagesApi } from "@/containers/Storages/api";
 import { usersApi } from "@/core/api";
 import { storageApi } from "@/containers/Storage/api";
+import { logsApi } from "@/containers/Settings/LogsSettingsContainer/api";
 import { storageSlice } from "@/containers/Storage/slice";
 
 const reducer = combineReducers({
@@ -14,6 +15,7 @@ const reducer = combineReducers({
   [storagesApi.reducerPath]: storagesApi.reducer,
   [storageApi.reducerPath]: storageApi.reducer,
   [usersApi.reducerPath]: usersApi.reducer,
+  [logsApi.reducerPath]: logsApi.reducer,
   [storageSlice.reducerPath]: storageSlice.reducer,
 });
 

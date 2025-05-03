@@ -1,0 +1,23 @@
+@use "@/core/styles" as *;
+
+.body {
+  :global(.react-json-view) {
+    padding: 10px;
+    background-color: $bg-service-color_lighten !important;
+    border-radius: 5px;
+
+    svg {
+      color: $primary-color !important;
+    }
+
+    span {
+      font-weight: 400 !important;
+    }
+
+    :global(.data-type-label),
+    :global(.string-value),
+    :global(.node-ellipsis) {
+      color: $primary-color !important;
+    }
+  }
+}

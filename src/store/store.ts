@@ -3,6 +3,7 @@ import { authApi } from "@/containers/Auth/api";
 import { usersApi } from "@/core/api";
 import { storagesApi } from "@/containers/Storages/api";
 import { storageApi } from "@/containers/Storage/api";
+import { logsApi } from "@/containers/Settings/LogsSettingsContainer/api";
 import reducer from "./reducer";
 
 export const store = configureStore({
@@ -13,5 +14,6 @@ export const store = configureStore({
       storagesApi.middleware,
       storageApi.middleware,
       usersApi.middleware,
+      logsApi.middleware,
     ]),
 });

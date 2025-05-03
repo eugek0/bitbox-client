@@ -166,15 +166,17 @@ const StoragesTableContainer: FC = () => {
         key: "1",
         type: "group",
         label: "Действия",
-      },
-      {
-        key: "2",
-        label: "Создать хранилище",
-        icon: <PlusOutlined />,
-        onClick: () => {
-          setModalConfig({ mode: "add", open: true });
-          setContextMenuOpen(false);
-        },
+        children: [
+          {
+            key: "2",
+            label: "Создать хранилище",
+            icon: <PlusOutlined />,
+            onClick: () => {
+              setModalConfig({ mode: "add", open: true });
+              setContextMenuOpen(false);
+            },
+          },
+        ],
       },
     ],
   });

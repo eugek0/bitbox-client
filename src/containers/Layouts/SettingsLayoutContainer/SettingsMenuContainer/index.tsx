@@ -17,6 +17,7 @@ const SettingsMenuContainer: FC = () => {
     security: () => navigate({ to: "/settings/security" }),
     development: () => navigate({ to: "/settings/development" }),
     users: () => navigate({ to: "/settings/users" }),
+    logs: () => navigate({ to: "/settings/logs" }),
   };
 
   useEffect(() => {
