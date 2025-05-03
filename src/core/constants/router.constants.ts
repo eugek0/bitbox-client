@@ -3,5 +3,5 @@ export const PATH_KEYS_DICTIONARY: Record<string, string> = {
   "/settings/profile": "settings",
   "/settings/security": "settings",
   "/settings/development": "settings",
-  "/settings/roles": "settings",
+  "/settings/users": "settings",
 } as const;

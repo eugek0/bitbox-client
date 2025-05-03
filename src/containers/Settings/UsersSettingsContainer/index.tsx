@@ -1,11 +1,11 @@
 import { FC } from "react";
-import RolesSettings from "@/components/Settings/RolesSettings";
+import UsersSettings from "@/components/Settings/UsersSettings";
 import { useChangeRoleMutation, useGetAllUsersQuery } from "@/core/api";
 import { useAppSelector } from "@/store";
 import { profileSelector } from "@/containers/Auth/selectors";
 import { TRole } from "@/containers/Auth/types";
 
-const RolesSettingsContainer: FC = () => {
+const UsersSettingsContainer: FC = () => {
   const profile = useAppSelector(profileSelector);
 
   const {
@@ -28,8 +28,8 @@ const RolesSettingsContainer: FC = () => {
   };
 
   return (
-    <RolesSettings handleChangeRole={handleChangeRole} users={users ?? []} />
+    <UsersSettings handleChangeRole={handleChangeRole} users={users ?? []} />
   );
 };
 
-export default RolesSettingsContainer;
+export default UsersSettingsContainer;

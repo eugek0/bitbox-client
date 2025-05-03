@@ -1,12 +1,16 @@
 import { FC } from "react";
-import { Avatar, Flex, List, Select } from "antd";
-import { RolesSettingsProps } from "./types";
+import { Avatar, Flex, List, Select, Typography } from "antd";
+import { UsersSettingsProps } from "./types";
 import styles from "./styles.module.scss";
-import { ROLES_SETTINGS_OPTIONS } from "./constants";
+import parentStyles from "../styles.module.scss";
+import { USERS_SETTINGS_OPTIONS } from "./constants";
 
-const RolesSettings: FC<RolesSettingsProps> = ({ users, handleChangeRole }) => {
+const UsersSettings: FC<UsersSettingsProps> = ({ users, handleChangeRole }) => {
   return (
     <div className={styles["body"]}>
+      <Typography.Title className={parentStyles["title"]} level={3}>
+        Пользователи
+      </Typography.Title>
       <List
         size="small"
         dataSource={users}
@@ -41,7 +45,7 @@ const RolesSettings: FC<RolesSettingsProps> = ({ users, handleChangeRole }) => {
             />
             <Select
               onChange={(role) => handleChangeRole(user._id, role)}
-              options={ROLES_SETTINGS_OPTIONS}
+              options={USERS_SETTINGS_OPTIONS}
               popupMatchSelectWidth={false}
               defaultValue={user.role}
               variant="borderless"
@@ -53,4 +57,4 @@ const RolesSettings: FC<RolesSettingsProps> = ({ users, handleChangeRole }) => {
   );
 };
 
-export default RolesSettings;
+export default UsersSettings;

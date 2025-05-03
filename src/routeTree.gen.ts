@@ -23,8 +23,8 @@ import { Route as LayoutStorageLayoutImport } from './routes/_layout/storage/_la
 import { Route as LayoutSettingsLayoutImport } from './routes/_layout/settings/_layout'
 import { Route as LayoutProfileUseridImport } from './routes/_layout/profile/$userid'
 import { Route as LayoutStorageLayoutStorageidImport } from './routes/_layout/storage/_layout/$storageid'
+import { Route as LayoutSettingsLayoutUsersImport } from './routes/_layout/settings/_layout/users'
 import { Route as LayoutSettingsLayoutSecurityImport } from './routes/_layout/settings/_layout/security'
-import { Route as LayoutSettingsLayoutRolesImport } from './routes/_layout/settings/_layout/roles'
 import { Route as LayoutSettingsLayoutProfileImport } from './routes/_layout/settings/_layout/profile'
 import { Route as LayoutSettingsLayoutDevelopmentImport } from './routes/_layout/settings/_layout/development'
 
@@ -105,18 +105,18 @@ const LayoutStorageLayoutStorageidRoute =
     getParentRoute: () => LayoutStorageLayoutRoute,
   } as any)
 
+const LayoutSettingsLayoutUsersRoute = LayoutSettingsLayoutUsersImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => LayoutSettingsLayoutRoute,
+} as any)
+
 const LayoutSettingsLayoutSecurityRoute =
   LayoutSettingsLayoutSecurityImport.update({
     id: '/security',
     path: '/security',
     getParentRoute: () => LayoutSettingsLayoutRoute,
   } as any)
-
-const LayoutSettingsLayoutRolesRoute = LayoutSettingsLayoutRolesImport.update({
-  id: '/roles',
-  path: '/roles',
-  getParentRoute: () => LayoutSettingsLayoutRoute,
-} as any)
 
 const LayoutSettingsLayoutProfileRoute =
   LayoutSettingsLayoutProfileImport.update({
@@ -227,18 +227,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutSettingsLayoutProfileImport
       parentRoute: typeof LayoutSettingsLayoutImport
     }
-    '/_layout/settings/_layout/roles': {
-      id: '/_layout/settings/_layout/roles'
-      path: '/roles'
-      fullPath: '/settings/roles'
-      preLoaderRoute: typeof LayoutSettingsLayoutRolesImport
-      parentRoute: typeof LayoutSettingsLayoutImport
-    }
     '/_layout/settings/_layout/security': {
       id: '/_layout/settings/_layout/security'
       path: '/security'
       fullPath: '/settings/security'
       preLoaderRoute: typeof LayoutSettingsLayoutSecurityImport
+      parentRoute: typeof LayoutSettingsLayoutImport
+    }
+    '/_layout/settings/_layout/users': {
+      id: '/_layout/settings/_layout/users'
+      path: '/users'
+      fullPath: '/settings/users'
+      preLoaderRoute: typeof LayoutSettingsLayoutUsersImport
       parentRoute: typeof LayoutSettingsLayoutImport
     }
     '/_layout/storage/_layout/$storageid': {
@@ -256,15 +256,15 @@ declare module '@tanstack/react-router' {
 interface LayoutSettingsLayoutRouteChildren {
   LayoutSettingsLayoutDevelopmentRoute: typeof LayoutSettingsLayoutDevelopmentRoute
   LayoutSettingsLayoutProfileRoute: typeof LayoutSettingsLayoutProfileRoute
-  LayoutSettingsLayoutRolesRoute: typeof LayoutSettingsLayoutRolesRoute
   LayoutSettingsLayoutSecurityRoute: typeof LayoutSettingsLayoutSecurityRoute
+  LayoutSettingsLayoutUsersRoute: typeof LayoutSettingsLayoutUsersRoute
 }
 
 const LayoutSettingsLayoutRouteChildren: LayoutSettingsLayoutRouteChildren = {
   LayoutSettingsLayoutDevelopmentRoute: LayoutSettingsLayoutDevelopmentRoute,
   LayoutSettingsLayoutProfileRoute: LayoutSettingsLayoutProfileRoute,
-  LayoutSettingsLayoutRolesRoute: LayoutSettingsLayoutRolesRoute,
   LayoutSettingsLayoutSecurityRoute: LayoutSettingsLayoutSecurityRoute,
+  LayoutSettingsLayoutUsersRoute: LayoutSettingsLayoutUsersRoute,
 }
 
 const LayoutSettingsLayoutRouteWithChildren =
@@ -334,8 +334,8 @@ export interface FileRoutesByFullPath {
   '/auth/recover/email': typeof AuthRecoverEmailRoute
   '/settings/development': typeof LayoutSettingsLayoutDevelopmentRoute
   '/settings/profile': typeof LayoutSettingsLayoutProfileRoute
-  '/settings/roles': typeof LayoutSettingsLayoutRolesRoute
   '/settings/security': typeof LayoutSettingsLayoutSecurityRoute
+  '/settings/users': typeof LayoutSettingsLayoutUsersRoute
   '/storage/$storageid': typeof LayoutStorageLayoutStorageidRoute
 }
 
@@ -350,8 +350,8 @@ export interface FileRoutesByTo {
   '/auth/recover/email': typeof AuthRecoverEmailRoute
   '/settings/development': typeof LayoutSettingsLayoutDevelopmentRoute
   '/settings/profile': typeof LayoutSettingsLayoutProfileRoute
-  '/settings/roles': typeof LayoutSettingsLayoutRolesRoute
   '/settings/security': typeof LayoutSettingsLayoutSecurityRoute
+  '/settings/users': typeof LayoutSettingsLayoutUsersRoute
   '/storage/$storageid': typeof LayoutStorageLayoutStorageidRoute
 }
 
@@ -370,8 +370,8 @@ export interface FileRoutesById {
   '/auth/recover/email': typeof AuthRecoverEmailRoute
   '/_layout/settings/_layout/development': typeof LayoutSettingsLayoutDevelopmentRoute
   '/_layout/settings/_layout/profile': typeof LayoutSettingsLayoutProfileRoute
-  '/_layout/settings/_layout/roles': typeof LayoutSettingsLayoutRolesRoute
   '/_layout/settings/_layout/security': typeof LayoutSettingsLayoutSecurityRoute
+  '/_layout/settings/_layout/users': typeof LayoutSettingsLayoutUsersRoute
   '/_layout/storage/_layout/$storageid': typeof LayoutStorageLayoutStorageidRoute
 }
 
@@ -389,8 +389,8 @@ export interface FileRouteTypes {
     | '/auth/recover/email'
     | '/settings/development'
     | '/settings/profile'
-    | '/settings/roles'
     | '/settings/security'
+    | '/settings/users'
     | '/storage/$storageid'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -404,8 +404,8 @@ export interface FileRouteTypes {
     | '/auth/recover/email'
     | '/settings/development'
     | '/settings/profile'
-    | '/settings/roles'
     | '/settings/security'
+    | '/settings/users'
     | '/storage/$storageid'
   id:
     | '__root__'
@@ -422,8 +422,8 @@ export interface FileRouteTypes {
     | '/auth/recover/email'
     | '/_layout/settings/_layout/development'
     | '/_layout/settings/_layout/profile'
-    | '/_layout/settings/_layout/roles'
     | '/_layout/settings/_layout/security'
+    | '/_layout/settings/_layout/users'
     | '/_layout/storage/_layout/$storageid'
   fileRoutesById: FileRoutesById
 }
@@ -497,8 +497,8 @@ export const routeTree = rootRoute
       "children": [
         "/_layout/settings/_layout/development",
         "/_layout/settings/_layout/profile",
-        "/_layout/settings/_layout/roles",
-        "/_layout/settings/_layout/security"
+        "/_layout/settings/_layout/security",
+        "/_layout/settings/_layout/users"
       ]
     },
     "/_layout/storage": {
@@ -529,12 +529,12 @@ export const routeTree = rootRoute
       "filePath": "_layout/settings/_layout/profile.tsx",
       "parent": "/_layout/settings/_layout"
     },
-    "/_layout/settings/_layout/roles": {
-      "filePath": "_layout/settings/_layout/roles.tsx",
-      "parent": "/_layout/settings/_layout"
-    },
     "/_layout/settings/_layout/security": {
       "filePath": "_layout/settings/_layout/security.tsx",
+      "parent": "/_layout/settings/_layout"
+    },
+    "/_layout/settings/_layout/users": {
+      "filePath": "_layout/settings/_layout/users.tsx",
       "parent": "/_layout/settings/_layout"
     },
     "/_layout/storage/_layout/$storageid": {

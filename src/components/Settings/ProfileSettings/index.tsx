@@ -3,6 +3,7 @@ import { Flex, Typography } from "antd";
 import { ProfileSettingsProps } from "./types";
 import styles from "../styles.module.scss";
 import ProfileEditForm from "./ProfileEditForm";
+import ProfileAvatarEditorContainer from "@/containers/Settings/ProfileSettingsContainer/ProfileAvatarEditorContainer";
 
 const ProfileSettings: FC<ProfileSettingsProps> = ({
   form,
@@ -10,7 +11,11 @@ const ProfileSettings: FC<ProfileSettingsProps> = ({
   isTelegramHidden,
   isEditing,
   avatar,
+  image,
   handleEdit,
+  handleChangeAvatar,
+  handleResetAvatar,
+  handleClosechangeAvatar,
 }) => {
   return (
     <Flex flex={1} gap={15} vertical>
@@ -24,7 +29,15 @@ const ProfileSettings: FC<ProfileSettingsProps> = ({
         isEditing={isEditing}
         onFinish={handleEdit}
         avatar={avatar}
+        handleResetAvatar={handleResetAvatar}
+        handleChangeAvatar={handleChangeAvatar}
       />
+      {image && (
+        <ProfileAvatarEditorContainer
+          image={image}
+          handleClose={handleClosechangeAvatar}
+        />
+      )}
     </Flex>
   );
 };

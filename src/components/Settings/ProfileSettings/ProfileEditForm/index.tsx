@@ -1,5 +1,14 @@
-import { FC } from "react";
-import { Avatar, Button, Flex, Form, Input, Select, Typography } from "antd";
+import { FC, useState } from "react";
+import {
+  Avatar,
+  Button,
+  Dropdown,
+  Flex,
+  Form,
+  Input,
+  Select,
+  Typography,
+} from "antd";
 import { ProfileEditFormFields, ProfileEditFormProps } from "./types";
 import styles from "./styles.module.scss";
 import {
@@ -15,7 +24,16 @@ const ProfileEditForm: FC<ProfileEditFormProps> = ({
   initialValues,
   isEditing,
   onFinish,
+  handleResetAvatar,
+  handleChangeAvatar,
 }) => {
+  const [isAvatarDropdownOpen, setIsAvatarDropdownOpen] =
+    useState<boolean>(false);
+
+  const handleToggleAvatarDropdown = (open: boolean) => {
+    setIsAvatarDropdownOpen(open);
+  };
+
   return (
     <Form
       className={styles["body"]}
@@ -77,14 +95,39 @@ const ProfileEditForm: FC<ProfileEditFormProps> = ({
             Аватар профиля
           </Typography.Text>
           <div className={styles["avatar-container"]}>
-            <Avatar src={avatar} className={styles["avatar"]} />
-            <Button
-              className={styles["avatar-edit-button"]}
-              icon={<EditOutlined />}
-              size="small"
+            <Avatar
+              onClick={() => handleToggleAvatarDropdown(true)}
+              src={avatar}
+              className={styles["avatar"]}
+            />
+            <Dropdown
+              onOpenChange={handleToggleAvatarDropdown}
+              open={isAvatarDropdownOpen}
+              trigger={["click"]}
+              menu={{
+                items: [
+                  {
+                    key: "change",
+                    label: "Сменить аватар",
+                    onClick: handleChangeAvatar,
+                  },
+                  {
+                    key: "reset",
+                    label: "Сбросить аватар",
+                    onClick: handleResetAvatar,
+                  },
+                ],
+              }}
+              arrow
             >
-              Ред.
-            </Button>
+              <Button
+                className={styles["avatar-edit-button"]}
+                icon={<EditOutlined />}
+                size="small"
+              >
+                Ред.
+              </Button>
+            </Dropdown>
           </div>
         </Flex>
       </Flex>

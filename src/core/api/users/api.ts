@@ -1,6 +1,7 @@
 import fetchMainBaseQuery from "@/core/rtkquery";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import {
+  IChangeAvatarPayload,
   IChangePasswordPayload,
   IChangeRolePayload,
   IEditUserPayload,
@@ -61,6 +62,14 @@ export const usersApi = createApi({
         body,
       }),
     }),
+
+    changeAvatar: builder.mutation<void, IChangeAvatarPayload>({
+      query: ({ userid, body }) => ({
+        url: `/avatar/${userid}`,
+        method: "PATCH",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -72,4 +81,5 @@ export const {
   useChangePasswordMutation,
   useGetAllUsersQuery,
   useChangeRoleMutation,
+  useChangeAvatarMutation,
 } = usersApi;

@@ -1,14 +1,15 @@
 import { IProfile } from "@/containers/Auth/types";
 import { Nullable } from "@/core/types";
-import { FormInstance } from "antd";
+import { FormProps } from "antd/lib";
 
-export interface ProfileEditFormProps {
-  form: FormInstance<ProfileEditFormFields>;
+export interface ProfileEditFormProps
+  extends Pick<FormProps<ProfileEditFormFields>, "form" | "onFinish"> {
   avatar?: string;
   isEditing?: boolean;
   isTelegramHidden?: boolean;
   initialValues?: Nullable<ProfileEditFormFields>;
-  onFinish?: (values: ProfileEditFormFields) => void;
+  handleChangeAvatar?: () => void;
+  handleResetAvatar?: () => void;
 }
 
 export type ProfileEditFormFields = Pick<

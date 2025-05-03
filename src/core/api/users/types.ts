@@ -25,3 +25,8 @@ export interface IChangeRolePayload {
     role: TRole;
   };
 }
+
+export interface IChangeAvatarPayload {
+  userid: string;
+  body?: FormData;
+}

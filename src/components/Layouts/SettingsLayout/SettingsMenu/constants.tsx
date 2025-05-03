@@ -37,10 +37,10 @@ export const SETTINGS_MENU_ITEMS = (
           icon: <CrownOutlined />,
           children: [
             {
-              key: "roles",
-              label: "Выдача ролей",
+              key: "users",
+              label: "Пользователи",
               icon: <UserOutlined />,
-              onClick: handlers?.roles,
+              onClick: handlers?.users,
             },
           ],
         },
