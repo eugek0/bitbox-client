@@ -1,0 +1,60 @@
+@use "@/core/styles" as *;
+
+.wrapper {
+  width: 70%;
+
+  .title {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .avatar {
+    width: 296px;
+    height: 296px;
+  }
+
+  .name-lastname {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.15;
+  }
+
+  .login {
+    font-size: 20px;
+    font-weight: 300;
+    color: $shadow-text-color;
+    line-height: 1.15;
+  }
+
+  .edit-button-link {
+    width: 100%;
+  }
+
+  .edit-button {
+    width: 100%;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+  }
+
+  .storage-card {
+    max-width: 471px;
+    border-radius: 5px;
+    border: 1px solid $bg-service-border-color;
+    padding: 10px;
+    height: 70px;
+  }
+
+  .storage-title {
+    font-weight: 600;
+  }
+
+  .storage-description {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

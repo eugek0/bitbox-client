@@ -35,6 +35,6 @@ export const LOGS_TABLE_COLUMNS: TableColumnType<ILog>[] = [
     render: (type: string) => {
       return { user: "Пользователь", pubapi: "Разработчик" }[type];
     },
-    width: "125px",
+    width: "140px",
   },
 ];

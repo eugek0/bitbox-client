@@ -99,8 +99,8 @@ const AsideLayout: FC<AsideLayoutProps> = ({
                   },
                   {
                     key: "profile-page",
-                    label: "Настройки",
-                    icon: <SettingOutlined />,
+                    label: "Профиль",
+                    icon: <UserOutlined />,
                     onClick: clickHandlers["profile"],
                   },
                   {

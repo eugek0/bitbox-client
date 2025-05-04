@@ -1,6 +1,7 @@
 import { IStorageMember, TStorageMemberRole } from "../types";
 
 export interface IStoragesTableRecord {
+  _id: string;
   name: string;
   description: string;
   owner: string;

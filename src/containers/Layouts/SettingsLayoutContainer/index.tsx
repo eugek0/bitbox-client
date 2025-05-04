@@ -22,7 +22,7 @@ const SettingsLayoutContainer: FC<PropsWithChildren> = ({ children }) => {
   }
 
   return (
-    <SettingsLayout>
+    <SettingsLayout profile={profile}>
       {SETTINGS_LAYOUT_PERMISSIONS[location.pathname ?? ""].includes(
         profile?.role ?? "user",
       ) ? (

@@ -27,7 +27,12 @@ const AsideLayoutContainer: FC<PropsWithChildren> = (props) => {
     settings: () => {
       navigate({ to: "/settings/profile" });
     },
-    profile: () => {},
+    profile: () => {
+      navigate({
+        to: "/profile/$userid",
+        params: { userid: profile?._id ?? "" },
+      });
+    },
     api: () => {
       window.open(`${SERVER_BASE_URL}/api`, "_blank");
     },

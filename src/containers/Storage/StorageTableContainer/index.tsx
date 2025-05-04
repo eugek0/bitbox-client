@@ -94,11 +94,14 @@ const StorageTableContainer: FC = () => {
   const buffer = useAppSelector(storageBufferSelector);
   const role = useStorageRole(context);
 
-  const { data: entities, refetch: refetchEntities } =
-    useGetStorageEntitiesQuery({
-      storageid,
-      params: { parent },
-    });
+  const {
+    data: entities,
+    isFetching: isEntitiesFetching,
+    refetch: refetchEntities,
+  } = useGetStorageEntitiesQuery({
+    storageid,
+    params: { parent },
+  });
   const [createDirectory] = useCreateDirectoryMutation();
   const [deleteEntities] = useDeleteEntitiesMutation();
   const [pasteEntities] = usePasteEntitiesMutation();
@@ -681,7 +684,7 @@ const StorageTableContainer: FC = () => {
       <BitBoxTableContainer<IEntity>
         records={entities?.items ?? []}
         columns={STORAGE_TABLE_COLUMNS}
-        loading={false}
+        loading={isEntitiesFetching}
         onRow={onRow}
         breadcrumbs={breadcrumbs}
         handleDrop={handleDrop}

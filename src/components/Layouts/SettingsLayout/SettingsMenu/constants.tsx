@@ -30,19 +30,23 @@ export const SETTINGS_MENU_ITEMS = (
     icon: <CodeOutlined />,
     onClick: handlers?.development,
   },
-  ...((["owner"] as TRole[]).includes(role ?? "user")
+  ...((["owner", "administrator"] as TRole[]).includes(role ?? "user")
     ? [
         {
           key: "administration",
           label: "Администрирование",
           icon: <CrownOutlined />,
           children: [
-            {
-              key: "users",
-              label: "Пользователи",
-              icon: <UserOutlined />,
-              onClick: handlers?.users,
-            },
+            ...((["owner"] as TRole[]).includes(role ?? "user")
+              ? [
+                  {
+                    key: "users",
+                    label: "Пользователи",
+                    icon: <UserOutlined />,
+                    onClick: handlers?.users,
+                  },
+                ]
+              : []),
             {
               key: "logs",
               label: "Журнал действий",

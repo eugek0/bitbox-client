@@ -20,6 +20,12 @@ export const storagesApi = createApi({
       keepUnusedDataFor: 0,
     }),
 
+    getUserStorages: builder.query<IStoragesTableRecord[], string>({
+      query: (userid) => ({
+        url: `/user/${userid}`,
+      }),
+    }),
+
     createStorage: builder.mutation<void, TCreateStoragePayload>({
       query: (body) => ({
         url: "/",
@@ -62,4 +68,5 @@ export const {
   useEditStorageMutation,
   useDeleteStorageMutation,
   useLazySearchStoragesOptionsQuery,
+  useGetUserStoragesQuery,
 } = storagesApi;
