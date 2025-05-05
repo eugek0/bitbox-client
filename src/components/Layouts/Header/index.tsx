@@ -5,7 +5,7 @@ import { Typography } from "antd";
 
 const Header: FC<HeaderProps> = ({ children }) => {
   return (
-    <header className={styles["body"]}>
+    <header className={`${styles["body"]} ${styles["sticky"]}`}>
       <Typography.Title className={styles["title"]} level={4}>
         {children}
       </Typography.Title>

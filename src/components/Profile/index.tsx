@@ -1,21 +1,27 @@
 import { FC } from "react";
-import { Avatar, Button, Descriptions, Flex, Typography } from "antd";
+import { Avatar, Button, Flex, Spin, Typography } from "antd";
 import Header from "../Layouts/Header";
 import { ProfileProps } from "./types";
 import { Link } from "@tanstack/react-router";
 import styles from "./styles.module.scss";
-import { EditOutlined } from "@ant-design/icons";
+import { EditOutlined, LoadingOutlined } from "@ant-design/icons";
+import { convertBytes } from "@/core/utils";
 import moment from "moment";
 import { USER_ROLE_DICTIONARY } from "@/core/constants";
-import { convertBytes } from "@/core/utils";
 
-const Profile: FC<ProfileProps> = ({ profile, storages, isMyProfile }) => {
+const Profile: FC<ProfileProps> = ({
+  profile,
+  isProfileLoading,
+  storages,
+  isStoragesLoading,
+  isMyProfile,
+}) => {
   return (
-    <Flex flex={1} gap={10} vertical>
-      <Header>Профиль</Header>
+    <Flex className={styles["body"]} flex={1} gap={10} vertical>
+      <Header sticky>Профиль</Header>
       <Flex flex={1} align="center" vertical>
         <div className={styles["wrapper"]}>
-          <Flex gap={40}>
+          <Flex className={styles["content"]} gap={40}>
             <Flex gap={15} vertical>
               <Avatar className={styles["avatar"]} src={profile?.avatar} />
               <Flex vertical>
@@ -39,64 +45,57 @@ const Profile: FC<ProfileProps> = ({ profile, storages, isMyProfile }) => {
                   </Button>
                 </Link>
               )}
+              <Typography.Text>
+                Email: <a href={`mailto:${profile?.email}`}>{profile?.email}</a>
+              </Typography.Text>
+              <Typography.Text>
+                Дата регистрации:{" "}
+                {moment(profile?.createdAt).format("DD.MM.YYYY")}
+              </Typography.Text>
+              <Typography.Text>
+                Роль: {USER_ROLE_DICTIONARY[profile?.role ?? "user"]}
+              </Typography.Text>
             </Flex>
-            <Flex gap={20} vertical>
-              <Descriptions
-                title="Информация"
-                size="small"
-                bordered
-                items={[
-                  {
-                    key: "email",
-                    label: "Адрес электронной почты",
-                    children: profile?.email,
-                  },
-                  {
-                    key: "createdAt",
-                    label: "Дата и время регистрации",
-                    children: moment(profile?.createdAt).format(
-                      "DD.MM.YYYY HH:mm:ss",
-                    ),
-                  },
-                  {
-                    key: "role",
-                    label: "Роль",
-                    children: USER_ROLE_DICTIONARY[profile?.role ?? "user"],
-                  },
-                ]}
-              />
+            <Flex gap={20} flex={1} vertical>
               <Typography.Text className={styles["title"]}>
                 Список хранилищ
               </Typography.Text>
-              <div className={styles["grid"]}>
-                {storages.map((storage) => (
-                  <Link
-                    to="/storage/$storageid"
-                    params={{ storageid: storage._id }}
-                    search={{ entityid: undefined, parent: undefined }}
-                  >
-                    <Flex className={styles["storage-card"]} gap={5} vertical>
-                      <Flex justify="space-between" flex={1}>
-                        <Typography.Text className={styles["storage-title"]}>
-                          {storage.name}
-                        </Typography.Text>
-                        <Typography.Text>
-                          {convertBytes(storage.used)} /{" "}
-                          {convertBytes(storage.size)}
-                        </Typography.Text>
-                      </Flex>
+              {isStoragesLoading ? (
+                <Flex align="center" justify="center" flex={1} vertical>
+                  <Spin indicator={<LoadingOutlined />} />
+                </Flex>
+              ) : (
+                <div className={styles["grid"]}>
+                  {storages.map((storage) => (
+                    <Link
+                      to="/storage/$storageid"
+                      params={{ storageid: storage._id }}
+                      search={{ entityid: undefined, parent: undefined }}
+                      key={storage._id}
+                    >
+                      <Flex className={styles["storage-card"]} gap={5} vertical>
+                        <Flex justify="space-between" gap={15} flex={1}>
+                          <Typography.Text className={styles["storage-title"]}>
+                            {storage.name}
+                          </Typography.Text>
+                          <Typography.Text className={styles["storage-size"]}>
+                            {convertBytes(storage.used)} /{" "}
+                            {convertBytes(storage.size)}
+                          </Typography.Text>
+                        </Flex>
 
-                      {storage.description && (
-                        <Typography.Text
-                          className={styles["storage-description"]}
-                        >
-                          {storage.description}
-                        </Typography.Text>
-                      )}
-                    </Flex>
-                  </Link>
-                ))}
-              </div>
+                        {storage.description && (
+                          <Typography.Text
+                            className={styles["storage-description"]}
+                          >
+                            {storage.description}
+                          </Typography.Text>
+                        )}
+                      </Flex>
+                    </Link>
+                  ))}
+                </div>
+              )}
             </Flex>
           </Flex>
         </div>

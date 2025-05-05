@@ -83,6 +83,10 @@ const RegisterForm: FC<AuthFormInstanceProps> = ({
             Зарегистрироваться
           </Button>
         </Form.Item>
+        <Typography.Text className={styles["agreement"]}>
+          Продолжая, вы принимаете <Link to="/">условия</Link> и{" "}
+          <Link to="/">политику конфиденциальности</Link>.
+        </Typography.Text>
       </div>
     </AuthForm>
   );

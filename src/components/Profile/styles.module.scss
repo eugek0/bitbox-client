@@ -1,60 +1,76 @@
 @use "@/core/styles" as *;
 
-.wrapper {
-  width: 70%;
+.body {
+  height: 100%;
 
-  .title {
-    font-size: 16px;
-    font-weight: 600;
-  }
+  .wrapper {
+    width: 70%;
+    height: 100%;
 
-  .avatar {
-    width: 296px;
-    height: 296px;
-  }
+    .content {
+      height: 100%;
+    }
 
-  .name-lastname {
-    font-size: 24px;
-    font-weight: 600;
-    line-height: 1.15;
-  }
+    .title {
+      font-size: 16px;
+      font-weight: 600;
+    }
 
-  .login {
-    font-size: 20px;
-    font-weight: 300;
-    color: $shadow-text-color;
-    line-height: 1.15;
-  }
+    .avatar {
+      width: 296px;
+      height: 296px;
+    }
 
-  .edit-button-link {
-    width: 100%;
-  }
+    .name-lastname {
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 1.15;
+    }
 
-  .edit-button {
-    width: 100%;
-  }
+    .login {
+      font-size: 20px;
+      font-weight: 300;
+      color: $shadow-text-color;
+      line-height: 1.15;
+    }
 
-  .grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 10px;
-  }
+    .edit-button-link {
+      width: 100%;
+    }
 
-  .storage-card {
-    max-width: 471px;
-    border-radius: 5px;
-    border: 1px solid $bg-service-border-color;
-    padding: 10px;
-    height: 70px;
-  }
+    .edit-button {
+      width: 100%;
+    }
 
-  .storage-title {
-    font-weight: 600;
-  }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 10px;
+    }
 
-  .storage-description {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    .storage-card {
+      width: 471px;
+      border-radius: 5px;
+      border: 1px solid $bg-service-border-color;
+      padding: 10px;
+      height: 70px;
+    }
+
+    .storage-title {
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .storage-size {
+      white-space: nowrap;
+    }
+
+    .storage-description {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 }

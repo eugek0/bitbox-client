@@ -12,12 +12,14 @@ const ProfileContainer: FC = () => {
   const { userid } = useParams({ from: "/_layout/profile/$userid" });
 
   const { data: user } = useGetUserQuery({ _id: userid });
-  const { data: storages } = useGetUserStoragesQuery(userid);
+  const { data: storages, isFetching: isStoragesFetching } =
+    useGetUserStoragesQuery(userid);
 
   return (
     <Profile
       profile={user ?? null}
       storages={storages ?? []}
+      isStoragesLoading={isStoragesFetching}
       isMyProfile={profile?._id === userid}
     />
   );

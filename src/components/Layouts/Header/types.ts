@@ -1,3 +1,5 @@
 import { PropsWithChildren } from "react";
 
-export type HeaderProps = PropsWithChildren;
+export interface HeaderProps extends PropsWithChildren {
+  sticky?: boolean;
+}
