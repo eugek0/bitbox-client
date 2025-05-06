@@ -226,7 +226,7 @@ const StorageTableContainer: FC = () => {
   };
 
   const handleUploadFiles = async (formdata: FormData, count: number) => {
-    formdata.append("parent", parent);
+    formdata.append("parent", parent ?? "");
     const uploadKey = v4();
 
     const message = `Загрузка ${count} ${getNoun(count, "файла", "файлов", "файлов")}`;
