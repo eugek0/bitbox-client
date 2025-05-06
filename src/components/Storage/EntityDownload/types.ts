@@ -6,6 +6,7 @@ export interface EntityDownloadProps {
   isFetching: boolean;
   isDownloading: boolean;
   handleClose: MouseEventHandler<HTMLButtonElement>;
+  maintainer: boolean;
   handleDownload: MouseEventHandler<HTMLButtonElement>;
   dropdownHandlers: Record<string, () => void>;
 }

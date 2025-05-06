@@ -3,6 +3,7 @@ import EntityDownload from "@/components/Storage/EntityDownload";
 import {
   useGetStorageEntitiesQuery,
   useGetStorageEntityQuery,
+  useGetStorageQuery,
   useRenameEntityMutation,
 } from "../api";
 import { SERVER_BASE_URL } from "@/core/constants";
@@ -12,11 +13,15 @@ import RenameEntityModalContainer from "../StorageTableContainer/RenameEntityMod
 import { useDispatch } from "react-redux";
 import { setStorageBuffer } from "../slice";
 import useApp from "antd/es/app/useApp";
+import { useAppSelector } from "@/store";
+import { profileSelector } from "@/containers/Auth/selectors";
 
 const EntityDownloadContainer: FC = () => {
   const [isRenameModalOpen, setIsRenameModalOpen] = useState<boolean>(false);
   const [isFileBufferFetching, setIsFileBufferFetching] =
     useState<boolean>(false);
+
+  const profile = useAppSelector(profileSelector);
 
   const { message } = useApp();
 
@@ -29,6 +34,7 @@ const EntityDownloadContainer: FC = () => {
   const navigate = useNavigate();
 
   const [rename] = useRenameEntityMutation();
+  const { data: storage } = useGetStorageQuery(storageid);
   const { refetch: refetchEntities } = useGetStorageEntitiesQuery({
     storageid,
     params: { parent },
@@ -40,12 +46,16 @@ const EntityDownloadContainer: FC = () => {
   } = useGetStorageEntityQuery(
     {
       storageid,
-      entityid,
+      entityid: entityid ?? "",
     },
     { skip: !entityid },
   );
 
   const dispatch = useDispatch();
+
+  const storageRole = storage?.members.find(
+    (member) => member._id === profile?._id,
+  )?.role;
 
   const handleCloseRenameModal = () => {
     setIsRenameModalOpen(false);
@@ -136,6 +146,10 @@ const EntityDownloadContainer: FC = () => {
         handleClose={handleClose}
         isFetching={isFetching}
         dropdownHandlers={dropdownHandlers}
+        maintainer={
+          ["maintainer", "administrator"].includes(storageRole ?? "watcher") ||
+          ["administrator", "owner"].includes(profile?.role ?? "user")
+        }
         isDownloading={isFileBufferFetching}
         entity={entity}
       />

@@ -20,6 +20,7 @@ import { ENTITY_DOWNLOAD_DROPDOWN_ITEMS } from "./constants";
 const EntityDownload: FC<EntityDownloadProps> = ({
   entity,
   isFetching,
+  maintainer,
   isDownloading,
   dropdownHandlers,
   handleClose,
@@ -58,7 +59,10 @@ const EntityDownload: FC<EntityDownloadProps> = ({
           <Dropdown
             trigger={["click"]}
             menu={{
-              items: ENTITY_DOWNLOAD_DROPDOWN_ITEMS(dropdownHandlers),
+              items: ENTITY_DOWNLOAD_DROPDOWN_ITEMS(
+                dropdownHandlers,
+                maintainer,
+              ),
             }}
           >
             <Button
