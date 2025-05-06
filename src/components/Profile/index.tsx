@@ -11,7 +11,6 @@ import { USER_ROLE_DICTIONARY } from "@/core/constants";
 
 const Profile: FC<ProfileProps> = ({
   profile,
-  isProfileLoading,
   storages,
   isStoragesLoading,
   isMyProfile,
