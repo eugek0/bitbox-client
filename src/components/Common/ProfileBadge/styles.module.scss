@@ -1,5 +1,17 @@
 @use "@/core/styles" as *;
 
+.body {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  &:hover {
+    .nickname {
+      text-decoration: underline;
+    }
+  }
+}
+
 .small {
   .login-skeleton {
     height: 10px;
@@ -88,4 +100,10 @@
 .role-icon {
   color: $admin-color;
   font-size: 10px;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }

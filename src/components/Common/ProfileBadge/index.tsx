@@ -4,11 +4,13 @@ import { ProfileBadgeProps } from "./types";
 import styles from "./styles.module.scss";
 import { CrownFilled } from "@ant-design/icons";
 import { TRole } from "@/containers/Auth/types";
+import { Link } from "@tanstack/react-router";
 
 const ProfileBadge: FC<ProfileBadgeProps> = ({
   avatar,
   login,
   name,
+  _id,
   lastname,
   role,
   subtitle,
@@ -22,7 +24,11 @@ const ProfileBadge: FC<ProfileBadgeProps> = ({
       <Skeleton.Input className={styles["login-skeleton"]} active />
     </Flex>
   ) : (
-    <Flex className={styles[size]} align="center" gap={10}>
+    <Link
+      className={`${styles["body"]} ${styles[size]}`}
+      to="/profile/$userid"
+      params={{ userid: _id ?? "" }}
+    >
       <Avatar className={styles["avatar"]} src={avatar} size="small" />
       <Flex vertical>
         <Flex gap={5} align="center">
@@ -67,7 +73,7 @@ const ProfileBadge: FC<ProfileBadgeProps> = ({
           </Typography.Text>
         )}
       </Flex>
-    </Flex>
+    </Link>
   );
 };
 

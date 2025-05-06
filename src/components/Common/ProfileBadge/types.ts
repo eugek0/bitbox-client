@@ -3,7 +3,7 @@ import { SizeType } from "@/core/types";
 
 export interface ProfileBadgeProps
   extends Partial<
-    Pick<IProfile, "avatar" | "login" | "role" | "name" | "lastname">
+    Pick<IProfile, "avatar" | "login" | "role" | "name" | "lastname" | "_id">
   > {
   size?: SizeType;
   showFullname?: boolean;
