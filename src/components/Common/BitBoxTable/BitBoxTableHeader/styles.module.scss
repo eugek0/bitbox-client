@@ -20,6 +20,10 @@
   &__title {
     margin: 0 !important;
     font-weight: 400;
+    max-width: 500px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &__search {
