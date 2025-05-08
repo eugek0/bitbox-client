@@ -67,12 +67,20 @@ const Profile: FC<ProfileProps> = ({
                 <>
                   <Avatar className={styles["avatar"]} src={profile?.avatar} />
                   <Flex vertical>
-                    <Typography.Text className={styles["name-lastname"]}>
-                      {profile?.name} {profile?.lastname}
-                    </Typography.Text>
-                    <Typography.Text className={styles["login"]}>
-                      {profile?.login}
-                    </Typography.Text>
+                    {profile?.name || profile?.lastname ? (
+                      <>
+                        <Typography.Text className={styles["nickname"]}>
+                          {profile?.name} {profile?.lastname}
+                        </Typography.Text>
+                        <Typography.Text className={styles["login"]}>
+                          {profile?.login}
+                        </Typography.Text>
+                      </>
+                    ) : (
+                      <Typography.Text className={styles["nickname"]}>
+                        {profile?.login}
+                      </Typography.Text>
+                    )}
                   </Flex>
                   {isMyProfile && (
                     <Link
