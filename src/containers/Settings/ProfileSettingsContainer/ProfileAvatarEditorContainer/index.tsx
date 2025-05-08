@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import ProfileAvatarEditor from "@/components/Settings/ProfileSettings/ProfileAvatarEditor";
 import { Area, CropperProps } from "react-easy-crop";
 import { Nullable } from "@/core/types";
