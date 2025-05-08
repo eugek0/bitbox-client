@@ -10,19 +10,23 @@ export const STORAGES_TABLE_COLUMNS: TableColumnType<IStoragesTableRecord>[] = [
     title: "Название",
     dataIndex: "name",
     width: "25%",
-    ellipsis: true,
     sorter: {
       compare: (a, b) => b.name.localeCompare(a.name),
     },
     showSorterTooltip: false,
     render: (name) => {
       return (
-        <Flex align="center" gap={10}>
+        <Flex align="center" gap={10} title={name}>
           <ProductFilled />
-          <Typography.Text>{name}</Typography.Text>
+          <Typography.Text
+            style={{ textOverflow: "ellipsis", overflow: "hidden" }}
+          >
+            {name}
+          </Typography.Text>
         </Flex>
       );
     },
+    ellipsis: true,
   },
   {
     title: "Описание",
@@ -32,7 +36,9 @@ export const STORAGES_TABLE_COLUMNS: TableColumnType<IStoragesTableRecord>[] = [
       compare: (a, b) =>
         (b.description ?? "").localeCompare(a.description ?? ""),
     },
+    render: (description) => <span title={description}>{description}</span>,
     showSorterTooltip: false,
+    ellipsis: true,
   },
   {
     title: "Создано",
