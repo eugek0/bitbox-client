@@ -17,6 +17,8 @@ import { Route as LayoutImport } from './routes/_layout'
 import { Route as LayoutIndexImport } from './routes/_layout/index'
 import { Route as AuthRegisterImport } from './routes/auth/register'
 import { Route as AuthLoginImport } from './routes/auth/login'
+import { Route as AgreementUserImport } from './routes/agreement/user'
+import { Route as AgreementConfidentialityImport } from './routes/agreement/confidentiality'
 import { Route as AuthRecoverEmailImport } from './routes/auth/recover/email'
 import { Route as AuthRecoverUseridImport } from './routes/auth/recover/$userid'
 import { Route as LayoutStorageLayoutImport } from './routes/_layout/storage/_layout'
@@ -68,6 +70,18 @@ const AuthRegisterRoute = AuthRegisterImport.update({
 const AuthLoginRoute = AuthLoginImport.update({
   id: '/auth/login',
   path: '/auth/login',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AgreementUserRoute = AgreementUserImport.update({
+  id: '/agreement/user',
+  path: '/agreement/user',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AgreementConfidentialityRoute = AgreementConfidentialityImport.update({
+  id: '/agreement/confidentiality',
+  path: '/agreement/confidentiality',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -148,6 +162,20 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: ''
       preLoaderRoute: typeof LayoutImport
+      parentRoute: typeof rootRoute
+    }
+    '/agreement/confidentiality': {
+      id: '/agreement/confidentiality'
+      path: '/agreement/confidentiality'
+      fullPath: '/agreement/confidentiality'
+      preLoaderRoute: typeof AgreementConfidentialityImport
+      parentRoute: typeof rootRoute
+    }
+    '/agreement/user': {
+      id: '/agreement/user'
+      path: '/agreement/user'
+      fullPath: '/agreement/user'
+      preLoaderRoute: typeof AgreementUserImport
       parentRoute: typeof rootRoute
     }
     '/auth/login': {
@@ -340,6 +368,8 @@ const LayoutRouteWithChildren =
 
 export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
+  '/agreement/confidentiality': typeof AgreementConfidentialityRoute
+  '/agreement/user': typeof AgreementUserRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
   '/': typeof LayoutIndexRoute
@@ -357,6 +387,8 @@ export interface FileRoutesByFullPath {
 }
 
 export interface FileRoutesByTo {
+  '/agreement/confidentiality': typeof AgreementConfidentialityRoute
+  '/agreement/user': typeof AgreementUserRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
   '/': typeof LayoutIndexRoute
@@ -376,6 +408,8 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/_layout': typeof LayoutRouteWithChildren
+  '/agreement/confidentiality': typeof AgreementConfidentialityRoute
+  '/agreement/user': typeof AgreementUserRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
   '/_layout/': typeof LayoutIndexRoute
@@ -398,6 +432,8 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | ''
+    | '/agreement/confidentiality'
+    | '/agreement/user'
     | '/auth/login'
     | '/auth/register'
     | '/'
@@ -414,6 +450,8 @@ export interface FileRouteTypes {
     | '/storage/$storageid'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/agreement/confidentiality'
+    | '/agreement/user'
     | '/auth/login'
     | '/auth/register'
     | '/'
@@ -431,6 +469,8 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/_layout'
+    | '/agreement/confidentiality'
+    | '/agreement/user'
     | '/auth/login'
     | '/auth/register'
     | '/_layout/'
@@ -452,6 +492,8 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   LayoutRoute: typeof LayoutRouteWithChildren
+  AgreementConfidentialityRoute: typeof AgreementConfidentialityRoute
+  AgreementUserRoute: typeof AgreementUserRoute
   AuthLoginRoute: typeof AuthLoginRoute
   AuthRegisterRoute: typeof AuthRegisterRoute
   AuthRecoverUseridRoute: typeof AuthRecoverUseridRoute
@@ -460,6 +502,8 @@ export interface RootRouteChildren {
 
 const rootRouteChildren: RootRouteChildren = {
   LayoutRoute: LayoutRouteWithChildren,
+  AgreementConfidentialityRoute: AgreementConfidentialityRoute,
+  AgreementUserRoute: AgreementUserRoute,
   AuthLoginRoute: AuthLoginRoute,
   AuthRegisterRoute: AuthRegisterRoute,
   AuthRecoverUseridRoute: AuthRecoverUseridRoute,
@@ -477,6 +521,8 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/_layout",
+        "/agreement/confidentiality",
+        "/agreement/user",
         "/auth/login",
         "/auth/register",
         "/auth/recover/$userid",
@@ -491,6 +537,12 @@ export const routeTree = rootRoute
         "/_layout/settings",
         "/_layout/storage"
       ]
+    },
+    "/agreement/confidentiality": {
+      "filePath": "agreement/confidentiality.tsx"
+    },
+    "/agreement/user": {
+      "filePath": "agreement/user.tsx"
     },
     "/auth/login": {
       "filePath": "auth/login.tsx"

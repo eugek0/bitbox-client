@@ -1,0 +1,33 @@
+@use "@/core/styles" as *;
+
+.body {
+  overflow-y: auto;
+
+  .sheet {
+    width: 60%;
+    margin: 40px 0;
+    height: fit-content;
+
+    border: 1px solid $bg-service-border-color;
+    border-radius: 5px;
+
+    .header {
+      height: 70px;
+      width: 100%;
+      padding: 0 30px;
+      background-color: $bg-service-color_lighten;
+
+      .title {
+        margin: 0;
+      }
+    }
+
+    .content {
+      padding: 30px;
+
+      h5 {
+        margin: 0;
+      }
+    }
+  }
+}
