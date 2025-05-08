@@ -11,6 +11,7 @@ export interface ProfileAvatarEditorProps
     | "onZoomChange"
     | "onCropComplete"
   > {
+  isAvatarChanging: boolean;
   handleGetCroppedImage: MouseEventHandler<HTMLButtonElement>;
   handleClose: MouseEventHandler;
 }

@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import ProfileAvatarEditor from "@/components/Settings/ProfileSettings/ProfileAvatarEditor";
 import { Area, CropperProps } from "react-easy-crop";
 import { Nullable } from "@/core/types";
@@ -19,7 +19,8 @@ const ProfileAvatarEditorContainer: FC<ProfileAvatarEditorContainerProps> = ({
 
   const profile = useAppSelector(profileSelector);
 
-  const [changeAvatar] = useChangeAvatarMutation();
+  const [changeAvatar, { isLoading: isAvatarChanging }] =
+    useChangeAvatarMutation();
   const [getProfile] = useLazyGetProfileQuery();
 
   const handleChangeCrop = (crop: CropperProps["crop"]) => {
@@ -58,6 +59,7 @@ const ProfileAvatarEditorContainer: FC<ProfileAvatarEditorContainerProps> = ({
       image={image}
       crop={crop}
       zoom={zoom}
+      isAvatarChanging={isAvatarChanging}
       onCropChange={handleChangeCrop}
       onZoomChange={handleChangeZoom}
       onCropComplete={handleCompleteCrop}

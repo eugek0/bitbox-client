@@ -7,6 +7,7 @@ import { CloseOutlined } from "@ant-design/icons";
 
 const ProfileAvatarEditor: FC<ProfileAvatarEditorProps> = ({
   handleGetCroppedImage,
+  isAvatarChanging,
   onZoomChange,
   handleClose,
   zoom,
@@ -37,6 +38,7 @@ const ProfileAvatarEditor: FC<ProfileAvatarEditorProps> = ({
         </div>
         <Button
           className={styles["cut"]}
+          loading={isAvatarChanging}
           onClick={handleGetCroppedImage}
           type="primary"
         >

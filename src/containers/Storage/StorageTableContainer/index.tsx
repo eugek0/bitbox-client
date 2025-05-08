@@ -132,7 +132,6 @@ const StorageTableContainer: FC = () => {
           const dirReader = item.createReader();
           dirReader.readEntries(async (entries: any[]) => {
             for (const entry of entries) {
-              console.log(entry);
               await traverseFileTree(entry, path + item.name + "/");
             }
             resolve();
