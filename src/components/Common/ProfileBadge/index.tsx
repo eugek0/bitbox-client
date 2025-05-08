@@ -18,7 +18,7 @@ const ProfileBadge: FC<ProfileBadgeProps> = ({
   showFullname,
   size = "small",
 }) => {
-  return true ? (
+  return loading ? (
     <Flex className={styles[size]} align="center" gap={10}>
       <Skeleton.Avatar className={styles["avatar"]} active size="small" />
       <Skeleton.Input className={styles["login-skeleton"]} active />
