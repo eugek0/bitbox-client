@@ -109,7 +109,7 @@ const Profile: FC<ProfileProps> = ({
                 </>
               )}
             </Flex>
-            <Flex gap={20} flex={1} vertical>
+            <Flex className={styles["list"]} gap={20} vertical>
               <Typography.Text className={styles["title"]}>
                 Список хранилищ
               </Typography.Text>

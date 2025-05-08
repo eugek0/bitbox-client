@@ -32,6 +32,18 @@
       }
     }
 
+    @media screen and (max-width: 1400px) {
+      .avatar {
+        width: 200px;
+        height: 200px;
+      }
+
+      :global(.ant-skeleton-avatar) {
+        width: 100px;
+        height: 100px;
+      }
+    }
+
     .nickname {
       font-size: 24px;
       font-weight: 600;
@@ -53,14 +65,26 @@
       width: 100%;
     }
 
+    .list {
+      width: 100%;
+    }
+
     .grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-gap: 10px;
     }
 
+    @media screen and (max-width: 1350px) {
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-gap: 10px;
+      }
+    }
+
     .storage-card {
-      width: 471px;
+      min-width: 340px;
       border-radius: 5px;
       border: 1px solid $bg-service-border-color;
       padding: 10px;
@@ -69,6 +93,7 @@
 
     .storage-title {
       font-weight: 600;
+      max-width: 240px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -79,6 +104,7 @@
     }
 
     .storage-description {
+      max-width: 300px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
