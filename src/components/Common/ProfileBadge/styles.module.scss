@@ -15,9 +15,13 @@
 .small {
   .login-skeleton {
     height: 10px;
+    width: 100%;
 
     > :global(.ant-skeleton-input) {
-      height: 10px !important;
+      height: 10px;
+      display: block;
+      min-width: inherit;
+      width: 100%;
     }
   }
 
