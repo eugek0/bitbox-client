@@ -1,4 +1,4 @@
-# Хостится на http://eugek0.ru
+# Хостится на eugek0.ru
 
 # React + TypeScript + Vite
 
