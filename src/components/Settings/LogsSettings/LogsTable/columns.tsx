@@ -10,6 +10,10 @@ export const LOGS_TABLE_COLUMNS: TableColumnType<ILog>[] = [
     render: (_id) => {
       return <ProfileBadgeContainer _id={_id} />;
     },
+    sorter: {
+      compare: (a, b) => b.user?.localeCompare(a.user ?? "") ?? -1,
+    },
+    showSorterTooltip: false,
     width: "20%",
   },
   {
@@ -18,16 +22,29 @@ export const LOGS_TABLE_COLUMNS: TableColumnType<ILog>[] = [
     render: (date) => {
       return date ? moment(date).format("DD.MM.YYYY HH:mm:ss") : "";
     },
+    sorter: {
+      compare: (a, b) =>
+        moment(a.createdAt).isAfter(moment(b.createdAt)) ? 1 : -1,
+    },
+    showSorterTooltip: false,
     width: "170px",
   },
   {
     title: "Метод",
     dataIndex: "method",
     width: "100px",
+    sorter: {
+      compare: (a, b) => b.method.localeCompare(a.method),
+    },
+    showSorterTooltip: false,
   },
   {
     title: "URL",
     dataIndex: "url",
+    sorter: {
+      compare: (a, b) => b.url.localeCompare(a.url),
+    },
+    showSorterTooltip: false,
   },
   {
     title: "Тип токена",
@@ -36,5 +53,9 @@ export const LOGS_TABLE_COLUMNS: TableColumnType<ILog>[] = [
       return { user: "Пользователь", pubapi: "Разработчик" }[type];
     },
     width: "140px",
+    sorter: {
+      compare: (a, b) => b.type?.localeCompare(a.type ?? "") ?? -1,
+    },
+    showSorterTooltip: false,
   },
 ];

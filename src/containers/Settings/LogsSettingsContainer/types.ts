@@ -5,6 +5,7 @@ export interface ILog {
   url: string;
   ip: string;
   userAgent: string;
+  createdAt: string;
   type?: "pubapi" | "user";
   body?: Record<string, any>;
   query?: Record<string, any>;
