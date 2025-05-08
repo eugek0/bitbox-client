@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Avatar, Button, Flex, Spin, Typography } from "antd";
+import { Avatar, Button, Flex, List, Skeleton, Spin, Typography } from "antd";
 import Header from "../Layouts/Header";
 import { ProfileProps } from "./types";
 import { Link } from "@tanstack/react-router";
@@ -13,6 +13,7 @@ const Profile: FC<ProfileProps> = ({
   profile,
   storages,
   isStoragesLoading,
+  isProfileLoading,
   isMyProfile,
 }) => {
   return (
@@ -22,38 +23,83 @@ const Profile: FC<ProfileProps> = ({
         <div className={styles["wrapper"]}>
           <Flex className={styles["content"]} gap={40}>
             <Flex gap={15} vertical>
-              <Avatar className={styles["avatar"]} src={profile?.avatar} />
-              <Flex vertical>
-                <Typography.Text className={styles["name-lastname"]}>
-                  {profile?.name} {profile?.lastname}
-                </Typography.Text>
-                <Typography.Text className={styles["login"]}>
-                  {profile?.login}
-                </Typography.Text>
-              </Flex>
-              {isMyProfile && (
-                <Link
-                  className={styles["edit-button-link"]}
-                  to="/settings/profile"
-                >
-                  <Button
-                    className={styles["edit-button"]}
-                    icon={<EditOutlined />}
-                  >
-                    Редактировать профиль
-                  </Button>
-                </Link>
+              {isProfileLoading ? (
+                <>
+                  <Skeleton.Avatar
+                    className={`${styles["skeleton"]} ${styles["avatar"]}`}
+                    active
+                  />
+                  <Flex gap={15} vertical>
+                    <Skeleton
+                      className={styles["skeleton"]}
+                      paragraph={false}
+                      active
+                    />
+                    <Skeleton
+                      className={styles["skeleton"]}
+                      paragraph={false}
+                      style={{ width: 100 }}
+                      active
+                    />
+                  </Flex>
+                  <Flex gap={15} vertical>
+                    <Skeleton
+                      className={styles["skeleton"]}
+                      paragraph={false}
+                      style={{ width: 225 }}
+                      active
+                    />
+                    <Skeleton
+                      className={styles["skeleton"]}
+                      paragraph={false}
+                      style={{ width: 200 }}
+                      active
+                    />
+                    <Skeleton
+                      className={styles["skeleton"]}
+                      paragraph={false}
+                      style={{ width: 125 }}
+                      active
+                    />
+                  </Flex>
+                </>
+              ) : (
+                <>
+                  <Avatar className={styles["avatar"]} src={profile?.avatar} />
+                  <Flex vertical>
+                    <Typography.Text className={styles["name-lastname"]}>
+                      {profile?.name} {profile?.lastname}
+                    </Typography.Text>
+                    <Typography.Text className={styles["login"]}>
+                      {profile?.login}
+                    </Typography.Text>
+                  </Flex>
+                  {isMyProfile && (
+                    <Link
+                      className={styles["edit-button-link"]}
+                      to="/settings/profile"
+                    >
+                      <Button
+                        className={styles["edit-button"]}
+                        icon={<EditOutlined />}
+                      >
+                        Редактировать профиль
+                      </Button>
+                    </Link>
+                  )}
+                  <Typography.Text>
+                    Email:{" "}
+                    <a href={`mailto:${profile?.email}`}>{profile?.email}</a>
+                  </Typography.Text>
+                  <Typography.Text>
+                    Дата регистрации:{" "}
+                    {moment(profile?.createdAt).format("DD.MM.YYYY")}
+                  </Typography.Text>
+                  <Typography.Text>
+                    Роль: {USER_ROLE_DICTIONARY[profile?.role ?? "user"]}
+                  </Typography.Text>
+                </>
               )}
-              <Typography.Text>
-                Email: <a href={`mailto:${profile?.email}`}>{profile?.email}</a>
-              </Typography.Text>
-              <Typography.Text>
-                Дата регистрации:{" "}
-                {moment(profile?.createdAt).format("DD.MM.YYYY")}
-              </Typography.Text>
-              <Typography.Text>
-                Роль: {USER_ROLE_DICTIONARY[profile?.role ?? "user"]}
-              </Typography.Text>
             </Flex>
             <Flex gap={20} flex={1} vertical>
               <Typography.Text className={styles["title"]}>
@@ -62,6 +108,10 @@ const Profile: FC<ProfileProps> = ({
               {isStoragesLoading ? (
                 <Flex align="center" justify="center" flex={1} vertical>
                   <Spin indicator={<LoadingOutlined />} />
+                </Flex>
+              ) : !storages.length ? (
+                <Flex align="center" justify="center" flex={1} vertical>
+                  <List dataSource={[]} />
                 </Flex>
               ) : (
                 <div className={styles["grid"]}>

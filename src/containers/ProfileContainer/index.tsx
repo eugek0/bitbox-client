@@ -11,7 +11,9 @@ const ProfileContainer: FC = () => {
 
   const { userid } = useParams({ from: "/_layout/profile/$userid" });
 
-  const { data: user } = useGetUserQuery({ _id: userid });
+  const { data: user, isFetching: isUserFetching } = useGetUserQuery({
+    _id: userid,
+  });
   const { data: storages, isFetching: isStoragesFetching } =
     useGetUserStoragesQuery(userid);
 
@@ -19,6 +21,7 @@ const ProfileContainer: FC = () => {
     <Profile
       profile={user ?? null}
       storages={storages ?? []}
+      isProfileLoading={isUserFetching}
       isStoragesLoading={isStoragesFetching}
       isMyProfile={profile?._id === userid}
     />

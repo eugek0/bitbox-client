@@ -16,9 +16,20 @@
       font-weight: 600;
     }
 
+    .skeleton {
+      :global(.ant-skeleton-title) {
+        margin: 0 !important;
+      }
+    }
+
     .avatar {
       width: 296px;
       height: 296px;
+
+      :global(.ant-skeleton-avatar) {
+        width: 296px;
+        height: 296px;
+      }
     }
 
     .name-lastname {
