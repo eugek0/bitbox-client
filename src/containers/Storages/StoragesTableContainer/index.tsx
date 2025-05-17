@@ -208,6 +208,7 @@ const StoragesTableContainer: FC = () => {
     <BitBoxTableContainer<IStoragesTableRecord>
       records={storages ?? []}
       columns={STORAGES_TABLE_COLUMNS}
+      pagination={{}}
       header={{
         title: "Список хранилищ",
         button: {

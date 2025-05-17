@@ -695,6 +695,10 @@ const StorageTableContainer: FC = () => {
           show: true,
           menu,
         }}
+        pagination={{
+          pageSize: 13,
+          showSizeChanger: false
+        }}
         header={{
           title: name,
           suffix: (
