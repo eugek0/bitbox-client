@@ -58,7 +58,6 @@ import { storageBufferSelector } from "../selectors";
 import { IEntity } from "../types";
 import { setStorageBuffer } from "../slice";
 import { download, getNoun } from "@/core/utils";
-import { v4 } from "uuid";
 import { appAxios } from "@/core/axios";
 import { isAxiosError } from "axios";
 import styles from "./styles.module.scss";
@@ -69,6 +68,7 @@ import { useStorageRole } from "./hooks/useStorageRole";
 import StorageInfoModalContainer from "@/containers/Storages/StoragesTableContainer/StorageInfoModalContainer";
 import { createPortal } from "react-dom";
 import EntityDownloadContainer from "../EntityDownloadContainer";
+import { v4 } from "uuid";
 
 const StorageTableContainer: FC = () => {
   const [isCreateDirectoryModalOpen, setIsCreateDirectoryModalOpen] =
@@ -125,38 +125,92 @@ const StorageTableContainer: FC = () => {
 
   const handleDrop: DragEventHandler<HTMLDivElement> = async (event) => {
     event.preventDefault();
-    const items = event.dataTransfer.items;
-    const formdata = new FormData();
 
-    const traverseFileTree = async (item: any, path = ""): Promise<void> => {
-      return new Promise((resolve) => {
-        if (item.isFile) {
-          item.file((file: File) => {
-            formdata.append("entities", file, file.name);
-            formdata.append("metadata", file.name);
-            resolve();
-          });
-        } else if (item.isDirectory) {
-          const dirReader = item.createReader();
-          dirReader.readEntries(async (entries: any[]) => {
-            for (const entry of entries) {
-              await traverseFileTree(entry, path + item.name + "/");
-            }
-            resolve();
-          });
-        }
-      });
+    const BATCH = 5;
+
+    const collectFiles = async (items: DataTransferItemList) => {
+      const result: File[] = [];
+
+      const traverse = async (entry: any, path = ""): Promise<void> =>
+        new Promise((res) => {
+          if (entry.isFile) {
+            entry.file((file: File) => {
+              Object.defineProperty(file, "webkitRelativePath", {
+                value: path + file.name,
+              });
+              result.push(file);
+              res();
+            });
+          } else if (entry.isDirectory) {
+            const reader = entry.createReader();
+            reader.readEntries(async (entries: any[]) => {
+              for (const e of entries)
+                await traverse(e, path + entry.name + "/");
+              res();
+            });
+          }
+        });
+
+      const roots = Array.from(items)
+        .map((i) => i.webkitGetAsEntry())
+        .filter(Boolean);
+
+      for (const root of roots) await traverse(root);
+      return result;
     };
 
-    const entries = Array.from(items)
-      .map((item) => item.webkitGetAsEntry())
-      .filter(Boolean);
+    const allFiles = await collectFiles(event.dataTransfer.items);
 
-    for (const entry of entries) {
-      await traverseFileTree(entry);
+    const uploadKey = v4();
+    let breaked = false;
+
+    const handleCancelUpload = async (controller: AbortController) => {
+      const result = await modal.confirm({
+        title: "Отменить загрузку?",
+        content: `${allFiles.length > 1 ? "Файлы" : "Файл"} еще не ${
+          allFiles.length > 1 ? "загружены" : "загружен"
+        }. Отменить?`,
+      });
+      if (result) {
+        controller.abort();
+        breaked = true;
+      }
+    };
+
+    for (let i = 0; i < allFiles.length; i += BATCH) {
+      if (breaked) break;
+
+      const slice = allFiles.slice(i, i + BATCH);
+      const fd = new FormData();
+      slice.forEach((file) => {
+        fd.append("entities", file, file.name);
+        fd.append("metadata", (file as any).webkitRelativePath || file.name);
+      });
+
+      const controller = new AbortController();
+
+      await handleUploadFiles({
+        formdata: fd,
+        uploading: slice.length,
+        uploaded: i,
+        total: allFiles.length,
+        uploadKey,
+        controller,
+        handleCancelUpload: () => handleCancelUpload(controller),
+      });
     }
 
-    await handleUploadFiles(formdata, event.dataTransfer.files.length);
+    if (!breaked) {
+      notification.open({
+        key: uploadKey,
+        type: "success",
+        style: { width: 500 },
+        message: "Файлы успешно загружены",
+        description: "Запись файлов на диск",
+        placement: "bottomRight",
+        duration: 5,
+      });
+    }
     refetchEntities();
   };
 
@@ -232,24 +286,24 @@ const StorageTableContainer: FC = () => {
     );
   };
 
-  const handleUploadFiles = async (formdata: FormData, count: number) => {
+  const handleUploadFiles = async ({
+    formdata,
+    uploaded,
+    total,
+    uploadKey,
+    controller,
+    handleCancelUpload,
+  }: {
+    formdata: FormData;
+    uploading: number;
+    uploaded: number;
+    total: number;
+    uploadKey: string;
+    controller: AbortController;
+    handleCancelUpload: () => void;
+  }) => {
     formdata.append("parent", parent ?? "");
-    const uploadKey = v4();
-
-    const message = `Загрузка ${count} ${getNoun(count, "файла", "файлов", "файлов")}`;
-
-    const controller = new AbortController();
-
-    const handleCancelUpload = async () => {
-      const result = await modal.confirm({
-        title: "Отменить загрузку?",
-        content: `${count > 1 ? "Файлы" : "Файл"} еще не ${count > 1 ? "загружены" : "загружен"}. Отменить?`,
-      });
-
-      if (result) {
-        controller.abort();
-      }
-    };
+    const message = `Загружено ${uploaded} / ${total} файлов`;
 
     try {
       await appAxios.get("auth/refresh");
@@ -260,6 +314,7 @@ const StorageTableContainer: FC = () => {
           notification.open({
             key: uploadKey,
             type: "info",
+            style: { width: 500 },
             description:
               progress === 100 ? (
                 <Flex gap={10} align="center">
@@ -293,6 +348,7 @@ const StorageTableContainer: FC = () => {
       notification.open({
         key: uploadKey,
         type: "info",
+        style: { width: 500 },
         description: (
           <Flex gap={10} align="center">
             <span>Запись файлов на диск</span>
@@ -300,7 +356,7 @@ const StorageTableContainer: FC = () => {
           </Flex>
         ),
         placement: "bottomRight",
-        duration: 5,
+        duration: 0,
         message,
       });
     } catch (error) {
@@ -308,6 +364,7 @@ const StorageTableContainer: FC = () => {
         notification.open({
           key: uploadKey,
           type: "error",
+          style: { width: 500 },
           duration: 5,
           message: "Ошибка",
           placement: "bottomRight",
@@ -317,6 +374,7 @@ const StorageTableContainer: FC = () => {
         notification.open({
           key: uploadKey,
           type: "warning",
+          style: { width: 500 },
           duration: 5,
           placement: "bottomRight",
           description: "Загрузка была отменена",
@@ -336,16 +394,68 @@ const StorageTableContainer: FC = () => {
       upload.setAttribute("webkitdirectory", "");
     }
 
-    const changeEventHandler = async () => {
-      const formdata = new FormData();
+    const uploadKey = v4();
+    let breaked = false;
 
-      for (const file of upload?.files ?? []) {
-        formdata.append("entities", file, file.name);
-        formdata.append("metadata", file.webkitRelativePath);
+    const changeEventHandler = async () => {
+      const BATCH = 5;
+
+      for (let index = 0; index < (upload.files?.length ?? 0); index += BATCH) {
+        if (breaked) break;
+        const formdata = new FormData();
+        const slice = Array.from(upload.files ?? [])?.slice(
+          index,
+          index + BATCH,
+        );
+
+        for (const file of slice) {
+          formdata.append("entities", file, file.name);
+          formdata.append("metadata", file.webkitRelativePath);
+        }
+        const controller = new AbortController();
+
+        const handleCancelUpload = async () => {
+          const result = await modal.confirm({
+            title: "Отменить загрузку?",
+            content: `${(upload.files?.length ?? 0) - index > 1 ? "Файлы" : "Файл"} еще не ${(upload.files?.length ?? 0) - index > 1 ? "загружены" : "загружен"}. Отменить?`,
+          });
+
+          if (result) {
+            controller.abort();
+            breaked = true;
+          }
+        };
+
+        if (breaked) {
+          break;
+        }
+
+        await handleUploadFiles({
+          formdata,
+          uploading: slice.length ?? 0,
+          uploaded: index,
+          total: upload.files?.length ?? 0,
+          uploadKey,
+          controller,
+          handleCancelUpload,
+        });
       }
 
-      await handleUploadFiles(formdata, upload?.files?.length ?? 0);
       upload.removeEventListener("change", changeEventHandler);
+      notification.open({
+        key: uploadKey,
+        type: "success",
+        style: { width: 500 },
+        description: (
+          <Flex gap={10} align="center">
+            <span>Запись файлов на диск</span>
+            <CheckOutlined className={styles["check"]} />
+          </Flex>
+        ),
+        placement: "bottomRight",
+        duration: 5,
+        message: "Файлы успешно загружены",
+      });
       refetchEntities();
     };
 
