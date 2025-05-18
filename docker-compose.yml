@@ -4,7 +4,6 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "80:80"
       - "445:443"
     volumes:
       - /etc/letsencrypt/live/eugek0.ru/fullchain.pem:/etc/nginx/certs/fullchain.pem
