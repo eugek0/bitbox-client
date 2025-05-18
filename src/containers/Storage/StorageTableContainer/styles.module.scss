@@ -1,9 +1,14 @@
 @use "@/core/styles" as *;
 
-.check {
-  color: $primary-color;
-}
+.body {
+  height: 100%;
+  padding: 0 0 15px 0;
 
-.icon {
-  font-size: 13px !important;
+  .check {
+    color: $primary-color;
+  }
+
+  .icon {
+    font-size: 13px !important;
+  }
 }
