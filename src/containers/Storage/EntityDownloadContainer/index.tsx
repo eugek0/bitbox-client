@@ -28,7 +28,7 @@ const EntityDownloadContainer: FC = () => {
   const { storageid } = useParams({
     from: "/_layout/storage/_layout/$storageid",
   });
-  const { parent, entityid } = useSearch({
+  const { parent, entityid, page, limit } = useSearch({
     from: "/_layout/storage/_layout/$storageid",
   });
   const navigate = useNavigate();
@@ -37,7 +37,7 @@ const EntityDownloadContainer: FC = () => {
   const { data: storage } = useGetStorageQuery(storageid);
   const { refetch: refetchEntities } = useGetStorageEntitiesQuery({
     storageid,
-    params: { parent },
+    params: { parent, page, limit },
   });
   const {
     data: entity,

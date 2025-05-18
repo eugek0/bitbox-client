@@ -697,7 +697,12 @@ const StorageTableContainer: FC = () => {
   useEffect(() => {
     navigate({
       to: `/storage/${storageid}`,
-      search: { parent, page: pagination.page, limit: pagination.limit },
+      search: {
+        parent,
+        page: pagination.page,
+        limit: pagination.limit,
+        entityid,
+      },
     });
   }, [pagination]);
 
@@ -711,7 +716,7 @@ const StorageTableContainer: FC = () => {
     ) {
       navigate({
         to: `/storage/${storageid}`,
-        search: { parent, limit, page: lastPage - 1 },
+        search: { parent, limit, page: lastPage - 1, entityid },
       });
     }
   }, [entities?.count, entities?.items, pagination]);

@@ -127,7 +127,12 @@ const Profile: FC<ProfileProps> = ({
                     <Link
                       to="/storage/$storageid"
                       params={{ storageid: storage._id }}
-                      search={{ entityid: undefined, parent: undefined }}
+                      search={{
+                        entityid: undefined,
+                        parent: undefined,
+                        page: 1,
+                        limit: undefined,
+                      }}
                       key={storage._id}
                     >
                       <Flex className={styles["storage-card"]} gap={5} vertical>
