@@ -36,12 +36,15 @@ export interface IGetStorageEntitiesPayload {
   storageid: string;
   params: {
     parent?: string;
+    page: number;
+    limit?: number;
   };
 }
 
 export interface IGetStorageEntitiesResponse {
   items: IEntity[];
   breadcrumbs: IEntityBreadcrumb[];
+  count: number;
 }
 
 export interface IGetStorageEntityPayload {

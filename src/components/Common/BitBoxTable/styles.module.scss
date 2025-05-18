@@ -147,6 +147,7 @@
             }
           }
           :global(.ant-table) {
+            overflow-y: auto;
             flex-direction: column;
             display: flex;
             flex: 1;

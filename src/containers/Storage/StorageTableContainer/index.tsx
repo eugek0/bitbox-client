@@ -14,6 +14,7 @@ import {
   Dropdown,
   Flex,
   MenuProps,
+  Pagination,
   Progress,
   Spin,
 } from "antd";
@@ -83,10 +84,17 @@ const StorageTableContainer: FC = () => {
   const { storageid } = useParams({
     from: "/_layout/storage/_layout/$storageid",
   });
-  const { parent, entityid } = useSearch({
+  const { parent, entityid, page, limit } = useSearch({
     from: "/_layout/storage/_layout/$storageid",
   });
   const navigate = useNavigate();
+
+  const [pagination, setPagination] = useState<{ page: number; limit: number }>(
+    {
+      page,
+      limit: limit ?? 15,
+    },
+  );
 
   const dispatch = useDispatch();
 
@@ -100,7 +108,7 @@ const StorageTableContainer: FC = () => {
     refetch: refetchEntities,
   } = useGetStorageEntitiesQuery({
     storageid,
-    params: { parent },
+    params: { parent, page, limit },
   });
   const [createDirectory] = useCreateDirectoryMutation();
   const [deleteEntities] = useDeleteEntitiesMutation();
@@ -470,6 +478,10 @@ const StorageTableContainer: FC = () => {
     })) ?? []),
   ];
 
+  const handleChangePage = (page: number, limit: number) => {
+    setPagination({ page, limit });
+  };
+
   const menu = ({
     selected,
     setSelected,
@@ -678,8 +690,34 @@ const StorageTableContainer: FC = () => {
     };
   }, [handlePasteEntities, selected]);
 
+  useEffect(() => {
+    setPagination({ page, limit: limit ?? 15 });
+  }, [limit, page]);
+
+  useEffect(() => {
+    navigate({
+      to: `/storage/${storageid}`,
+      search: { parent, page: pagination.page, limit: pagination.limit },
+    });
+  }, [pagination]);
+
+  useEffect(() => {
+    const lastPage = (entities?.count ?? 0) / pagination.limit + 1;
+
+    if (
+      pagination.page !== 1 &&
+      pagination.page === lastPage &&
+      !entities?.items.length
+    ) {
+      navigate({
+        to: `/storage/${storageid}`,
+        search: { parent, limit, page: lastPage - 1 },
+      });
+    }
+  }, [entities?.count, entities?.items, pagination]);
+
   return (
-    <>
+    <Flex className={styles["body"]} gap={15} vertical>
       <BitBoxTableContainer<IEntity>
         records={entities?.items ?? []}
         columns={STORAGE_TABLE_COLUMNS}
@@ -746,6 +784,15 @@ const StorageTableContainer: FC = () => {
         handleSelect={handleSelect}
         withDrop
       />
+      <Pagination
+        align="center"
+        total={entities?.count}
+        current={pagination.page}
+        pageSize={pagination.limit}
+        pageSizeOptions={[10, 15, 20, 25, 50, 100]}
+        onChange={handleChangePage}
+        showSizeChanger
+      />
       <CreateDirectoryModalContainer
         open={isCreateDirectoryModalOpen}
         handleCloseModal={handleCloseCreateDirectoryModal}
@@ -763,7 +810,7 @@ const StorageTableContainer: FC = () => {
         selected={context}
       />
       {entityid && createPortal(<EntityDownloadContainer />, document.body)}
-    </>
+    </Flex>
   );
 };
 
